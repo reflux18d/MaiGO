@@ -19,4 +19,17 @@ class User:
         self.data = None
         self.history = [] #list of Tour
         self.achivement = []
+
+class Place:
+    def __init__(self, name):
+        self.name = name
+        self.latitude, self.longitude = 0, 0
+        self.visits = 0
+
+    def set_pos(self, lati, longi):
+        self.latitude, self.longitude = lati, longi
+
+class Arcade(Place):
+    def __init__(self, name):
+        super.__init__("Arcade")
         
