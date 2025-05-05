@@ -19,4 +19,6 @@ class User:
         self.data = None
         self.history = [] #list of Tour
         self.achivement = []
+
+print("just for test")
         
