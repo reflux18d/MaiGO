@@ -42,4 +42,5 @@ class User:
         self.achivement = []
 
 
+print("just for test")
         
