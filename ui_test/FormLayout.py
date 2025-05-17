@@ -51,6 +51,8 @@ class SettingsWindow(QWidget):
             name, state = option
             off, on = state
             button, text = QCheckBox(name), QLabel(off)
+            button.setStyleSheet("background-color: #66ccff; color: white;")
+#            text.setStyleSheet("background-color: #66ccff; color: white;")
             self.data_form.addRow(button, text)
             button.stateChanged.connect(
                 lambda state, b = button, t = text, on = on, off = off:
