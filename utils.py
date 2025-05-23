@@ -32,22 +32,27 @@ class MethodWidget(QWidget):
         self.setLayout(self.layout)
         return self.layout
     
-    def more_widgets(self, *widgets):
+    def more_widgets(self, *widgets, stretch = 0):
         """
         Multiple add method for widget
+        Single stretch length
+        如果你只传入了一个对象应该使用','解引
         Only for widget with QVBoxLayout or QHBoxLayout
         >>> a, w = QApplication([]), MethodWidget()
         >>> layout = w.create_layout(QVBoxLayout)
         >>> top, center, button = w.more_widgets(QGroupBox(), QGroupBox(), QPushButton())
         >>> isinstance(top, QGroupBox)
         True
-
+        >>> bottom, = w.more_widgets(QLabel())
+        >>> isinstance(bottom, QLabel)
+        True
         """
         assert self.layout is not None, "Undefined layout"
         assert isinstance(self.layout, QVBoxLayout) or isinstance(self.layout, QHBoxLayout), "Incorrect layout type"
 
         for widget in widgets:
             self.layout.addWidget(widget)
+            self.layout.addStretch(stretch)
         return widgets
     
 
@@ -70,7 +75,7 @@ class MGroupBox(QGroupBox):
         self.setLayout(self.layout)
         return self.layout
     
-    def more_widgets(self, *widgets):
+    def more_widgets(self, *widgets, stretch = 0):
         """
         Multiple add method
         Only for widget with QVBoxLayout or QHBoxLayout
@@ -86,6 +91,7 @@ class MGroupBox(QGroupBox):
 
         for widget in widgets:
             self.layout.addWidget(widget)
+            self.layout.addStretch(stretch)
         return widgets
 
 

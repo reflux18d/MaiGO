@@ -108,9 +108,6 @@ class MapWindow(QWidget):
 class GoWindow(QWidget):
     def __init__(self, signal, *args, **kwargs):
         super().__init__(*args, **kwargs)
-#        self.setWindowTitle("出勤中")
-#        self.setWindowIcon(QIcon(bear_path))
-#        self.resize(800, 400)
         self.signal = signal
         self.state = 0  # 0: preparing 1: marching 2: playing 
         self.set_buttons()
