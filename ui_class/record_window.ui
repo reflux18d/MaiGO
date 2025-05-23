@@ -17,19 +17,12 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>10</y>
+     <y>450</y>
      <width>281</width>
      <height>61</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="top_layout">
-    <item>
-     <widget class="QPushButton" name="return_button">
-      <property name="text">
-       <string>返回</string>
-      </property>
-     </widget>
-    </item>
+   <layout class="QHBoxLayout" name="bottom_layout">
     <item>
      <spacer name="horizontalSpacer">
       <property name="orientation">
@@ -43,6 +36,13 @@
       </property>
      </spacer>
     </item>
+    <item>
+     <widget class="QPushButton" name="return_button">
+      <property name="text">
+       <string>返回</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
@@ -54,7 +54,7 @@
      <height>361</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QVBoxLayout" name="record_layout">
     <item>
      <spacer name="verticalSpacer">
       <property name="orientation">

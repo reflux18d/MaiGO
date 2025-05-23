@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/">
+    <file>image/bear_full.PNG</file>
+    <file>image/map.png</file>
+    <file>image/bear.png</file>
+    <file>image/online.png</file>
+    <file>image/offline.png</file>
+  </qresource>
+</RCC>
