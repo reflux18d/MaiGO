@@ -1,17 +1,19 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtWidgets import QPushButton, QLabel
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QGroupBox
 from PyQt5.QtWidgets import QGridLayout, QFormLayout
-from PyQt5.QtWidgets import QStackedWidget, QScrollArea
+from PyQt5.QtWidgets import QStackedWidget
 from PyQt5.QtWidgets import QTextEdit, QCheckBox
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
+import sqlite3
+from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout, QGraphicsView, 
+                            QGraphicsScene, QGraphicsPixmapItem, QGraphicsEllipseItem,
+                            QGraphicsSimpleTextItem, QLabel, QPushButton, QDialog, 
+                            QScrollArea, QHBoxLayout, QGroupBox)
+from PyQt5.QtGui import QPixmap, QColor, QFont, QBrush, QPen
+from PyQt5.QtCore import Qt, QPointF, pyqtSignal, QObject, QRectF
 
-bear_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/bear.png'
-online_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/offline.png'
-map_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/map.png'
+bear_path = 'D:/MaiGO-main/ui_test/bear.png'
+online_path = 'D:/MaiGO-main/ui_test/offline.png'
+map_path = 'D:/MaiGO-main/ui_test/map.png'
 
 class StartWindow(QWidget):
     def __init__(self, signal: pyqtSignal, *args, **kwargs):
@@ -65,45 +67,256 @@ class StartWindow(QWidget):
 
 
 
-class MapWindow(QWidget):
-    def __init__(self, signal, arcades = ["上地", "五道口", "万柳", "新奥"], *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.setWindowTitle("地图")
-#        self.setWindowIcon(QIcon(bear_path))
-#        self.resize(800, 400)
-        self.signal = signal
-        self.arcades = arcades
-        self.arcade_buttons = []
-        self.set_buttons(arcades)
-        self.more_widgets()
+class ArcadeSignal(QObject):
+    """独立的信号类"""
+    clicked = pyqtSignal(dict)
+    detail_requested = pyqtSignal(dict)  # 新增：请求详细信息的信号
 
-    def set_buttons(self, arcades):
-        for index, arcade in enumerate(arcades):
-            button = QPushButton(arcade)
-            button.clicked.connect(lambda: self.signal.emit(2))
-            self.arcade_buttons.append(button)
+class ArcadeMarker(QGraphicsEllipseItem):
+    """自定义商场标记图形项"""
+    def __init__(self, arcade_info, x, y, signal_handler, parent=None):
+        super().__init__(0, 0, 30, 30, parent)
+        self.arcade_info = arcade_info
+        self.signal_handler = signal_handler
+        self.setPos(x, y)
+        self.setBrush(QBrush(QColor(255, 0, 0, 150)))
+        self.setPen(QPen(Qt.black))
+        self.setFlag(QGraphicsEllipseItem.ItemIsSelectable)
+        
+    def mousePressEvent(self, event):
+        """点击标记时触发"""
+        if event.button() == Qt.LeftButton:
+            self.signal_handler.clicked.emit(self.arcade_info)
+        super().mousePressEvent(event)
 
-    def more_widgets(self):
+class ArcadeDetailDialog(QDialog):
+    """店铺详细信息弹窗"""
+    def __init__(self, arcade_info, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle(f"{arcade_info['name']} - 详细信息")
+        self.setModal(True)
+        self.resize(400, 300)
+        
         layout = QVBoxLayout()
+        
+        # 店铺名称
+        name_label = QLabel(f"<h1>{arcade_info['name']}</h1>")
+        layout.addWidget(name_label)
+        
+        # 详细信息
+        info_group = QGroupBox("店铺信息")
+        info_layout = QVBoxLayout()
+        
+        # 使用数据库中的所有字段
+        details = [
+            ("地址", arcade_info['address']),
+            ("机台数量", arcade_info['num']),
+            ("营业时间", arcade_info['hours']),  # 从数据库获取
+            ("价格", arcade_info['price']),  # 从数据库获取
+            ("交通", arcade_info['notes'])      # 从数据库获取
+        ]
+        
+        for label, text in details:
+            hbox = QHBoxLayout()
+            hbox.addWidget(QLabel(f"<b>{label}:</b>"))
+            hbox.addWidget(QLabel(text))
+            hbox.addStretch()
+            info_layout.addLayout(hbox)
+        
+        info_group.setLayout(info_layout)
+        layout.addWidget(info_group)
+        
+        # 关闭按钮
+        close_btn = QPushButton("关闭")
+        close_btn.clicked.connect(self.close)
+        layout.addWidget(close_btn, alignment=Qt.AlignRight)
+        
         self.setLayout(layout)
 
-        map_label = QLabel()
+class ArcadeInfoDialog(QDialog):
+    """商场信息弹窗"""
+    def __init__(self, arcade_info, signal_handler, parent=None):
+        super().__init__(parent)
+        self.signal_handler = signal_handler
+        self.setWindowTitle("店铺信息")
+        self.setModal(True)
+        self.resize(300, 200)
+        
+        layout = QVBoxLayout()
+        
+        # 将店铺名称改为按钮
+        name_btn = QPushButton(f"<h2>{arcade_info['name']}</h2>")
+        name_btn.setStyleSheet("""
+            QPushButton { 
+                text-align: left; 
+                border: none; 
+                color: blue;
+            }
+            QPushButton:hover {
+                text-decoration: underline;
+            }
+        """)
+        name_btn.clicked.connect(lambda: self.signal_handler.detail_requested.emit(arcade_info))
+        layout.addWidget(name_btn)
+        
+        # 其他信息
+        info_label = QLabel()
+        info_text = f"""
+        <p><b>地址:</b> {arcade_info['address']}</p>
+        <p><b>机台数量:</b> {arcade_info['num']}</p>
+        """
+        info_label.setText(info_text)
+        
         scroll = QScrollArea()
-        scroll.setWidget(map_label)
+        scroll.setWidget(info_label)
         scroll.setWidgetResizable(True)
         layout.addWidget(scroll)
-
-        bottom = QGroupBox()
-        layout.addWidget(bottom)
-
-        pixmap = QPixmap(map_path)
-        map_label.setPixmap(pixmap)
         
-        bottom_layout = QHBoxLayout()
-        bottom.setLayout(bottom_layout)
+        # 关闭按钮
+        close_btn = QPushButton("关闭")
+        close_btn.clicked.connect(self.close)
+        layout.addWidget(close_btn, alignment=Qt.AlignRight)
         
-        for button in self.arcade_buttons:
-            bottom_layout.addWidget(button)
+        self.setLayout(layout)
+
+class MapWindow(QWidget):
+    """主地图窗口"""
+    def __init__(self,switch_signal,parent=None):
+        super().__init__(parent)
+        self.switch_signal = switch_signal  # 保存信号对象
+        self.setWindowTitle("中二节奏地图")
+        self.resize(800, 600)
+        
+        # 创建信号处理器
+        self.signal_handler = ArcadeSignal()
+        self.signal_handler.clicked.connect(self.display_arcade_info)
+        self.signal_handler.detail_requested.connect(self.display_arcade_detail)  # 连接详细信息信号
+        
+        # 初始化数据库
+        self.init_database()
+        
+        # 创建UI
+        self.init_ui()
+
+        # 添加返回按钮
+        self.add_back_button()
+        
+    def add_back_button(self):
+        """添加返回按钮"""
+        back_btn = QPushButton("返回主菜单", self)
+        back_btn.clicked.connect(lambda: self.switch_signal.emit(0))  # 发射返回信号
+        back_btn.move(10, 10)  # 放置在左上角
+    
+    def init_database(self):
+        """初始化SQLite数据库"""
+        self.conn = sqlite3.connect(":memory:", check_same_thread=False)
+        self.cursor = self.conn.cursor()
+        
+        # 创建表 - 添加营业时间和联系电话字段
+        self.cursor.execute("""
+        CREATE TABLE arcades (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            pos_x REAL NOT NULL,
+            pos_y REAL NOT NULL,
+            address TEXT,
+            num TEXT,
+            hours TEXT,       -- 新增营业时间字段
+            price TEXT,       -- 新增联系电话字段
+            notes TEXT        -- 新增备注字段
+        )
+        """)
+        
+        # 插入示例数据 - 包含新字段
+        sample_data = [
+            ("吉睿游艺北京海淀学清路店", 1048, 357, 
+            "北京市海淀区学清路8号三层吉睿游艺", "1",
+            "10:00-21:00", "2元/币", "地铁15号线、昌平线六道口站b口出向北步行约780m，地铁昌平线学知园站c口出向南步行约620m；公交至石板房、科荟桥西、林大北路东口下"),
+            ("嘉贝乐北京五道口店", 892, 600, 
+            "北京市海淀区成府路28号五道口购物中心三层", "2",
+            "10:00-22:00", "2元/币", "地铁13号线五道口站出站即可见"),
+            ("噜彼熊电玩嘉年华万柳店", 403, 864, 
+            "北京市海淀区巴沟路2号万柳华联购物中心二层", "2",
+            "09:00-22:00", "1元/币", "地铁路线：10号线巴沟站C出口，可从C3出口分支或者地下通道直接进入购物中心 公交路线：302 304 307 361 386 424 528 539 613 614 644路巴沟村站下车，534 644 664路万柳中路北口站下车。"),
+            ("北京上地华联嘉贝乐", 584, 71, 
+            "北京市海淀区农大南路1号院1号楼华联商厦上地店", "1",
+            "10:00-21:00", "1元/币", "可乘坐公交到上地南口站或地铁13号线上地站下车后步行/骑行到达商场")
+        ]
+        self.cursor.executemany("""
+        INSERT INTO arcades (name, pos_x, pos_y, address, num, hours, price, notes)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, sample_data)
+        self.conn.commit()
+    
+    def init_ui(self):
+        """初始化用户界面"""
+        layout = QVBoxLayout(self)
+        
+        # 创建地图视图
+        self.scene = QGraphicsScene()
+        self.view = QGraphicsView(self.scene)
+        layout.addWidget(self.view)
+        
+        pixmap = QPixmap("D:/MaiGO-main/ui_test/map.png")
+        self.background = QGraphicsPixmapItem(pixmap)
+        self.scene.addItem(self.background)
+        rect = QRectF(pixmap.rect())
+        self.scene.setSceneRect(rect)
+        
+        # 从数据库加载商场标记
+        self.load_arcade_markers()
+        
+        # 底部控制区域
+        control_layout = QHBoxLayout()
+        refresh_btn = QPushButton("刷新地图")
+        refresh_btn.clicked.connect(self.refresh_map)
+        control_layout.addWidget(refresh_btn)
+        layout.addLayout(control_layout)
+    
+    def load_arcade_markers(self):
+        """从数据库加载商场并创建标记"""
+        self.cursor.execute("SELECT name, pos_x, pos_y, address, num, hours, price, notes FROM arcades")
+        
+        for arcade in self.cursor.fetchall():
+            arcade_info = {
+                "name": arcade[0],
+                "pos_x": arcade[1],
+                "pos_y": arcade[2],
+                "address": arcade[3],
+                "num": arcade[4],
+                "hours": arcade[5],  # 营业时间
+                "price": arcade[6],   
+                "notes": arcade[7]    # 备注
+            }
+            
+            # 创建标记并添加到场景
+            marker = ArcadeMarker(arcade_info, arcade[1], arcade[2], self.signal_handler)
+            self.scene.addItem(marker)
+    
+    def display_arcade_info(self, arcade_info):
+        """显示商场信息弹窗"""
+        dialog = ArcadeInfoDialog(arcade_info, self.signal_handler, self)
+        dialog.exec_()
+    
+    def display_arcade_detail(self, arcade_info):
+        """显示商场详细信息弹窗"""
+        dialog = ArcadeDetailDialog(arcade_info, self)
+        dialog.exec_()
+    
+    def refresh_map(self):
+        """刷新地图"""
+        # 清除现有标记
+        for item in self.scene.items():
+            if isinstance(item, ArcadeMarker):
+                self.scene.removeItem(item)
+        
+        # 重新加载标记
+        self.load_arcade_markers()
+    
+    def closeEvent(self, event):
+        """关闭窗口时关闭数据库连接"""
+        self.conn.close()
+        event.accept()
 
 class GoWindow(QWidget):
     def __init__(self, signal, *args, **kwargs):
