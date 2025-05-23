@@ -1,9 +1,9 @@
-<RCC>
-  <qresource prefix="/">
-    <file>image/bear_full.PNG</file>
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
     <file>image/map.png</file>
     <file>image/bear.png</file>
     <file>image/online.png</file>
     <file>image/offline.png</file>
-  </qresource>
+    <file>image/bear_full.png</file>
+</qresource>
 </RCC>
