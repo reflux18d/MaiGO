@@ -9,7 +9,8 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import Qt
 
-from ui_class.start_window import Ui_StartWidget
+from ui_class import Ui_start_window, Ui_record_window, Ui_settings_window
+from ui_class import Ui_record_single, Ui_settings_single
 from utils import *
 
 bear_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/bear.png'
@@ -59,20 +60,100 @@ class User:
         self.history = [] #list of Tour
         self.achivement = []
 
+class RecordSingle(MethodWidget):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_record_single.Ui_RecordSingle() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        self.time_label = self.ui.time_label
+        self.goal_label = self.ui.goal_label
+
+class SettingsSingle(MethodWidget):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_settings_single.Ui_SettingsSingle() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        self.single_layout = self.ui.single_layout
+
+        self.set_widgets()
+        self.add_data([("日记", ("不记录", "记录")), ("通勤", ("无通勤", "有通勤")), ("退勤", ("不退勤", "退勤"))])
+        self.add_outfit(["饮料", "手套", "谷子", "板子"])
+
+    def set_widgets(self):
+        layout = self.single_layout
+
+        top = QHBoxLayout()
+        layout.addLayout(top)
+        data = QGroupBox("数据")
+        outfit = QGroupBox("出装")
+
+        layout.addWidget(data)
+        layout.addWidget(outfit)
+
+        top.addStretch(1)
+
+        self.data_form = QFormLayout()
+        self.outfit_form = QFormLayout()
+        data.setLayout(self.data_form)
+        outfit.setLayout(self.outfit_form)
+
+    def add_data(self, options = []):
+        for option in options:
+            name, state = option
+            off, on = state
+            button, text = QCheckBox(name), QLabel(off)
+#            button.setStyleSheet("background-color: #66ccff; color: white;")
+#            text.setStyleSheet("background-color: #66ccff; color: white;")
+            self.data_form.addRow(button, text)
+            button.stateChanged.connect(
+                lambda state, b = button, t = text, on = on, off = off:
+                t.setText(on if b.isChecked() else off)
+                )
+            
+    def add_outfit(self, options = []):
+        for option in options:
+            name = option # only name
+            self.outfit_form.addRow(QCheckBox(name))
+        
+        
+
+    def add_data(self, options = []):
+        for option in options:
+            name, state = option
+            off, on = state
+            button, text = QCheckBox(name), QLabel(off)
+            self.data_form.addRow(button, text)
+            button.stateChanged.connect(
+                lambda state, b = button, t = text, on = on, off = off:
+                t.setText(on if b.isChecked() else off)
+                )
+            
+    def add_outfit(self, options = []):
+        for option in options:
+            name = option # only name
+            self.outfit_form.addRow(QCheckBox(name))
+
+
+
 class StartWindow(MethodWidget):
     def __init__(self, signal: pyqtSignal, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.ui = Ui_StartWidget() # 创建 UI 类实例
-        self.ui.setupUi(self) # 从基类获取所有已有布局
+        self.ui = Ui_start_window.Ui_StartWidget() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
 
         self.signal = signal
         self.set_buttons()
 
     def set_buttons(self):
-        self.ui.go_button.clicked.connect(lambda: self.signal.emit(1))
-        self.ui.record_button.clicked.connect(lambda: self.signal.emit(3))
-        self.ui.settings_button.clicked.connect(lambda: self.signal.emit(4))
-        self.ui.account_button.clicked.connect(lambda: None) # TODO
+        self.go_button = self.ui.go_button
+        self.record_button = self.ui.record_button
+        self.settings_button = self.ui.settings_button
+        self.account_button = self.ui.account_button
+
+        self.go_button.clicked.connect(lambda: self.signal.emit(1))
+        self.record_button.clicked.connect(lambda: self.signal.emit(3))
+        self.settings_button.clicked.connect(lambda: self.signal.emit(4))
+        self.account_button.clicked.connect(lambda: None) # TODO
 
 class MapWindow(MethodWidget):
     def __init__(self, signal, arcades = ["上地", "五道口", "万柳", "新奥"], *args, **kwargs):
@@ -159,78 +240,53 @@ class GoWindow(MethodWidget):
 class RecordWindow(MethodWidget):
     def __init__(self, signal, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.setWindowTitle("记录")
+        self.ui = Ui_record_window.Ui_RecordWidget() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        
+        record_widget = MethodWidget()
+        self.record_layout = record_widget.create_layout(QVBoxLayout)
+        self.ui.record_scroll.setWidget(record_widget)
+        #record_layout为添加记录的layout
+
         self.signal = signal
         self.set_buttons()
-        self.set_widgets()
+        self.add_record(RecordSingle(), RecordSingle())
 
     def set_buttons(self):
-        self.return_button = QPushButton("返回")
+        self.return_button = self.ui.return_button
         self.return_button.clicked.connect(lambda: self.signal.emit(0))
-
-    def set_widgets(self):
-        layout = self.create_layout(QVBoxLayout)
-
-        top = QHBoxLayout()
-        layout.addLayout(top)
-        layout.addStretch(1)
-
-        top.addWidget(self.return_button)
-        top.addStretch(1)
-                
-        self.record_text = QLabel("空空如也")
-        layout.addWidget(self.record_text)
+        
+    def add_record(self, *widgets):
+        for widget in widgets:
+            self.record_layout.addWidget(widget)
 
 class SettingsWindow(MethodWidget):
     def __init__(self, signal, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.setWindowTitle("设置")
+        self.ui = Ui_settings_window.Ui_SettingsWidget() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        
+        settings_widget = MethodWidget()
+        self.settings_layout = settings_widget.create_layout(QVBoxLayout)
+        self.ui.settings_scroll.setWidget(settings_widget)
+        # record_layout为添加记录的layout
+
         self.signal = signal
         self.set_buttons()
-        self.more_widgets()
+        self.add_settings(SettingsSingle(), SettingsSingle())
+    """
         self.add_data([("日记", ("不记录", "记录")), ("通勤", ("无通勤", "有通勤")), ("退勤", ("不退勤", "退勤"))])
-        self.add_outfit(["饮料", "手套", "谷子", "板子"])
+        self.add_outfit(["饮料", "手套", "谷子", "板子"])"""
     
     def set_buttons(self):
-        self.return_button = QPushButton("返回")
+        self.return_button = self.ui.return_button
         self.return_button.clicked.connect(lambda: self.signal.emit(0))
 
-    def more_widgets(self):
-        layout = self.create_layout(QVBoxLayout)
-
-        top = QHBoxLayout()
-        layout.addLayout(top)
-        data = QGroupBox("数据")
-        outfit = QGroupBox("出装")
-
-        layout.addWidget(data)
-        layout.addWidget(outfit)
-
-        top.addWidget(self.return_button)
-        top.addStretch(1)
-
-        self.data_form = QFormLayout()
-        self.outfit_form = QFormLayout()
-        data.setLayout(self.data_form)
-        outfit.setLayout(self.outfit_form)
+    def add_settings(self, *widgets):
+        for widget in widgets:
+            self.settings_layout.addWidget(widget)
         
-        
-
-    def add_data(self, options = []):
-        for option in options:
-            name, state = option
-            off, on = state
-            button, text = QCheckBox(name), QLabel(off)
-            self.data_form.addRow(button, text)
-            button.stateChanged.connect(
-                lambda state, b = button, t = text, on = on, off = off:
-                t.setText(on if b.isChecked() else off)
-                )
-            
-    def add_outfit(self, options = []):
-        for option in options:
-            name = option # only name
-            self.outfit_form.addRow(QCheckBox(name))
+    
 
 class MainWindow(QWidget):
     switch_signal = pyqtSignal(int)
