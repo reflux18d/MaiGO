@@ -86,6 +86,7 @@ class ArcadeMarker(QGraphicsEllipseItem):
     def mousePressEvent(self, event):
         """点击标记时触发"""
         if event.button() == Qt.LeftButton:
+            self.setSelected(True)
             self.signal_handler.clicked.emit(self.arcade_info)
         super().mousePressEvent(event)
 
@@ -135,8 +136,9 @@ class ArcadeDetailDialog(QDialog):
 
 class ArcadeInfoDialog(QDialog):
     """商场信息弹窗"""
-    def __init__(self, arcade_info, signal_handler, parent=None):
+    def __init__(self, signal,arcade_info, signal_handler, parent=None):
         super().__init__(parent)
+        self.signal=signal
         self.signal_handler = signal_handler
         self.setWindowTitle("店铺信息")
         self.setModal(True)
@@ -171,13 +173,21 @@ class ArcadeInfoDialog(QDialog):
         scroll.setWidget(info_label)
         scroll.setWidgetResizable(True)
         layout.addWidget(scroll)
+        button_layout=QHBoxLayout()
+        # 出勤按钮
+        go_btn = QPushButton("出勤")
+        go_btn.clicked.connect(lambda:(self.signal.emit(2),self.accept())) 
+        button_layout.addWidget(go_btn)
         
         # 关闭按钮
         close_btn = QPushButton("关闭")
         close_btn.clicked.connect(self.close)
-        layout.addWidget(close_btn, alignment=Qt.AlignRight)
+        button_layout.addWidget(close_btn)
+        button_layout.setAlignment(Qt.AlignRight)
+        layout.addLayout(button_layout)
         
         self.setLayout(layout)
+        self.setAttribute(Qt.WA_DeleteOnClose)
 
 class MapWindow(QWidget):
     """主地图窗口"""
@@ -267,11 +277,11 @@ class MapWindow(QWidget):
         self.load_arcade_markers()
         
         # 底部控制区域
-        control_layout = QHBoxLayout()
-        refresh_btn = QPushButton("刷新地图")
-        refresh_btn.clicked.connect(self.refresh_map)
-        control_layout.addWidget(refresh_btn)
-        layout.addLayout(control_layout)
+        #control_layout = QHBoxLayout()
+        #refresh_btn = QPushButton("刷新地图")
+        #refresh_btn.clicked.connect(self.refresh_map)
+        #control_layout.addWidget(refresh_btn)
+        #layout.addLayout(control_layout)
     
     def load_arcade_markers(self):
         """从数据库加载商场并创建标记"""
@@ -295,24 +305,20 @@ class MapWindow(QWidget):
     
     def display_arcade_info(self, arcade_info):
         """显示商场信息弹窗"""
-        dialog = ArcadeInfoDialog(arcade_info, self.signal_handler, self)
+        dialog = ArcadeInfoDialog(self.switch_signal,arcade_info, self.signal_handler, self)
+        dialog.finished.connect(self.clear_selection)
         dialog.exec_()
     
+    def clear_selection(self):
+        for item in self.scene.items():
+            if isinstance(item,ArcadeMarker):
+                item.setSelected(False)
+
     def display_arcade_detail(self, arcade_info):
         """显示商场详细信息弹窗"""
         dialog = ArcadeDetailDialog(arcade_info, self)
         dialog.exec_()
-    
-    def refresh_map(self):
-        """刷新地图"""
-        # 清除现有标记
-        for item in self.scene.items():
-            if isinstance(item, ArcadeMarker):
-                self.scene.removeItem(item)
-        
-        # 重新加载标记
-        self.load_arcade_markers()
-    
+   
     def closeEvent(self, event):
         """关闭窗口时关闭数据库连接"""
         self.conn.close()
