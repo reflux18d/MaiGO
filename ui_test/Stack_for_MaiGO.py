@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime
 from PyQt5.QtWidgets import QGridLayout, QFormLayout
 from PyQt5.QtWidgets import QStackedWidget
 from PyQt5.QtWidgets import QTextEdit, QCheckBox
@@ -10,10 +11,89 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout, QGraphicsView,
                             QScrollArea, QHBoxLayout, QGroupBox)
 from PyQt5.QtGui import QPixmap, QColor, QFont, QBrush, QPen
 from PyQt5.QtCore import Qt, QPointF, pyqtSignal, QObject, QRectF
+from PyQt5.QtCore import QTimer
 
 bear_path = 'D:/MaiGO-main/ui_test/bear.png'
 online_path = 'D:/MaiGO-main/ui_test/offline.png'
 map_path = 'D:/MaiGO-main/ui_test/map.png'
+
+from datetime import datetime
+import os
+
+class Tour:
+    def __init__(self):
+        self.start_time = None
+        self.arrival_time = None
+        self.end_time = None
+        self.home = None  # 起点(Place对象)
+        self.goal = None  # 终点(Arcade对象)
+        self.state = 0  # 0:准备 1:通勤 2:游玩 3:结束
+    
+    def start_tour(self, home, goal):
+        """开始出勤"""
+        self.home = home
+        self.goal = goal
+        self.start_time = datetime.now()
+        self.state = 1
+    
+    def arrived(self):
+        """到达目的地"""
+        self.arrival_time = datetime.now()
+        self.state = 2
+    
+    def end_tour(self):
+        """结束出勤"""
+        self.end_time = datetime.now()
+        self.state = 3
+        return self._calculate_stats()
+    
+    def _calculate_stats(self):
+        """计算统计数据"""
+        if not all([self.start_time, self.arrival_time, self.end_time]):
+            return None
+            
+        return {
+            "travel_time": (self.arrival_time - self.start_time).total_seconds() / 60,  # 分钟
+            "play_duration": (self.end_time - self.arrival_time).total_seconds() / 60,  # 分钟
+            "from_to": f"{self.home} → {self.goal}"
+        }
+
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.history = []  # 存储所有Tour记录
+        self.current_tour = None  # 当前出勤
+    
+    def start_new_tour(self, home, goal):
+        """开始新的出勤记录"""
+        self.current_tour = Tour()
+        self.current_tour.start_tour(home, goal)
+    
+    def save_tour(self):
+        """保存当前出勤记录"""
+        if self.current_tour:
+            stats = self.current_tour.end_tour()
+            self.history.append({
+                "tour": self.current_tour,
+                "stats": stats
+            })
+            self._save_to_file(stats)
+            self.current_tour = None
+            return stats
+        return None
+    
+    def _save_to_file(self, stats):
+        """将记录保存到txt文件"""
+        os.makedirs("records", exist_ok=True)
+        filename = f"records/{self.name}_records.txt"
+        
+        with open(filename, "a", encoding="utf-8") as f:
+            f.write(f"\n=== 出勤记录 {datetime.now().strftime('%Y-%m-%d %H:%M')} ===\n")
+            f.write(f"用户: {self.name}\n")
+            f.write(f"路线: {stats['from_to']}\n")
+            f.write(f"通勤时间: {stats['travel_time']:.1f} 分钟\n")
+            f.write(f"游玩时长: {stats['play_duration']:.1f} 分钟\n")
+            f.write("="*30 + "\n")
 
 class StartWindow(QWidget):
     def __init__(self, signal: pyqtSignal, *args, **kwargs):
@@ -86,6 +166,7 @@ class ArcadeMarker(QGraphicsEllipseItem):
     def mousePressEvent(self, event):
         """点击标记时触发"""
         if event.button() == Qt.LeftButton:
+            self.setSelected(True)
             self.signal_handler.clicked.emit(self.arcade_info)
         super().mousePressEvent(event)
 
@@ -135,8 +216,9 @@ class ArcadeDetailDialog(QDialog):
 
 class ArcadeInfoDialog(QDialog):
     """商场信息弹窗"""
-    def __init__(self, arcade_info, signal_handler, parent=None):
+    def __init__(self, signal,arcade_info, signal_handler, parent=None):
         super().__init__(parent)
+        self.signal=signal
         self.signal_handler = signal_handler
         self.setWindowTitle("店铺信息")
         self.setModal(True)
@@ -171,13 +253,21 @@ class ArcadeInfoDialog(QDialog):
         scroll.setWidget(info_label)
         scroll.setWidgetResizable(True)
         layout.addWidget(scroll)
+        button_layout=QHBoxLayout()
+        # 出勤按钮
+        go_btn = QPushButton("出勤")
+        go_btn.clicked.connect(lambda:(self.signal.emit(2),self.accept())) 
+        button_layout.addWidget(go_btn)
         
         # 关闭按钮
         close_btn = QPushButton("关闭")
         close_btn.clicked.connect(self.close)
-        layout.addWidget(close_btn, alignment=Qt.AlignRight)
+        button_layout.addWidget(close_btn)
+        button_layout.setAlignment(Qt.AlignRight)
+        layout.addLayout(button_layout)
         
         self.setLayout(layout)
+        self.setAttribute(Qt.WA_DeleteOnClose)
 
 class MapWindow(QWidget):
     """主地图窗口"""
@@ -267,11 +357,11 @@ class MapWindow(QWidget):
         self.load_arcade_markers()
         
         # 底部控制区域
-        control_layout = QHBoxLayout()
-        refresh_btn = QPushButton("刷新地图")
-        refresh_btn.clicked.connect(self.refresh_map)
-        control_layout.addWidget(refresh_btn)
-        layout.addLayout(control_layout)
+        #control_layout = QHBoxLayout()
+        #refresh_btn = QPushButton("刷新地图")
+        #refresh_btn.clicked.connect(self.refresh_map)
+        #control_layout.addWidget(refresh_btn)
+        #layout.addLayout(control_layout)
     
     def load_arcade_markers(self):
         """从数据库加载商场并创建标记"""
@@ -295,24 +385,20 @@ class MapWindow(QWidget):
     
     def display_arcade_info(self, arcade_info):
         """显示商场信息弹窗"""
-        dialog = ArcadeInfoDialog(arcade_info, self.signal_handler, self)
+        dialog = ArcadeInfoDialog(self.switch_signal,arcade_info, self.signal_handler, self)
+        dialog.finished.connect(self.clear_selection)
         dialog.exec_()
     
+    def clear_selection(self):
+        for item in self.scene.items():
+            if isinstance(item,ArcadeMarker):
+                item.setSelected(False)
+
     def display_arcade_detail(self, arcade_info):
         """显示商场详细信息弹窗"""
         dialog = ArcadeDetailDialog(arcade_info, self)
         dialog.exec_()
-    
-    def refresh_map(self):
-        """刷新地图"""
-        # 清除现有标记
-        for item in self.scene.items():
-            if isinstance(item, ArcadeMarker):
-                self.scene.removeItem(item)
-        
-        # 重新加载标记
-        self.load_arcade_markers()
-    
+   
     def closeEvent(self, event):
         """关闭窗口时关闭数据库连接"""
         self.conn.close()
@@ -329,6 +415,10 @@ class GoWindow(QWidget):
         self.set_buttons()
         self.more_widgets()
         self.state_update()
+        self.user=User("name")
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_timer)
+        self.time_elapsed = 0
 
     def set_buttons(self):
         self.main_button = QPushButton()
@@ -346,9 +436,25 @@ class GoWindow(QWidget):
         layout.addStretch(1)
         layout.addWidget(self.main_button)
 
+        self.timer_label = QLabel("00:00")  # 新增计时器显示
+        self.timer_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.timer_label)
+
     def state_change(self, n):
         self.state = n
         self.state_update()
+    def start_timer(self):
+        self.time_elapsed=0
+        self.timer.start(1000)
+    def stop_timer(self):
+        self.timer.stop()
+
+    def update_timer(self):
+        """更新计时器显示"""
+        self.time_elapsed += 1
+        mins = self.time_elapsed // 60
+        secs = self.time_elapsed % 60
+        self.timer_label.setText(f"{mins:02d}:{secs:02d}") # 可以显示在UI上
 
     def state_update(self):
         if self.state == 0:
@@ -360,13 +466,25 @@ class GoWindow(QWidget):
             self.setWindowTitle("通勤中")
             self.main_button.setText("到达!")
             self.state_text.setText("GOGOGO!")
+            self.start_timer()
+            self.user.current_tour=Tour()
+            self.user.current_tour.start_tour("homw","goal")
+            if self.user and self.user.current_tour:
+                print(f"通勤中: {self.user.current_tour.home} → {self.user.current_tour.goal}")
 
         elif self.state == 2:
             self.setWindowTitle("游玩中")
             self.main_button.setText("退勤")
             self.state_text.setText("要继续游玩吗")
+            print(os.getcwd())
+            if self.user and self.user.current_tour:
+                self.user.current_tour.arrived()
+                print(f"到达时间记录: {self.user.current_tour.arrival_time}")
 
         else:
+            if self.user and self.user.current_tour:
+                stats = self.user.save_tour()  # 保存记录
+                print(f"记录已保存: {stats}")
             self.state = 0
             self.state_update()
             self.signal.emit(0)
@@ -464,6 +582,7 @@ class MainWindow(QWidget):
         self.setWindowTitle("MaiGO!!!!!")
         self.setWindowIcon(QIcon(bear_path))
         self.resize(800, 400)
+        self.user=User("name")
 
         self.stack = QStackedWidget()
         layout = QVBoxLayout()
