@@ -7,7 +7,8 @@ from PyQt5.QtWidgets import QStackedWidget, QScrollArea
 from PyQt5.QtWidgets import QTextEdit, QCheckBox
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt,QTimer
+from datetime import datetime
 
 from ui_class.start_window import Ui_StartWidget
 from utils import *
@@ -38,19 +39,30 @@ class Tour:
         self.diary = ""
         self.state = 0
 
-    def here_we_go(self, home: Place = None, st = None):
+    def here_we_go(self, home: Place = None, goal:Arcade=None):
         self.home = home
-        self.start_time = st
+        self.start_time = datetime.now()
+        self.goal=goal
         self.state = 1
 
-    def arrived(self, goal: Place = None, at = None):
-        self.goal = goal
-        self.play_time = at
+    def arrived(self):
+        
+        self.play_time = datetime.now()
         self.state = 2
 
-    def end(self, et = None):
-        self.end_time = et
+    def end(self):
+        self.end_time = datetime.now()
         self.state = 3
+        return self.calculate_stats()
+    
+    def calculate_stats(self):
+        if not all([self.start_time,self.play_time,self.end_time]):
+            return None
+        return {
+            "travel_time": (self.play_time - self.start_time).total_seconds() / 60,  # 分钟
+            "play_duration": (self.end_time - self.play_time).total_seconds() / 60,  # 分钟
+             "from_to": f"{self.home.name} → {self.goal.name}"
+        }
 
 class User:
     def __init__(self, name):
@@ -86,7 +98,7 @@ class MapWindow(MethodWidget):
     def set_buttons(self, arcades):
         for index, arcade in enumerate(arcades):
             button = QPushButton(arcade)
-            button.clicked.connect(lambda: self.signal.emit(2))
+            button.clicked.connect(self.select_arcade)
             self.arcade_buttons.append(button)
 
     def set_widgets(self):
@@ -105,6 +117,12 @@ class MapWindow(MethodWidget):
         
         for button in self.arcade_buttons:
             bottom_layout.addWidget(button)
+    #关于记录终点
+    def select_arcade(self,arcade):
+        go_window=self.parent().findChild(GoWindow)
+        if go_window:
+            go_window.selected_arcade=arcade
+        self.signal.emit(2)
 
 class GoWindow(MethodWidget):
     def __init__(self, signal, *args, **kwargs):
@@ -114,6 +132,12 @@ class GoWindow(MethodWidget):
         self.set_buttons()
         self.set_widgets()
         self.state_update()
+
+        #关于实现tour的新增代码
+        self.current_tour=None
+        self.timer=QTimer(self)
+        self.timer.timeout.connect(self.update_timer_display)
+        self.time_elapsed=0
 
     def set_buttons(self):
         self.main_button = QPushButton()
@@ -131,6 +155,24 @@ class GoWindow(MethodWidget):
         layout.addStretch(1)
         layout.addWidget(self.main_button)
 
+         #新增了计时器
+        self.timer_label=QLabel("00:00")
+        self.timer_label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.timer_label)
+
+    #新增了计时的相关实现
+    def start_timer(self):
+        self.time_elapsed=0
+        self.timer.start(1000)
+
+    def stop_timer(self):
+        self.timer.stop()
+
+    def update_timer_display(self):
+        self.time_elapsed+=1
+        minutes=self.time_elapsed//60
+        seconds=self.time_elapsed%60
+        self.timer_label.setText(f"{minutes:02d}:{seconds:02d}")
     def state_change(self, n):
         self.state = n
         self.state_update()
@@ -140,20 +182,38 @@ class GoWindow(MethodWidget):
             self.setWindowTitle("准备中")
             self.main_button.setText("GO!")
             self.state_text.setText("准备好了就开始了哦")
+            #新增的计时相关代码
+            
 
         elif self.state == 1:
             self.setWindowTitle("通勤中")
             self.main_button.setText("到达!")
             self.state_text.setText("GOGOGO!")
+            if hasattr(self,'selected_arcade'):
+                self.current_tour=Tour()
+                self.current_tour.here_we_go(Place("pku"),Place(self.selected_arcade))
+                print(self.current_tour.start_time)
+                print(self.current_tour.goal.name)
+                self.start_timer()
+            
 
         elif self.state == 2:
             self.setWindowTitle("游玩中")
             self.main_button.setText("退勤")
             self.state_text.setText("要继续游玩吗")
+            if self.current_tour:
+                self.current_tour.arrived()
+                print(self.current_tour.play_time)
+               
 
         else:
-            self.state = 0
-            self.state_update()
+            #self.state = 0
+            #self.state_update()
+            if self.current_tour:
+                stats=self.current_tour.end()
+                self.stop_timer()
+                print(self.current_tour.end_time)
+                print(stats)
             self.signal.emit(0)
 
 class RecordWindow(MethodWidget):
