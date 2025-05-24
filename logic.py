@@ -11,7 +11,7 @@ from PyQt5.QtCore import pyqtSignal, QTimer
 from PyQt5.QtCore import Qt
 
 # 调用ui_class文件夹中使用QTdesigner写好的窗口类文件
-from ui_class import Ui_start_window, Ui_record_window, Ui_settings_window, Ui_go_window
+from ui_class import Ui_start_window, Ui_record_window, Ui_settings_window, Ui_go_window, Ui_map_window
 from ui_class import Ui_record_single, Ui_settings_single
 
 # 调用utils中自定义的Method基类
@@ -25,13 +25,14 @@ online_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/offline.png'
 map_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/map.png'
 
 # MainWindow中main_signal:pyqtSignal(str)的绑定函数字典
-# 所有val函数输入为MainWindow的self, 均在MainWindow中定义
+# 现有val函数输入均为MainWindow的self, 均在MainWindow中定义
 CMD_DICT = {
         "start_window": lambda self: MainWindow.switch_to(self, 0),
         "map_window": lambda self: MainWindow.switch_to(self, 1),
         "go_window": lambda self: MainWindow.switch_to(self, 2),
         "record_window": lambda self: MainWindow.switch_to(self, 3),
         "settings_window": lambda self: MainWindow.switch_to(self, 4),
+        "save_record": lambda self: MainWindow.save_record(self)
     }
 
 
@@ -50,7 +51,7 @@ class Place:
 
 class Arcade(Place):
     def __init__(self, name, info_text = ""):
-        super.__init__(name)
+        super().__init__(name)
         self.info_text = info_text
     
     def description(self) -> str:
@@ -106,6 +107,7 @@ class User:
         self.name = name
         self.history = []  # 存储所有Tour记录
         self.current_tour = None  # 当前出勤
+        self.home = Place()
 
     def __str__(self):
         return self.name
@@ -136,12 +138,20 @@ class User:
             f.write("="*30 + "\n")
 
 class RecordSingle(MethodWidget):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, record: Tour = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ui = Ui_record_single.Ui_RecordSingle() # 创建ui类实例
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
         self.time_label = self.ui.time_label
         self.goal_label = self.ui.goal_label
+        self.tour = record
+        if self.tour:
+            self.set_tour_info()
+
+    def set_tour_info(self):
+        self.time_label.setText(f"时间:{self.tour.start_time.date()}")
+        self.goal_label.setText(f"地点:{str(self.tour.goal)}")
+
 
 class SettingsSingle(MethodWidget):
     def __init__(self, *args, **kwargs):
@@ -155,8 +165,8 @@ class SettingsSingle(MethodWidget):
         self.add_outfit(["饮料", "手套", "谷子", "板子"])
 
     """
-    此类下面的函数仅做scroll测试
-    而将其从ui_test中的FormLayout复制过来
+    下面的函数仅做scroll测试
+    从ui_test中的FormLayout复制而来
     以后会将该类写为更通用的设置部件
     """
     def set_widgets(self):
@@ -214,41 +224,31 @@ class StartWindow(MethodWidget):
         self.account_button.clicked.connect(lambda: None) # TODO
 
 class MapWindow(MethodWidget):
-    def __init__(self, signal, user: User = None, arcades = ["上地", "五道口", "万柳", "新奥"], *args, **kwargs):
+    def __init__(self, signal, user: User = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # 创建ui类实例
+        self.ui = Ui_map_window.Ui_MapWidget() 
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+
         self.user = user # 绑定用户
         self.signal = signal # 绑定切换界面信号
 
-        self.arcades = arcades #机厅列表
-        self.arcade_buttons = []
-        self.trigger_widgets(arcades) #动态添加机厅按钮
-        self.set_widgets()
+        self.arcades = [Arcade("上地"), Arcade("五道口"), Arcade("万柳"), Arcade("新奥")] # 机厅列表
+        self.trigger_widgets() # 动态添加机厅按钮
 
-    def trigger_widgets(self, arcades):
-        for index, arcade in enumerate(arcades):
-            button = QPushButton(arcade)
+    def trigger_widgets(self):
+        self.return_button = self.ui.return_button
+        self.bottom_layout = self.ui.arcade_layout
+        self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
+        for index, arcade in enumerate(self.arcades):
+            button = QPushButton(str(arcade))
             # 绑定selected函数, 点击记住机厅
-            button.clicked.connect(lambda n = index: self.selected(n))
-            self.arcade_buttons.append(button)
-
-    def set_widgets(self):
-        #两个MethodWidget方法
-        self.create_layout(QVBoxLayout)
-        scroll, bottom = self.more_widgets(QScrollArea(), MGroupBox())
-
-        map_label = QLabel()
-        scroll.setWidget(map_label)
-        scroll.setWidgetResizable(True)
-
-        pixmap = QPixmap(map_path)
-        map_label.setPixmap(pixmap)
-        
-        bottom_layout = bottom.create_layout(QHBoxLayout)
-        
-        for button in self.arcade_buttons:
-            bottom_layout.addWidget(button)
+            # 好阴间的占位符
+            button.clicked.connect(lambda _, n = index: self.selected(n))
+            self.bottom_layout.addWidget(button)
 
     def selected(self, index):
+        self.user.start_new_tour(self.user.home, self.arcades[index])
         self.signal.emit("go_window")
 
 class GoWindow(MethodWidget):
@@ -318,21 +318,32 @@ class GoWindow(MethodWidget):
         self.state_label.setText("准备好了就开始了哦")
 
     def marching(self):
+        # 启动user的current_tour
+        self.user.current_tour.start_tour()
         self.start_timer()
         self.setWindowTitle("通勤中")
         self.main_button.setText("到达!")
         self.state_label.setText("GOGOGO!")
 
     def playing(self):
+        # current_tour到达
+        self.user.current_tour.arrived()
         self.setWindowTitle("游玩中")
         self.main_button.setText("退勤")
         self.state_label.setText("要继续游玩吗")
 
     def ending(self):
-        # 更新为状态0
+        # current_tour到达
+        self.user.current_tour.end_tour()
         self.stop_timer()
+
+        # 更新为状态0
         self.state = 0
         self.state_update()
+
+        # 保存记录
+        self.signal.emit("save_record")
+        self.user.save_tour()
         self.signal.emit("start_window")
 
 class RecordWindow(MethodWidget):
@@ -348,7 +359,6 @@ class RecordWindow(MethodWidget):
 
         self.signal = signal
         self.trigger_widgets()
-        self.add_record(RecordSingle(), RecordSingle())
 
     def trigger_widgets(self):
         self.return_button = self.ui.return_button
@@ -425,6 +435,10 @@ class MainWindow(MethodWidget):
     def switch_to(self, index):
         self.stack.setCurrentIndex(index)
 
+    def save_record(self):
+        # 加载用户的current_tour为RecordWindow的Widget
+        self.record_window.add_record(RecordSingle(self.user.current_tour))
+
     # 所有指令
     def signal_trigger(self, command: str):
         func = CMD_DICT.get(command)
@@ -434,7 +448,7 @@ class MainWindow(MethodWidget):
 if __name__ == "__main__":
     app = QApplication([])
 
-    window = MainWindow()
+    window = MainWindow(User("Bo"))
 
     window.show()
 
