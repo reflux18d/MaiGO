@@ -84,7 +84,6 @@ class MGroupBox(QGroupBox):
         >>> top, center, button = g.more_widgets(QGroupBox(), QGroupBox(), QPushButton())
         >>> isinstance(top, QGroupBox)
         True
-
         """
         assert self.layout is not None, "Undefined layout"
         assert isinstance(self.layout, QVBoxLayout) or isinstance(self.layout, QHBoxLayout), "Incorrect layout type"
@@ -94,7 +93,22 @@ class MGroupBox(QGroupBox):
             self.layout.addStretch(stretch)
         return widgets
 
+def more_widgets(layout, *widgets, stretch = 0):
+    """
+    Multiple add method
+    Only for widget with QVBoxLayout or QHBoxLayout
+    >>> a, layout = QApplication([]), QVBoxLayout()
+    >>> top, center, button = more_widgets(layout, QGroupBox(), QGroupBox(), QPushButton())
+    >>> isinstance(top, QGroupBox)
+    True
+    """
+    assert layout is not None, "Undefined layout"
+    assert isinstance(layout, QVBoxLayout) or isinstance(layout, QHBoxLayout), "Incorrect layout type"
 
+    for widget in widgets:
+        layout.addWidget(widget)
+        layout.addStretch(stretch)
+    return widgets
     
 if __name__ == "__main__":
     import doctest
