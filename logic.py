@@ -6,13 +6,16 @@ from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QGroupBox
 from PyQt5.QtWidgets import QGridLayout, QFormLayout
 from PyQt5.QtWidgets import QStackedWidget, QScrollArea
 from PyQt5.QtWidgets import QTextEdit, QCheckBox
+from PyQt5.QtWidgets import QGraphicsEllipseItem, QGraphicsScene, QGraphicsPixmapItem
+from PyQt5.QtGui import QPixmap, QColor, QFont, QBrush, QPen
 from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5.QtCore import pyqtSignal, QTimer
 from PyQt5.QtCore import Qt
+import resources_rc
 
 # 调用ui_class文件夹中使用QTdesigner写好的窗口类文件
 from ui_class import Ui_start_window, Ui_record_window, Ui_settings_window, Ui_go_window, Ui_map_window
-from ui_class import Ui_record_single, Ui_settings_single
+from ui_class import Ui_record_single, Ui_settings_single, Ui_map_graphic
 
 # 调用utils中自定义的Method基类
 from utils import *
@@ -32,7 +35,8 @@ CMD_DICT = {
         "go_window": lambda self: MainWindow.switch_to(self, 2),
         "record_window": lambda self: MainWindow.switch_to(self, 3),
         "settings_window": lambda self: MainWindow.switch_to(self, 4),
-        "save_record": lambda self: MainWindow.save_record(self)
+        "save_record": lambda self: MainWindow.save_record(self),
+        "update_goal_label": lambda self: MainWindow.update_goal_label(self)
     }
 
 
@@ -227,29 +231,60 @@ class MapWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # 创建ui类实例
-        self.ui = Ui_map_window.Ui_MapWidget() 
+        self.ui = Ui_map_graphic.Ui_MapWidget() 
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
 
         self.user = user # 绑定用户
         self.signal = signal # 绑定切换界面信号
 
-        self.arcades = [Arcade("上地"), Arcade("五道口"), Arcade("万柳"), Arcade("新奥")] # 机厅列表
+        # Arcade samples
+        self.arcades = [Arcade("上地"), Arcade("五道口"), Arcade("万柳"), Arcade("学清")] # 机厅列表
+        positions = [(584, 71), (892, 600), (403, 864), (1048, 357)]
+        for arcade, pos in zip(self.arcades, positions):
+            arcade.set_pos(*pos)
+
         self.trigger_widgets() # 动态添加机厅按钮
 
     def trigger_widgets(self):
+        self.scene = QGraphicsScene()
+        self.view = self.ui.view
+        self.view.setScene(self.scene)
+        pixmap = QPixmap(map_path)
+        self.background = QGraphicsPixmapItem(pixmap)
+        self.scene.addItem(self.background)
+
         self.return_button = self.ui.return_button
         self.bottom_layout = self.ui.arcade_layout
         self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
-        for index, arcade in enumerate(self.arcades):
-            button = QPushButton(str(arcade))
-            # 绑定selected函数, 点击记住机厅
-            # 好阴间的占位符
-            button.clicked.connect(lambda _, n = index: self.selected(n))
-            self.bottom_layout.addWidget(button)
+        for arcade in self.arcades:
+            # 在ArcadeMarker中定义点击行为
+            marker = ArcadeMarker(self, arcade)
+            self.scene.addItem(marker)
 
-    def selected(self, index):
-        self.user.start_new_tour(self.user.home, self.arcades[index])
+
+    def selected(self, arcade):
+        self.user.start_new_tour(self.user.home, arcade)
+        self.signal.emit("update_goal_label")
         self.signal.emit("go_window")
+
+class ArcadeMarker(QGraphicsEllipseItem):
+    """自定义商场标记图形项"""
+    def __init__(self, map: MapWindow = None, arcade: Arcade = None, *args):
+        super().__init__(0, 0, 30, 30, *args)
+        self.map_parent = map
+        self.arcade = arcade
+        self.setPos(arcade.latitude, arcade.longitude)
+        self.setBrush(QBrush(QColor(255, 0, 0, 150)))
+        self.setPen(QPen(Qt.black))
+        self.setFlag(QGraphicsEllipseItem.ItemIsSelectable)
+        
+    def mousePressEvent(self, event):
+        """点击标记时触发"""
+        if event.button() == Qt.LeftButton:
+            self.setSelected(True)
+            self.map_parent.selected(self.arcade)
+        super().mousePressEvent(event)
+
 
 class GoWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
@@ -277,6 +312,7 @@ class GoWindow(MethodWidget):
         self.main_button = self.ui.main_button
         self.state_label = self.ui.state_label
         self.timer_label = self.ui.time_label
+        self.goal_label = self.ui.goal_label
         self.option_button = self.ui.option_button
         # 点击主按钮切换到下一阶段
         self.main_button.clicked.connect(lambda: self.state_change(self.state + 1))
@@ -402,7 +438,7 @@ class MainWindow(MethodWidget):
         super().__init__(*args, **kwargs)
         self.setWindowTitle("MaiGO!!!!!")
         self.setWindowIcon(QIcon(bear_path))
-        self.resize(800, 400)
+        self.resize(600, 1000)
 
         self.user = user # 设置用户
         self.stack = QStackedWidget()
@@ -439,7 +475,11 @@ class MainWindow(MethodWidget):
         # 加载用户的current_tour为RecordWindow的Widget
         self.record_window.add_record(RecordSingle(self.user.current_tour))
 
-    # 所有指令
+    def update_goal_label(self):
+        if self.user.current_tour is not None:
+            self.go_window.goal_label.setText(f"目的地:{str(self.user.current_tour.goal)}")
+
+    # 所有指令经过此处
     def signal_trigger(self, command: str):
         func = CMD_DICT.get(command)
         assert func, "Undefined command"
