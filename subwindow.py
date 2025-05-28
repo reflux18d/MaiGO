@@ -5,12 +5,12 @@ from logicbase import User, Tour, Place, Arcade
 
 # PyQt组件
 from PyQt5.QtWidgets import (
-    QGridLayout, QFormLayout,
-    QLabel, QPushButton, QCheckBox, QGroupBox,
-    QStackedWidget, QVBoxLayout
-    )
+QGridLayout, QFormLayout,
+QLabel, QPushButton, QCheckBox, QGroupBox,
+QStackedWidget, QVBoxLayout
+)
 from PyQt5.QtCore import (
-    pyqtSignal
+pyqtSignal
 )
 
 # subwindow的.ui文件

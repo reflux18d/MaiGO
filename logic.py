@@ -20,8 +20,9 @@ import resources_rc
 
 # 调用ui_class文件夹中使用QTdesigner写好的窗口类文件
 from ui_class import (
-    Ui_start_window, Ui_record_window, Ui_settings_window, 
-    Ui_go_window, Ui_map_graphic    
+Ui_start_window, Ui_record_window, Ui_settings_window, 
+Ui_go_window, Ui_map_window,
+Ui_account_window, Ui_option_window
 )
 # 调用utils中自定义的Method基类
 from utils import *
@@ -31,8 +32,6 @@ from logicbase import User, Tour, Place, Arcade
 
 # 调用subwindow中的子窗口类
 from subwindow import SettingsSingle, RecordSingle
-
-
 
 bear_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/bear.png'
 online_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/offline.png'
@@ -46,6 +45,8 @@ CMD_DICT = {
         "go_window": lambda self: MainWindow.switch_to(self, 2),
         "record_window": lambda self: MainWindow.switch_to_record(self),
         "settings_window": lambda self: MainWindow.switch_to(self, 4),
+        "option_window": lambda self: MainWindow.switch_to(self, 5),
+        "account_window": lambda self: MainWindow.switch_to(self, 6),
         "save_record": lambda self: MainWindow.save_record(self),
         "update_goal_label": lambda self: MainWindow.update_goal_label(self)
     }  
@@ -74,13 +75,13 @@ class StartWindow(MethodWidget):
         self.go_button.clicked.connect(lambda: self.signal.emit("map_window"))
         self.record_button.clicked.connect(lambda: self.signal.emit("record_window"))
         self.settings_button.clicked.connect(lambda: self.signal.emit("settings_window"))
-        self.account_button.clicked.connect(lambda: None) # TODO
+        self.account_button.clicked.connect(lambda: self.signal.emit("account_window"))
 
 class MapWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # 创建ui类实例
-        self.ui = Ui_map_graphic.Ui_MapWidget() 
+        self.ui = Ui_map_window.Ui_MapWidget() 
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
 
         self.user = user # 绑定用户
@@ -109,7 +110,6 @@ class MapWindow(MethodWidget):
         self.scene.addItem(self.background)
 
         self.return_button = self.ui.return_button
-        self.bottom_layout = self.ui.arcade_layout
         self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
         for arcade in self.arcades:
             # 在ArcadeMarker中定义点击行为
@@ -174,7 +174,7 @@ class GoWindow(MethodWidget):
         self.option_button = self.ui.option_button
         # 点击主按钮切换到下一阶段
         self.main_button.clicked.connect(lambda: self.state_change(self.state + 1))
-        # TODO: 点击选项按钮可以进行记录
+        self.option_button.clicked.connect(lambda: self.signal.emit("option_window"))
 
     def start_timer(self):
         self.timer.start(1000)
@@ -240,6 +240,42 @@ class GoWindow(MethodWidget):
         self.user.save_tour()
         self.signal.emit("start_window")
 
+class OptionWindow(MethodWidget):
+    def __init__(self, signal, user: User = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_option_window.Ui_OptionWidget() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        
+        self.user = user
+        self.signal = signal
+        self.option_list = [] # 另外存放所有OptionSingle
+        self.trigger_widgets()
+
+    def trigger_widgets(self):
+        """
+        绑定所有QTdesigner中定义的控件
+        并定义逻辑行为
+        """
+        option_widget = MethodWidget()
+
+        #添加记录的layout
+        self.option_layout = option_widget.create_layout(QVBoxLayout)
+        self.ui.options_scroll.setWidget(option_widget)
+
+        self.return_button = self.ui.return_button
+        self.return_button.clicked.connect(lambda: self.signal.emit("go_window"))
+        
+    def add_option(self, *widgets):
+        for widget in widgets:
+            self.option_layout.addWidget(widget)
+            self.option_list.append(widget)
+
+    def update_visibility(self):
+        """将所有OptionsSingle更新可视性"""
+        for widget in self.option_list:
+            # TODO
+            pass   
+
 class RecordWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -301,7 +337,41 @@ class SettingsWindow(MethodWidget):
         for widget in widgets:
             self.settings_layout.addWidget(widget)
         
-    
+class AccountWindow(MethodWidget):
+    def __init__(self, signal, user: User = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_account_window.Ui_AccountWidget() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        
+        self.user = user
+        self.signal = signal
+        self.data_list = [] # 另外存放所有DataSingle
+        self.trigger_widgets()
+
+    def trigger_widgets(self):
+        """
+        绑定所有QTdesigner中定义的控件
+        并定义逻辑行为
+        """
+        data_widget = MethodWidget()
+
+        #添加记录的layout
+        self.data_layout = data_widget.create_layout(QVBoxLayout)
+        self.ui.account_scroll.setWidget(data_widget)
+
+        self.return_button = self.ui.return_button
+        self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
+        
+    def add_data(self, *widgets):
+        for widget in widgets:
+            self.data_layout.addWidget(widget)
+            self.data_list.append(widget)
+
+    def update_data(self):
+        """将所有DataSingle更新数据"""
+        for widget in self.data_list:
+            # TODO
+            pass   
 
 class MainWindow(MethodWidget):
     main_signal = pyqtSignal(str)
@@ -337,6 +407,11 @@ class MainWindow(MethodWidget):
         self.windows.append(self.record_window)
         self.settings_window = SettingsWindow(self.main_signal, self.user)
         self.windows.append(self.settings_window)
+        self.option_window = OptionWindow(self.main_signal, self.user)
+        self.windows.append(self.option_window)
+        self.account_window = AccountWindow(self.main_signal, self.user)
+        self.windows.append(self.account_window)
+        
 
         for window in self.windows:
             self.stack.addWidget(window)
@@ -350,7 +425,7 @@ class MainWindow(MethodWidget):
         self.switch_to(3)
 
     def save_record(self):
-        # 加载用户的current_tour为RecordWindow的Widget
+        """加载用户的current_tour为RecordWindow的Widget"""
         self.record_window.add_record(RecordSingle(self.user.current_tour))
 
     def update_goal_label(self):
