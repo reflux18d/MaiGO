@@ -41,10 +41,10 @@ class RecordSingle(MethodWidget):
     def switch_to(self, index):
         self.stack.setCurrentIndex(index)
         self.adjustSize() # 调整高度
+        self.parentWidget().adjustSize()
 
     def reset(self):
-        self.stack.setCurrentIndex(0)
-        self.adjustSize() # 调整高度
+        self.switch_to(0)
 
 
 class RecordInterface(MethodWidget):

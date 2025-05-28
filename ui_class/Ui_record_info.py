@@ -15,7 +15,7 @@ class Ui_RecordInfo(object):
     def setupUi(self, RecordInfo):
         RecordInfo.setObjectName("RecordInfo")
         RecordInfo.resize(391, 300)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(RecordInfo.sizePolicy().hasHeightForWidth())
