@@ -18,9 +18,6 @@ class Ui_StartWidget(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/image/bear.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
         StartWidget.setWindowIcon(icon)
-        StartWidget.setStyleSheet("QWidget#StartWidget{\n"
-"    border-image:url(:/image/旅行伙伴.png);\n"
-"}")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(StartWidget)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -31,22 +28,9 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.account_button.sizePolicy().hasHeightForWidth())
         self.account_button.setSizePolicy(sizePolicy)
-        self.account_button.setStyleSheet("QPushButton {\n"
-"    font: 16pt \"华文新魏\";\n"
-"    background-color: rgb(255, 170, 127);  /* 按钮背景色 */\n"
-"    \n"
-"    font: 16pt \"等线\";\n"
-"    color: rgb(27, 27, 27);\n"
-"    border-radius: 5px;        /* 圆角 */\n"
-"    padding: 8px 10px;         /* 内边距 */\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(252, 146, 125); /* 鼠标悬停时的颜色 */\n"
-"    color: rgb(27, 27, 27);\n"
-"}S")
         self.account_button.setObjectName("account_button")
         self.horizontalLayout.addWidget(self.account_button)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtCore.Qt.QSizePolicy::Policy::Expanding)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.settings_button = QtWidgets.QPushButton(StartWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -54,24 +38,21 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.settings_button.sizePolicy().hasHeightForWidth())
         self.settings_button.setSizePolicy(sizePolicy)
-        self.settings_button.setStyleSheet("QPushButton {\n"
-"    font: 16pt \"华文新魏\";\n"
-"    background-color: rgb(255, 170, 127);  /* 按钮背景色 */\n"
-"    \n"
-"    font: 16pt \"等线\";\n"
-"    color: rgb(27, 27, 27);\n"
-"    border-radius: 5px;        /* 圆角 */\n"
-"    padding: 8px 10px;         /* 内边距 */\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(252, 146, 125); /* 鼠标悬停时的颜色 */\n"
-"    color: rgb(27, 27, 27);\n"
-"}S")
         self.settings_button.setObjectName("settings_button")
         self.horizontalLayout.addWidget(self.settings_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem1)
+        self.label_2 = QtWidgets.QLabel(StartWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy)
+        self.label_2.setScaledContents(True)
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_2.addWidget(self.label_2)
         spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem2)
         self.verticalLayout = QtWidgets.QVBoxLayout()
@@ -84,20 +65,7 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.go_button.sizePolicy().hasHeightForWidth())
         self.go_button.setSizePolicy(sizePolicy)
-        self.go_button.setLayoutDirection(QtCore.Qt.Qt::LayoutDirection::LeftToRight)
-        self.go_button.setStyleSheet("QPushButton {\n"
-"    font: 16pt \"华文新魏\";\n"
-"    background-color: rgb(255, 170, 127);  /* 按钮背景色 */\n"
-"    \n"
-"    font: 16pt \"等线\";\n"
-"    color: rgb(27, 27, 27);\n"
-"    border-radius: 5px;        /* 圆角 */\n"
-"    padding: 8px 10px;         /* 内边距 */\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(252, 146, 125); /* 鼠标悬停时的颜色 */\n"
-"    color: rgb(27, 27, 27);\n"
-"}S")
+        self.go_button.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.go_button.setObjectName("go_button")
         self.horizontalLayout_2.addWidget(self.go_button)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
@@ -109,19 +77,6 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.record_button.sizePolicy().hasHeightForWidth())
         self.record_button.setSizePolicy(sizePolicy)
-        self.record_button.setStyleSheet("QPushButton {\n"
-"    font: 16pt \"华文新魏\";\n"
-"    background-color: rgb(255, 170, 127);  /* 按钮背景色 */\n"
-"    \n"
-"    font: 16pt \"等线\";\n"
-"    color: rgb(27, 27, 27);\n"
-"    border-radius: 5px;        /* 圆角 */\n"
-"    padding: 8px 10px;         /* 内边距 */\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(252, 146, 125); /* 鼠标悬停时的颜色 */\n"
-"    color: rgb(27, 27, 27);\n"
-"}S")
         self.record_button.setObjectName("record_button")
         self.horizontalLayout_3.addWidget(self.record_button)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
@@ -135,11 +90,10 @@ class Ui_StartWidget(object):
         font = QtGui.QFont()
         font.setFamily("黑体")
         self.label.setFont(font)
-        self.label.setStyleSheet("background:transparent;\n"
+        self.label.setStyleSheet("background-color: #f0f0f0;\n"
 "    border-radius: 8px;\n"
-"    padding: 6px 12px;\n"
-"")
-        self.label.setAlignment(QtCore.Qt.Qt::AlignmentFlag::AlignCenter)
+"    padding: 6px 12px;")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
 
@@ -151,6 +105,7 @@ class Ui_StartWidget(object):
         StartWidget.setWindowTitle(_translate("StartWidget", "开始界面"))
         self.account_button.setText(_translate("StartWidget", "账号"))
         self.settings_button.setText(_translate("StartWidget", "设置"))
+        self.label_2.setText(_translate("StartWidget", "可爱立绘"))
         self.go_button.setText(_translate("StartWidget", "出发"))
         self.record_button.setText(_translate("StartWidget", "记录"))
         self.label.setText(_translate("StartWidget", "可以和我打一辈子舞萌吗"))

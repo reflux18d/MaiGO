@@ -18,11 +18,6 @@
     <selectedon>:/image/bear.png</selectedon>
    </iconset>
   </property>
-  <property name="styleSheet">
-   <string notr="true">QWidget#StartWidget{
-	border-image:url(:/image/旅行伙伴.png);
-}</string>
-  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
@@ -34,21 +29,6 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-	font: 16pt &quot;华文新魏&quot;;
-    background-color: rgb(255, 170, 127);  /* 按钮背景色 */
-	
-	font: 16pt &quot;等线&quot;;
-	color: rgb(27, 27, 27);
-    border-radius: 5px;        /* 圆角 */
-    padding: 8px 10px;         /* 内边距 */
-}
-QPushButton:hover {
-    background-color: rgb(252, 146, 125); /* 鼠标悬停时的颜色 */
-	color: rgb(27, 27, 27);
-}S</string>
-       </property>
        <property name="text">
         <string>账号</string>
        </property>
@@ -57,10 +37,10 @@ QPushButton:hover {
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
+        <enum>Qt::Horizontal</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Policy::Expanding</enum>
+        <enum>QSizePolicy::Expanding</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -78,21 +58,6 @@ QPushButton:hover {
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton {
-	font: 16pt &quot;华文新魏&quot;;
-    background-color: rgb(255, 170, 127);  /* 按钮背景色 */
-	
-	font: 16pt &quot;等线&quot;;
-	color: rgb(27, 27, 27);
-    border-radius: 5px;        /* 圆角 */
-    padding: 8px 10px;         /* 内边距 */
-}
-QPushButton:hover {
-    background-color: rgb(252, 146, 125); /* 鼠标悬停时的颜色 */
-	color: rgb(27, 27, 27);
-}S</string>
-       </property>
        <property name="text">
         <string>设置</string>
        </property>
@@ -103,7 +68,7 @@ QPushButton:hover {
    <item>
     <spacer name="verticalSpacer_2">
      <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -114,9 +79,28 @@ QPushButton:hover {
     </spacer>
    </item>
    <item>
+    <widget class="QLabel" name="label_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>可爱立绘</string>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -139,22 +123,7 @@ QPushButton:hover {
           </sizepolicy>
          </property>
          <property name="layoutDirection">
-          <enum>Qt::LayoutDirection::LeftToRight</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	font: 16pt &quot;华文新魏&quot;;
-    background-color: rgb(255, 170, 127);  /* 按钮背景色 */
-	
-	font: 16pt &quot;等线&quot;;
-	color: rgb(27, 27, 27);
-    border-radius: 5px;        /* 圆角 */
-    padding: 8px 10px;         /* 内边距 */
-}
-QPushButton:hover {
-    background-color: rgb(252, 146, 125); /* 鼠标悬停时的颜色 */
-	color: rgb(27, 27, 27);
-}S</string>
+          <enum>Qt::LeftToRight</enum>
          </property>
          <property name="text">
           <string>出发</string>
@@ -172,21 +141,6 @@ QPushButton:hover {
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
-	font: 16pt &quot;华文新魏&quot;;
-    background-color: rgb(255, 170, 127);  /* 按钮背景色 */
-	
-	font: 16pt &quot;等线&quot;;
-	color: rgb(27, 27, 27);
-    border-radius: 5px;        /* 圆角 */
-    padding: 8px 10px;         /* 内边距 */
-}
-QPushButton:hover {
-    background-color: rgb(252, 146, 125); /* 鼠标悬停时的颜色 */
-	color: rgb(27, 27, 27);
-}S</string>
          </property>
          <property name="text">
           <string>记录</string>
@@ -211,16 +165,15 @@ QPushButton:hover {
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background:transparent;
+      <string notr="true">background-color: #f0f0f0;
     border-radius: 8px;
-    padding: 6px 12px;
-</string>
+    padding: 6px 12px;</string>
      </property>
      <property name="text">
       <string>可以和我打一辈子舞萌吗</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
