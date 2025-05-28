@@ -1,27 +1,38 @@
+"""存放主要窗口类和运行逻辑的文件"""
 import sys
 # 调用PyQt5相关组件
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtWidgets import QPushButton, QLabel
-from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QGroupBox
-from PyQt5.QtWidgets import QGridLayout, QFormLayout
-from PyQt5.QtWidgets import QStackedWidget, QScrollArea
-from PyQt5.QtWidgets import QTextEdit, QCheckBox
-from PyQt5.QtWidgets import QGraphicsEllipseItem, QGraphicsScene, QGraphicsPixmapItem
-from PyQt5.QtGui import QPixmap, QColor, QFont, QBrush, QPen
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import pyqtSignal, QTimer
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (
+QApplication, QWidget,
+QPushButton, QLabel,
+QVBoxLayout, QHBoxLayout, QGroupBox,
+QStackedWidget, QScrollArea, QTextEdit, QCheckBox,
+QGraphicsEllipseItem, QGraphicsScene, QGraphicsPixmapItem
+)
+from PyQt5.QtGui import (
+QPixmap, QColor, QFont, QBrush, QPen,
+QIcon, QPixmap
+)
+from PyQt5.QtCore import (
+pyqtSignal, QTimer, Qt
+)
+# 调用暂时不知道有没有用的资源文件
 import resources_rc
 
 # 调用ui_class文件夹中使用QTdesigner写好的窗口类文件
-from ui_class import Ui_start_window, Ui_record_window, Ui_settings_window, Ui_go_window, Ui_map_window
-from ui_class import Ui_record_single, Ui_settings_single, Ui_map_graphic
-
+from ui_class import (
+    Ui_start_window, Ui_record_window, Ui_settings_window, 
+    Ui_go_window, Ui_map_graphic    
+)
 # 调用utils中自定义的Method基类
 from utils import *
 
-from datetime import datetime
-import os
+# 调用logicbase的数据类
+from logicbase import User, Tour, Place, Arcade
+
+# 调用subwindow中的子窗口类
+from subwindow import SettingsSingle, RecordSingle
+
+
 
 bear_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/bear.png'
 online_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/offline.png'
@@ -33,176 +44,11 @@ CMD_DICT = {
         "start_window": lambda self: MainWindow.switch_to(self, 0),
         "map_window": lambda self: MainWindow.switch_to(self, 1),
         "go_window": lambda self: MainWindow.switch_to(self, 2),
-        "record_window": lambda self: MainWindow.switch_to(self, 3),
+        "record_window": lambda self: MainWindow.switch_to_record(self),
         "settings_window": lambda self: MainWindow.switch_to(self, 4),
         "save_record": lambda self: MainWindow.save_record(self),
         "update_goal_label": lambda self: MainWindow.update_goal_label(self)
-    }
-
-
-class Place:
-    def __init__(self, name = "Peking University"):
-        self.name = name
-        self.latitude, self.longitude = 0, 0
-        self.visits = 0
-
-    def __str__(self):
-        return self.name
-
-    def set_pos(self, lati, longi):
-        self.latitude, self.longitude = lati, longi
-
-
-class Arcade(Place):
-    def __init__(self, name, info_text = ""):
-        super().__init__(name)
-        self.info_text = info_text
-    
-    def description(self) -> str:
-        return self.info_text
-
-
-class Tour:
-    def __init__(self, home, goal):
-        self.start_time = None
-        self.arrival_time = None
-        self.end_time = None
-        self.home = home  # 起点(Place对象)
-        self.goal = goal  # 终点(Arcade对象)
-        self.state = 0  # 0:准备 1:通勤 2:游玩 3:结束
-        self.info = {} # 其他记录数据种类 key: str  val: varible
-    
-    def start_tour(self):
-        """开始出勤"""
-        self.start_time = datetime.now()
-        self.state = 1
-    
-    def arrived(self):
-        """到达目的地"""
-        self.arrival_time = datetime.now()
-        self.state = 2
-    
-    def end_tour(self):
-        """结束出勤"""
-        self.end_time = datetime.now()
-        self.state = 3
-        self._calculate_stats()
-    
-    def _calculate_stats(self):
-        """计算统计数据"""
-        # 函数名前加下划线，ok不在类外使用
-        assert all([self.start_time, self.arrival_time, self.end_time]), "Uncomplete Tour"
-        # 暂不返回
-        self.info["travel_time"] = (self.arrival_time - self.start_time).total_seconds() / 60  # 分钟 
-        self.info["play_duration"] = (self.end_time - self.arrival_time).total_seconds() / 60
-        self.info["from_to"] = f"{str(self.home)} → {str(self.goal)}" # 使用Place的str形式
-
-    def description(self):
-        """返回对于本次出勤的详情文本"""
-        result = ""
-        for item in self.info.items():
-            key, val = item
-            result = result + key + ": " + str(val) + "\n"
-        return result
-        
-        
-class User:
-    def __init__(self, name):
-        self.name = name
-        self.history = []  # 存储所有Tour记录
-        self.current_tour = None  # 当前出勤
-        self.home = Place()
-
-    def __str__(self):
-        return self.name
-    
-    def start_new_tour(self, home, goal):
-        """开始新的出勤记录"""
-        self.current_tour = Tour(home, goal)
-    
-    def save_tour(self):
-        """保存当前出勤记录"""
-        assert self.current_tour, "No Tour to save"
-        if self.current_tour.state >= 3:
-            self.history.append(self.current_tour)
-            self.current_tour = None
-    
-    def _save_to_file(self, stats):
-        """将记录保存到txt文件"""
-        # 也许改一下还可以用？
-        os.makedirs("records", exist_ok=True)
-        filename = f"records/{self.name}_records.txt"
-        
-        with open(filename, "a", encoding="utf-8") as f:
-            f.write(f"\n=== 出勤记录 {datetime.now().strftime('%Y-%m-%d %H:%M')} ===\n")
-            f.write(f"用户: {self.name}\n")
-            f.write(f"路线: {stats['from_to']}\n")
-            f.write(f"通勤时间: {stats['travel_time']:.1f} 分钟\n")
-            f.write(f"游玩时长: {stats['play_duration']:.1f} 分钟\n")
-            f.write("="*30 + "\n")
-
-class RecordSingle(MethodWidget):
-    def __init__(self, record: Tour = None, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.ui = Ui_record_single.Ui_RecordSingle() # 创建ui类实例
-        self.ui.setupUi(self) # 从ui对象获取所有已有布局
-        self.time_label = self.ui.time_label
-        self.goal_label = self.ui.goal_label
-        self.tour = record
-        if self.tour:
-            self.set_tour_info()
-
-    def set_tour_info(self):
-        self.time_label.setText(f"时间:{self.tour.start_time.date()}")
-        self.goal_label.setText(f"地点:{str(self.tour.goal)}")
-
-
-class SettingsSingle(MethodWidget):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.ui = Ui_settings_single.Ui_SettingsSingle() # 创建ui类实例
-        self.ui.setupUi(self) # 从ui对象获取所有已有布局
-        self.single_layout = self.ui.single_layout
-
-        self.set_widgets()
-        self.add_data([("日记", ("不记录", "记录")), ("通勤", ("无通勤", "有通勤")), ("退勤", ("不退勤", "退勤"))])
-        self.add_outfit(["饮料", "手套", "谷子", "板子"])
-
-    """
-    下面的函数仅做scroll测试
-    从ui_test中的FormLayout复制而来
-    以后会将该类写为更通用的设置部件
-    """
-    def set_widgets(self):
-        layout = self.single_layout
-
-        data = QGroupBox("数据")
-        outfit = QGroupBox("出装")
-
-        layout.addWidget(data)
-        layout.addWidget(outfit)
-
-        self.data_form = QFormLayout()
-        self.outfit_form = QFormLayout()
-        data.setLayout(self.data_form)
-        outfit.setLayout(self.outfit_form)
-
-    def add_data(self, options = []):
-        for option in options:
-            name, state = option
-            off, on = state
-            button, text = QCheckBox(name), QLabel(off)
-            self.data_form.addRow(button, text)
-            button.stateChanged.connect(
-                lambda state, b = button, t = text, on = on, off = off:
-                t.setText(on if b.isChecked() else off)
-                )
-            
-    def add_outfit(self, options = []):
-        for option in options:
-            name = option # only name
-            self.outfit_form.addRow(QCheckBox(name))
-        
+    }  
 
 class StartWindow(MethodWidget):
     def __init__(self, signal: pyqtSignal, user: User = None, *args, **kwargs):
@@ -216,7 +62,10 @@ class StartWindow(MethodWidget):
         self.trigger_widgets()
 
     def trigger_widgets(self):
-        # 绑定所有QTdesigner中的控件并定义逻辑行为
+        """
+        绑定所有QTdesigner中定义的控件
+        并定义逻辑行为
+        """
         self.go_button = self.ui.go_button
         self.record_button = self.ui.record_button
         self.settings_button = self.ui.settings_button
@@ -246,6 +95,12 @@ class MapWindow(MethodWidget):
         self.trigger_widgets() # 动态添加机厅按钮
 
     def trigger_widgets(self):
+        """
+        绑定所有QTdesigner中定义的控件
+        并定义逻辑行为
+        """
+        # QTdesigner只有GraphicView
+        # 所以还要自己添加Graphic的其他控件
         self.scene = QGraphicsScene()
         self.view = self.ui.view
         self.view.setScene(self.scene)
@@ -308,7 +163,10 @@ class GoWindow(MethodWidget):
         self.update_timer()
 
     def trigger_widgets(self):
-        # 绑定所有QTdesigner中的控件并定义逻辑行为
+        """
+        绑定所有QTdesigner中定义的控件
+        并定义逻辑行为
+        """
         self.main_button = self.ui.main_button
         self.state_label = self.ui.state_label
         self.timer_label = self.ui.time_label
@@ -354,7 +212,7 @@ class GoWindow(MethodWidget):
         self.state_label.setText("准备好了就开始了哦")
 
     def marching(self):
-        # 启动user的current_tour
+        """启动user的current_tour"""
         self.user.current_tour.start_tour()
         self.start_timer()
         self.setWindowTitle("通勤中")
@@ -362,14 +220,14 @@ class GoWindow(MethodWidget):
         self.state_label.setText("GOGOGO!")
 
     def playing(self):
-        # current_tour到达
+        """current_tour到达"""
         self.user.current_tour.arrived()
         self.setWindowTitle("游玩中")
         self.main_button.setText("退勤")
         self.state_label.setText("要继续游玩吗")
 
     def ending(self):
-        # current_tour到达
+        """current_tour结束"""
         self.user.current_tour.end_tour()
         self.stop_timer()
 
@@ -388,21 +246,33 @@ class RecordWindow(MethodWidget):
         self.ui = Ui_record_window.Ui_RecordWidget() # 创建ui类实例
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
         
+        self.signal = signal
+        self.record_list = [] # 另外存放所有RecordSingle
+        self.trigger_widgets()
+
+    def trigger_widgets(self):
+        """
+        绑定所有QTdesigner中定义的控件
+        并定义逻辑行为
+        """
         record_widget = MethodWidget()
+
         #添加记录的layout
         self.record_layout = record_widget.create_layout(QVBoxLayout)
         self.ui.record_scroll.setWidget(record_widget)
 
-        self.signal = signal
-        self.trigger_widgets()
-
-    def trigger_widgets(self):
         self.return_button = self.ui.return_button
         self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
         
     def add_record(self, *widgets):
         for widget in widgets:
             self.record_layout.addWidget(widget)
+            self.record_list.append(widget)
+
+    def reset_all(self):
+        """将所有RecordSingle切换到interface界面"""
+        for widget in self.record_list:
+            widget.reset()
 
 class SettingsWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
@@ -420,6 +290,10 @@ class SettingsWindow(MethodWidget):
         self.add_settings(SettingsSingle(), SettingsSingle())
     
     def trigger_widgets(self):
+        """
+        绑定所有QTdesigner中定义的控件
+        并定义逻辑行为
+        """
         self.return_button = self.ui.return_button
         self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
 
@@ -470,6 +344,10 @@ class MainWindow(MethodWidget):
     # 切换界面的指令
     def switch_to(self, index):
         self.stack.setCurrentIndex(index)
+
+    def switch_to_record(self):
+        self.record_window.reset_all()
+        self.switch_to(3)
 
     def save_record(self):
         # 加载用户的current_tour为RecordWindow的Widget

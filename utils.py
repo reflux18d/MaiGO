@@ -1,17 +1,6 @@
 # More methods
-
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtWidgets import QPushButton, QLabel
+from PyQt5.QtWidgets import QWidget
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QGroupBox
-from PyQt5.QtWidgets import QGridLayout, QFormLayout
-from PyQt5.QtWidgets import QStackedWidget, QScrollArea
-from PyQt5.QtWidgets import QTextEdit, QCheckBox
-from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import Qt
-
-
 
 class MethodWidget(QWidget):
     """
