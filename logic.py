@@ -28,10 +28,13 @@ Ui_account_window, Ui_option_window
 from utils import *
 
 # 调用logicbase的数据类
-from logicbase import User, Tour, Place, Arcade
-
+from logicbase import (
+User, Tour, Place, Arcade
+)
 # 调用subwindow中的子窗口类
-from subwindow import SettingsSingle, RecordSingle
+from subwindow import (
+SettingsSingle, RecordSingle
+)
 
 bear_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/bear.png'
 online_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/offline.png'

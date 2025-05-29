@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_SettingsSingle(object):
     def setupUi(self, SettingsSingle):
         SettingsSingle.setObjectName("SettingsSingle")
-        SettingsSingle.resize(553, 173)
+        SettingsSingle.resize(553, 116)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -23,9 +23,18 @@ class Ui_SettingsSingle(object):
         SettingsSingle.setMaximumSize(QtCore.QSize(16777215, 400))
         self.horizontalLayout = QtWidgets.QHBoxLayout(SettingsSingle)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.single_layout = QtWidgets.QVBoxLayout()
-        self.single_layout.setObjectName("single_layout")
-        self.horizontalLayout.addLayout(self.single_layout)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.name_label = QtWidgets.QLabel(SettingsSingle)
+        self.name_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.name_label.setObjectName("name_label")
+        self.horizontalLayout_2.addWidget(self.name_label)
+        self.enable_checkbox = QtWidgets.QCheckBox(SettingsSingle)
+        self.enable_checkbox.setMaximumSize(QtCore.QSize(16777215, 16777214))
+        self.enable_checkbox.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.enable_checkbox.setObjectName("enable_checkbox")
+        self.horizontalLayout_2.addWidget(self.enable_checkbox)
+        self.horizontalLayout.addLayout(self.horizontalLayout_2)
 
         self.retranslateUi(SettingsSingle)
         QtCore.QMetaObject.connectSlotsByName(SettingsSingle)
@@ -33,3 +42,5 @@ class Ui_SettingsSingle(object):
     def retranslateUi(self, SettingsSingle):
         _translate = QtCore.QCoreApplication.translate
         SettingsSingle.setWindowTitle(_translate("SettingsSingle", "Form"))
+        self.name_label.setText(_translate("SettingsSingle", "描述"))
+        self.enable_checkbox.setText(_translate("SettingsSingle", "未启用"))

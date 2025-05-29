@@ -90,16 +90,102 @@ class User:
             self.history.append(self.current_tour)
             self.current_tour = None
     
-    def _save_to_file(self, stats):
-        """将记录保存到txt文件"""
-        # 也许改一下还可以用？
-        os.makedirs("records", exist_ok=True)
-        filename = f"records/{self.name}_records.txt"
-        
-        with open(filename, "a", encoding="utf-8") as f:
-            f.write(f"\n=== 出勤记录 {datetime.now().strftime('%Y-%m-%d %H:%M')} ===\n")
-            f.write(f"用户: {self.name}\n")
-            f.write(f"路线: {stats['from_to']}\n")
-            f.write(f"通勤时间: {stats['travel_time']:.1f} 分钟\n")
-            f.write(f"游玩时长: {stats['play_duration']:.1f} 分钟\n")
-            f.write("="*30 + "\n")
+class Data:
+    """记录数据选项的基类"""
+    def __init__(self, name: str, val = None, show_in_account = True):   
+        self.name = name
+        self.val = val
+        self.show = False # 重要，决定OptionWindow是否显示对应widget
+        self.info = "" # TODO: 加入描述信息
+
+    def set_val(self, new_val):
+        """用于单条数据的类"""
+        self.val = new_val
+
+    def add_val(self, adder):
+        self.val += adder
+
+    def enable(self):
+        self.show = True
+
+    def disable(self):
+        self.show = False
+
+    def __str__(self):
+        return f"{self.name}: {self.val}"
+    
+    def __add__(self):
+        pass
+    
+    def __iadd__(self, other):
+        """用于合并单次Tour的Data对象到User的总计Data对象中"""
+        pass
+
+class NumData(Data):
+    """记录数值的类，如时间里程等"""
+    """暂时默认val为int"""
+    def __init__(self, name: str, val = 0):
+        super().__init__(name, val)
+
+    def __iadd__(self, other):
+        """
+        >>> total_time, tour_time = NumData("出勤时间", 60), NumData("出勤时间", 30)
+        >>> total_time += tour_time
+        >>> print(total_time)
+        出勤时间: 90
+        """
+        assert isinstance(other, NumData) and self.name == other.name, "invalid class"
+        self.val += other.val
+        return self
+    
+class StrData(Data):
+    """记录文字的类，如不同标签的日记等"""
+    def __init__(self, name: str, val: str = ""):
+        super().__init__(name, val)
+
+    def __iadd__(self, other, enter = False):
+        """支持选择换行"""
+        assert isinstance(other, StrData) and self.name == other.name, "invalid class"
+        if enter and len(self.val) > 0:
+            self.val += '\n'
+        self.val += other.val
+        return self
+    
+class DictData(Data):
+    """记录选项的类，如选择交通方式并统计次数"""
+    """默认key值为int"""
+    def __init__(self, name: str, val: dict = None):
+        super().__init__(name, val)
+
+    def get_val(self, key):
+        return self.val.get(key, 0)
+    
+    def set_val(self, key, new_val):
+        """重载Data的set_val"""
+        self.val[key] = new_val
+
+    def add_val(self, key, adder):
+        self.val[key] = self.val.get(key, 0) + adder
+    
+    def update_val(self, key):
+        """默认加一，后续有需求可修改"""
+        self.add_val(key, 1)
+    
+    def __iadd__(self, other):   
+        assert isinstance(other, DictData) and self.name == other.name, "invalid class"
+        for other_key, other_val in other.val.items():
+            self.add_val(other_key, other_val)
+        return self
+    
+    def __str__(self):
+        result = self.name
+        for key, val in self.val.items():
+            if val:
+                result += '\n'
+                result += f"{key}: {val}"
+        return result
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

@@ -1,13 +1,16 @@
-"""存放子窗口类的文件，比如单条记录的弹窗"""
+"""存放子窗口类的文件，比如单项记录的选择"""
 
 # 调用logicbase中的数据类
-from logicbase import User, Tour, Place, Arcade
-
+from logicbase import (
+User, Tour,
+Data, NumData, StrData, DictData
+)
 # PyQt组件
 from PyQt5.QtWidgets import (
 QGridLayout, QFormLayout,
 QLabel, QPushButton, QCheckBox, QGroupBox,
-QStackedWidget, QVBoxLayout
+QStackedWidget, QVBoxLayout,
+QButtonGroup, QRadioButton
 )
 from PyQt5.QtCore import (
 pyqtSignal
@@ -15,8 +18,10 @@ pyqtSignal
 
 # subwindow的.ui文件
 from ui_class import (
-    Ui_record_info, Ui_record_interface,
-    Ui_settings_single
+Ui_record_info, Ui_record_interface,
+Ui_settings_single, Ui_data_single,
+Ui_option_input, Ui_option_select,
+Ui_select_single
 )
 
 # 调用utils中自定义的Method基类
@@ -103,49 +108,136 @@ class RecordInfo(MethodWidget):
         """展示详细信息"""
         pass
 
+class DataSingle(MethodWidget):
+    """
+    展示信息的窗口
+    """
+    def __init__(self, data = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_data_single.Ui_DataSingle() # 创建ui类逻辑
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        self.data = data
+        self.trigger_widgets()
+        self.update_data()
+    
+    def trigger_widgets(self):
+        self.data_label = self.ui.data_label
+
+    def update_data(self):
+        """更新label展示的数据 可扩展"""
+        self.data_label.setText(str(self.data))
+        
+
+
 
 class SettingsSingle(MethodWidget):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, data = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ui = Ui_settings_single.Ui_SettingsSingle() # 创建ui类实例
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
-        self.single_layout = self.ui.single_layout
+        self.data = data
+        self.trigger_widgets()
 
-        self.set_widgets()
-        self.add_data([("日记", ("不记录", "记录")), ("通勤", ("无通勤", "有通勤")), ("退勤", ("不退勤", "退勤"))])
-        self.add_outfit(["饮料", "手套", "谷子", "板子"])
+    def trigger_widgets(self):
+        """绑定描述的文本和checkbox"""
+        assert isinstance(self.data, Data), "No Data"
+        self.name_label = self.ui.name_label
+        self.name_label.setText(self.data.name)
+        self.checkbox = self.ui.enable_checkbox
+        self.checkbox.stateChanged.connect(self.update_enablity)
 
-    """
-    下面的函数仅做scroll测试
-    从ui_test中的FormLayout复制而来
-    以后会将该类写为更通用的设置部件
-    """
-    def set_widgets(self):
-        layout = self.single_layout
+    def update_enablity(self):
+        """检查自己的checkbox并相应改变data的enable属性"""
+        if self.checkbox.isChecked():
+            self.data.enable()
+            self.checkbox.setText("已启用")
+        else:
+            self.data.disable()
+            self.checkbox.setText("未启用")
 
-        data = QGroupBox("数据")
-        outfit = QGroupBox("出装")
+class SelectSingle(MethodWidget):
+    """用于OptionSelect的单个选项"""
+    def __init__(self, text = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_select_single.Ui_SelectSingle() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        self.text = text
+        self.button = None
+        self.trigger_widgets()
 
-        layout.addWidget(data)
-        layout.addWidget(outfit)
+    def trigger_widgets(self):
+        """绑定描述的文本和TextEdit"""
+        self.name_label = self.ui.name_label
+        self.name_label.setText(self.text)
+        self.button = self.ui.radioButton
 
-        self.data_form = QFormLayout()
-        self.outfit_form = QFormLayout()
-        data.setLayout(self.data_form)
-        outfit.setLayout(self.outfit_form)
+class OptionInput(MethodWidget):
+    """拥有Textedit的输入型option"""
+    def __init__(self, data = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_option_input.Ui_OptionInput() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        self.data = data
+        self.trigger_widgets()
 
-    def add_data(self, options = []):
-        for option in options:
-            name, state = option
-            off, on = state
-            button, text = QCheckBox(name), QLabel(off)
-            self.data_form.addRow(button, text)
-            button.stateChanged.connect(
-                lambda state, b = button, t = text, on = on, off = off:
-                t.setText(on if b.isChecked() else off)
-                )
-            
-    def add_outfit(self, options = []):
-        for option in options:
-            name = option # only name
-            self.outfit_form.addRow(QCheckBox(name))
+    def trigger_widgets(self):
+        """绑定GroupBoxName和TextEdit"""
+        assert isinstance(self.data, Data), "No Data"
+        self.option_box = self.ui.option_box
+        self.option_edit = self.ui.option_edit
+        self.option_box.setTitle(self.data.name)
+        self.option_edit.setPlaceholderText(self.data.info)
+
+    def update_context(self):
+        """检查自己的checkbox并相应改变data的enable属性"""
+        assert isinstance(self.data, Data), "No Data"
+        text = self.option_edit.toPlainText()
+        if isinstance(self.data, NumData):
+            self.data.add_val(int(text))
+        elif isinstance(self.data, StrData):
+            self.data.add_val(text)
+
+    def reset(self):
+        self.option_edit.clear()
+
+class OptionSelect(MethodWidget):
+    """拥有RadioButtons的选择型option"""
+    def __init__(self, data = None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.ui = Ui_option_select.Ui_OptionSelect() # 创建ui类实例
+        self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        self.data = data
+
+        self.trigger_widgets()
+
+    def trigger_widgets(self):
+        """绑定布局、GroupBoxName和TextEdit"""
+        assert isinstance(self.data, DictData), "No Data"
+        self.selection_layout = self.ui.selection_layout
+        self.option_box = self.ui.option_box
+        self.option_box.setTitle(self.data.name)
+        # 创建ButtonGroup实现单选逻辑
+        self.radio_group = QButtonGroup(self)
+        self.radio_group.setExclusive(True)
+        self.index_to_key = {} # 方便后续调用self.data.val
+        for index, key in enumerate(self.data.val.keys()):
+            # 暂时默认传入key作为label
+            select_widget = SelectSingle(key)
+            button = select_widget.button
+            self.index_to_key[index] = key
+            self.radio_group.addButton(button, index)
+
+    def update_selection(self):
+        """保存自己的选择"""
+        assert isinstance(self.data, DictData), "Only support dict"
+        for index, button in enumerate(self.radio_group.buttons()):
+            assert isinstance(button, QRadioButton)
+            if button.isChecked():
+                key = self.index_to_key[index]
+                self.data.update_val(key)
+
+
+    def reset(self):
+        for button in self.radio_group.buttons():
+            button.setChecked(False)
+    
