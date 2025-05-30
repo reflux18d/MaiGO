@@ -29,7 +29,8 @@ from utils import *
 
 # 调用logicbase的数据类
 from logicbase import (
-User, Tour, Place, Arcade
+User, Tour, Place, Arcade,
+Data, NumData, StrData, DictData
 )
 # 调用subwindow中的子窗口类
 from subwindow import (
@@ -270,18 +271,54 @@ class OptionWindow(MethodWidget):
         self.ui.options_scroll.setWidget(option_widget)
 
         self.return_button = self.ui.return_button
-        self.return_button.clicked.connect(lambda: self.signal.emit("go_window"))
+        self.return_button.clicked.connect(self.cancel_and_quit)
+        self.fixed_button = self.ui.Fixed_button
+        self.fixed_button.clicked.connect(self.save_and_quit)
+        # 将用户设置中所有data转化为OptionInput或OptionSelect
+        for data in self.user.data.values():
+            option = None
+            if isinstance(data, DictData):
+                option = OptionSelect(data)
+            elif isinstance(data, Data):
+                option = OptionInput(data)
+            assert data is not None, "Invalid option type"
+            self.add_option(option)
+
         
     def add_option(self, *widgets):
         for widget in widgets:
+            assert isinstance(widget, (OptionInput, OptionSelect)), "Invalid option type"
             self.option_layout.addWidget(widget)
             self.option_list.append(widget)
 
     def update_visibility(self):
         """将所有OptionsSingle更新可视性"""
-        for widget in self.option_list:
-            # TODO
-            pass   
+        for option in self.option_list:
+            assert isinstance(option, (OptionInput, OptionSelect)) and isinstance(option.data, Data), "Invalid option or data"
+            option.setVisible(bool(option.data))
+             
+
+    def save_all(self):
+        """按确定键保存所有编辑到相应的data"""
+        for option in self.option_list:
+            assert isinstance(option, (OptionInput, OptionSelect)), "Invalid option type"
+            option.save()
+    
+    def reset_all(self):
+        """按取消键取消所有编辑"""
+        for option in self.option_list:
+            assert isinstance(option, (OptionInput, OptionSelect)), "Invalid option type"
+            option.reset()
+
+    def save_and_quit(self):
+        self.save_all()
+        self.signal.emit("go_window")
+
+    def cancel_and_quit(self):
+        self.reset_all()
+        self.signal.emit("go_window")
+        
+
 
 class RecordWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
@@ -342,13 +379,13 @@ class SettingsWindow(MethodWidget):
         # 将用户设置中所有data转化为settingsSingle
         for data in self.user.data.values():
             settings_single = SettingsSingle(data)
-            self.add_settings(settings_single)
-            self.settings_list.append(settings_single)
+            self.add_settings(settings_single)           
 
     def add_settings(self, *widgets):
         for widget in widgets:
             assert isinstance(widget, SettingsSingle), "Incorrect setting class"
             self.settings_layout.addWidget(widget)
+            self.settings_list.append(widget)
 
     def update_settings(self):
         for setting in self.settings_list:

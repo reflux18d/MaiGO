@@ -121,6 +121,9 @@ class Data:
     def __str__(self):
         return f"{self.name}: {self.val}"
     
+    def __bool__(self):
+        return self.show
+    
     def __add__(self):
         pass
     
