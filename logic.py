@@ -33,8 +33,12 @@ User, Tour, Place, Arcade
 )
 # 调用subwindow中的子窗口类
 from subwindow import (
-SettingsSingle, RecordSingle
+SettingsSingle, RecordSingle,
+DataSingle, OptionInput, OptionSelect,
 )
+
+# 调用datainfo中的sample
+from datainfo import data_samples
 
 bear_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/bear.png'
 online_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/offline.png'
@@ -318,15 +322,10 @@ class SettingsWindow(MethodWidget):
         super().__init__(*args, **kwargs)
         self.ui = Ui_settings_window.Ui_SettingsWidget() # 创建ui类实例
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
-        
-        settings_widget = MethodWidget()
-        # 添加设置选项的layout
-        self.settings_layout = settings_widget.create_layout(QVBoxLayout)
-        self.ui.settings_scroll.setWidget(settings_widget)
 
         self.signal = signal
         self.trigger_widgets()
-        self.add_settings(SettingsSingle(), SettingsSingle())
+#        self.add_settings(SettingsSingle(), SettingsSingle())
     
     def trigger_widgets(self):
         """
@@ -335,6 +334,10 @@ class SettingsWindow(MethodWidget):
         """
         self.return_button = self.ui.return_button
         self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
+        # 添加设置选项的layout
+        settings_widget = MethodWidget()
+        self.settings_layout = settings_widget.create_layout(QVBoxLayout)
+        self.ui.settings_scroll.setWidget(settings_widget)
 
     def add_settings(self, *widgets):
         for widget in widgets:
@@ -444,7 +447,9 @@ class MainWindow(MethodWidget):
 if __name__ == "__main__":
     app = QApplication([])
 
-    window = MainWindow(User("Bo"))
+    user = User("Bo", data_samples)
+
+    window = MainWindow(user)
 
     window.show()
 

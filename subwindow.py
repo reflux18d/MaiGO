@@ -7,6 +7,7 @@ Data, NumData, StrData, DictData
 )
 # PyQt组件
 from PyQt5.QtWidgets import (
+QApplication,
 QGridLayout, QFormLayout,
 QLabel, QPushButton, QCheckBox, QGroupBox,
 QStackedWidget, QVBoxLayout,
@@ -125,6 +126,7 @@ class DataSingle(MethodWidget):
 
     def update_data(self):
         """更新label展示的数据 可扩展"""
+        assert isinstance(self.data, Data), "No data"
         self.data_label.setText(str(self.data))
         
 
@@ -202,11 +204,12 @@ class OptionInput(MethodWidget):
 
 class OptionSelect(MethodWidget):
     """拥有RadioButtons的选择型option"""
-    def __init__(self, data = None, *args, **kwargs):
+    def __init__(self, data = None, exclusive = True, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ui = Ui_option_select.Ui_OptionSelect() # 创建ui类实例
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
         self.data = data
+        self.exclusive = exclusive # 是否单选
 
         self.trigger_widgets()
 
@@ -226,6 +229,7 @@ class OptionSelect(MethodWidget):
             button = select_widget.button
             self.index_to_key[index] = key
             self.radio_group.addButton(button, index)
+            self.selection_layout.addWidget(select_widget)
 
     def update_selection(self):
         """保存自己的选择"""
@@ -240,4 +244,17 @@ class OptionSelect(MethodWidget):
     def reset(self):
         for button in self.radio_group.buttons():
             button.setChecked(False)
+
+if __name__ == "__main__":
+    app = QApplication([])
+
+    select_window = OptionSelect(DictData("交通方式", {"骑行": 0, "步行": 0, "公共交通": 0}))
+
+    input_window = OptionInput(StrData("推分记录"))
+
+    select_window.show()
+
+    input_window.show()
+
+    app.exec()
     

@@ -33,7 +33,7 @@ class Tour:
         self.home = home  # 起点(Place对象)
         self.goal = goal  # 终点(Arcade对象)
         self.state = 0  # 0:准备 1:通勤 2:游玩 3:结束
-        self.info = {} # 其他记录数据种类 key: str  val: varible
+        self.data = {} # 其他记录数据种类 key: str  val: varible
     
     def start_tour(self):
         """开始出勤"""
@@ -70,11 +70,12 @@ class Tour:
         
         
 class User:
-    def __init__(self, name):
+    def __init__(self, name, data = None):
         self.name = name
         self.history = []  # 存储所有Tour记录
         self.current_tour = None  # 当前出勤
         self.home = Place()
+        self.data = data if data is not None else {} # 总计数据, key: str
 
     def __str__(self):
         return self.name
@@ -89,6 +90,12 @@ class User:
         if self.current_tour.state >= 3:
             self.history.append(self.current_tour)
             self.current_tour = None
+
+    def add_datatype(self, *new_data):
+        for data in new_data:
+            assert isinstance(data, Data), "Invalid data type"
+            key = data.name
+            self.data[key] = data
     
 class Data:
     """记录数据选项的基类"""
