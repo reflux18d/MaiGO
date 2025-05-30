@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\record_info.ui'
+# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\record_info.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -44,6 +44,20 @@ class Ui_RecordInfo(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.return_button.sizePolicy().hasHeightForWidth())
         self.return_button.setSizePolicy(sizePolicy)
+        self.return_button.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
+"    color: rgb(0, 0, 0);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    padding: 8px 16px;\n"
+"    font: 14pt \"STHupo\";\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
+"}")
         self.return_button.setObjectName("return_button")
         self.horizontalLayout_2.addWidget(self.return_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)

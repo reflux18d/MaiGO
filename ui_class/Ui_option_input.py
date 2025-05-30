@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\option_input.ui'
+# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\option_input.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #

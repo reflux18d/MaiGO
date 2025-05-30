@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\record_interface.ui'
+# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\record_single.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -11,24 +11,24 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_RecordInterface(object):
-    def setupUi(self, RecordInterface):
-        RecordInterface.setObjectName("RecordInterface")
-        RecordInterface.resize(391, 100)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.MinimumExpanding)
+class Ui_RecordSingle(object):
+    def setupUi(self, RecordSingle):
+        RecordSingle.setObjectName("RecordSingle")
+        RecordSingle.resize(391, 100)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(RecordInterface.sizePolicy().hasHeightForWidth())
-        RecordInterface.setSizePolicy(sizePolicy)
-        RecordInterface.setMaximumSize(QtCore.QSize(16777215, 150))
-        self.horizontalLayout = QtWidgets.QHBoxLayout(RecordInterface)
+        sizePolicy.setHeightForWidth(RecordSingle.sizePolicy().hasHeightForWidth())
+        RecordSingle.setSizePolicy(sizePolicy)
+        RecordSingle.setMaximumSize(QtCore.QSize(16777215, 100))
+        self.horizontalLayout = QtWidgets.QHBoxLayout(RecordSingle)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.time_label = QtWidgets.QLabel(RecordInterface)
+        self.time_label = QtWidgets.QLabel(RecordSingle)
         self.time_label.setObjectName("time_label")
         self.verticalLayout.addWidget(self.time_label)
-        self.goal_label = QtWidgets.QLabel(RecordInterface)
+        self.goal_label = QtWidgets.QLabel(RecordSingle)
         self.goal_label.setObjectName("goal_label")
         self.verticalLayout.addWidget(self.goal_label)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -40,37 +40,23 @@ class Ui_RecordInterface(object):
         self.verticalLayout_2.addItem(spacerItem1)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.info_button = QtWidgets.QPushButton(RecordInterface)
+        self.info_button = QtWidgets.QPushButton(RecordSingle)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.info_button.sizePolicy().hasHeightForWidth())
         self.info_button.setSizePolicy(sizePolicy)
-        self.info_button.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
-"    color: rgb(0, 0, 0);\n"
-"    border: none;\n"
-"    border-radius: 4px;\n"
-"    padding: 8px 16px;\n"
-"    font: 14pt \"STHupo\";\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
-"}\n"
-"QPushButton:pressed {\n"
-"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
-"}")
         self.info_button.setObjectName("info_button")
         self.horizontalLayout_2.addWidget(self.info_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
         self.horizontalLayout.addLayout(self.verticalLayout_2)
 
-        self.retranslateUi(RecordInterface)
-        QtCore.QMetaObject.connectSlotsByName(RecordInterface)
+        self.retranslateUi(RecordSingle)
+        QtCore.QMetaObject.connectSlotsByName(RecordSingle)
 
-    def retranslateUi(self, RecordInterface):
+    def retranslateUi(self, RecordSingle):
         _translate = QtCore.QCoreApplication.translate
-        RecordInterface.setWindowTitle(_translate("RecordInterface", "Form"))
-        self.time_label.setText(_translate("RecordInterface", "时间"))
-        self.goal_label.setText(_translate("RecordInterface", "目的地"))
-        self.info_button.setText(_translate("RecordInterface", "详情"))
+        RecordSingle.setWindowTitle(_translate("RecordSingle", "Form"))
+        self.time_label.setText(_translate("RecordSingle", "时间"))
+        self.goal_label.setText(_translate("RecordSingle", "目的地"))
+        self.info_button.setText(_translate("RecordSingle", "详情"))
