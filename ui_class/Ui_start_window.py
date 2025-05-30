@@ -19,7 +19,10 @@ class Ui_StartWidget(object):
         icon.addPixmap(QtGui.QPixmap(":/image/bear.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
         StartWidget.setWindowIcon(icon)
         StartWidget.setStyleSheet("QWidget#StartWidget {\n"
-"        border-image: url(:/image/friend.png) 0 0 0 0 round round;\n"
+"    background-image: url(:/image/friend.png);\n"
+"    background-repeat: no-repeat;  /* 防止图片重复 */\n"
+"    background-position: center;  /* 图片在容器中居中 */\n"
+"    background - size: contain;  \n"
 "    }\n"
 "")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(StartWidget)
@@ -27,18 +30,14 @@ class Ui_StartWidget(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.account_button = QtWidgets.QPushButton(StartWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.account_button.sizePolicy().hasHeightForWidth())
-        self.account_button.setSizePolicy(sizePolicy)
+        self.account_button.setEnabled(True)
         self.account_button.setStyleSheet("QPushButton {\n"
 "    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
 "    color: rgb(0, 0, 0);\n"
 "    border: none;\n"
 "    border-radius: 4px;\n"
 "    padding: 8px 16px;\n"
-"    font: 14pt \"华文彩云\";\n"
+"    font: 14pt \"STHupo\";\n"
 "}\n"
 "QPushButton:hover {\n"
 "    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
@@ -62,7 +61,7 @@ class Ui_StartWidget(object):
 "    border: none;\n"
 "    border-radius: 4px;\n"
 "    padding: 8px 16px;\n"
-"    font: 14pt \"华文彩云\";\n"
+"    font: 14pt \"STHupo\";\n"
 "}\n"
 "QPushButton:hover {\n"
 "    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
@@ -75,7 +74,7 @@ class Ui_StartWidget(object):
         self.verticalLayout_2.addLayout(self.horizontalLayout)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem1)
         self.go_button = QtWidgets.QPushButton(StartWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)

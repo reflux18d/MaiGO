@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\go_window.ui'
+# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\go_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -14,35 +14,46 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_GoWidget(object):
     def setupUi(self, GoWidget):
         GoWidget.setObjectName("GoWidget")
-        GoWidget.resize(246, 369)
+        GoWidget.resize(336, 472)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/image/bear.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
         GoWidget.setWindowIcon(icon)
+        GoWidget.setStyleSheet("QWidget#GoWidget {\n"
+"        border-image: url(:/image/friend.png) 0 0 0 0 round round;\n"
+"    }")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(GoWidget)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.goal_label = QtWidgets.QLabel(GoWidget)
+        self.goal_label.setAutoFillBackground(False)
+        self.goal_label.setStyleSheet("QLabel#goal_label{\n"
+"    font: 14pt \"Book Antiqua\";\n"
+"    background-color:rgb(242, 234, 255)\n"
+"}")
+        self.goal_label.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.goal_label.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.goal_label.setMidLineWidth(0)
         self.goal_label.setAlignment(QtCore.Qt.AlignCenter)
         self.goal_label.setObjectName("goal_label")
         self.verticalLayout_2.addWidget(self.goal_label)
         self.time_label = QtWidgets.QLabel(GoWidget)
+        self.time_label.setStyleSheet("QLabel#time_label{\n"
+"    background-color:rgba(235, 252, 255, 100);\n"
+"    font: 20pt \"Noto Serif SC Black\";\n"
+"}\n"
+"")
+        self.time_label.setFrameShadow(QtWidgets.QFrame.Plain)
         self.time_label.setAlignment(QtCore.Qt.AlignCenter)
         self.time_label.setObjectName("time_label")
-        self.verticalLayout_2.addWidget(self.time_label)
+        self.verticalLayout_2.addWidget(self.time_label, 0, QtCore.Qt.AlignHCenter)
         spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem)
-        self.label_2 = QtWidgets.QLabel(GoWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy)
-        self.label_2.setScaledContents(True)
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_2.setObjectName("label_2")
-        self.verticalLayout_2.addWidget(self.label_2)
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem1)
         self.state_label = QtWidgets.QLabel(GoWidget)
+        self.state_label.setStyleSheet("QLabel#state_label{\n"
+"    \n"
+"    font: 14pt \"Book Antiqua\";\n"
+"}")
         self.state_label.setAlignment(QtCore.Qt.AlignCenter)
         self.state_label.setObjectName("state_label")
         self.verticalLayout_2.addWidget(self.state_label)
@@ -57,6 +68,20 @@ class Ui_GoWidget(object):
         sizePolicy.setHeightForWidth(self.main_button.sizePolicy().hasHeightForWidth())
         self.main_button.setSizePolicy(sizePolicy)
         self.main_button.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.main_button.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
+"    color: rgb(0, 0, 0);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    padding: 8px 16px;\n"
+"    font: 14pt \"STHupo\";\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
+"}")
         self.main_button.setObjectName("main_button")
         self.horizontalLayout_2.addWidget(self.main_button)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
@@ -68,6 +93,20 @@ class Ui_GoWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.option_button.sizePolicy().hasHeightForWidth())
         self.option_button.setSizePolicy(sizePolicy)
+        self.option_button.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
+"    color: rgb(0, 0, 0);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    padding: 8px 16px;\n"
+"    font: 14pt \"STHupo\";\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
+"}")
         self.option_button.setObjectName("option_button")
         self.horizontalLayout_3.addWidget(self.option_button)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
@@ -81,7 +120,6 @@ class Ui_GoWidget(object):
         GoWidget.setWindowTitle(_translate("GoWidget", "开始界面"))
         self.goal_label.setText(_translate("GoWidget", "目的地："))
         self.time_label.setText(_translate("GoWidget", "0:00"))
-        self.label_2.setText(_translate("GoWidget", "旅行伙伴们"))
         self.state_label.setText(_translate("GoWidget", "state"))
         self.main_button.setText(_translate("GoWidget", "出发"))
         self.option_button.setText(_translate("GoWidget", "选项"))

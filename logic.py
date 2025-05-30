@@ -215,7 +215,7 @@ class GoWindow(MethodWidget):
             
     def preparing(self):
         self.setWindowTitle("准备中")
-        self.main_button.setText("GO!")
+        self.main_button.setText("出发")
         self.state_label.setText("准备好了就开始了哦")
 
     def marching(self):
@@ -223,7 +223,7 @@ class GoWindow(MethodWidget):
         self.user.current_tour.start_tour()
         self.start_timer()
         self.setWindowTitle("通勤中")
-        self.main_button.setText("到达!")
+        self.main_button.setText("到达")
         self.state_label.setText("GOGOGO!")
 
     def playing(self):
