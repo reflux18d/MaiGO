@@ -6,7 +6,7 @@ QApplication, QWidget,
 QPushButton, QLabel,
 QVBoxLayout, QHBoxLayout, QGroupBox,
 QStackedWidget, QScrollArea, QTextEdit, QCheckBox,
-QGraphicsEllipseItem, QGraphicsScene, QGraphicsPixmapItem
+QGraphicsEllipseItem, QGraphicsScene, QGraphicsPixmapItem,QSizePolicy
 )
 from PyQt5.QtGui import (
 QPixmap, QColor, QFont, QBrush, QPen,
@@ -66,23 +66,14 @@ class StartWindow(MethodWidget):
         # 创建ui类实例
         self.ui = Ui_start_window.Ui_StartWidget() 
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        #self.ui.label_2.setVisible(False)
+        self.ui.label_2.setText("")
         self.original_pixmap=None
         self.user = user # 绑定用户
         self.signal = signal # 绑定切换界面信号
         self.trigger_widgets()
         self.set_figure(acid_path)
-        # 创建气泡框 QLabel
-        self.tooltip_label = QLabel(self)
-        self.tooltip_label.setStyleSheet("""
-            QLabel {
-                background-color: rgba(0, 0, 0, 0.7);
-                color: white;
-                border-radius: 5px;
-                padding: 5px;
-            }
-        """)
-        self.tooltip_label.setAlignment(Qt.AlignCenter)
-        self.tooltip_label.setVisible(False)  # 初始化隐藏
+        
 
     def trigger_widgets(self):
         """
@@ -103,16 +94,10 @@ class StartWindow(MethodWidget):
     def on_image_click(self, event):
         from PyQt5.QtWidgets import QToolTip,QMessageBox
         from PyQt5.QtCore import QRect
-        self.tooltip_label.setText("ajskfjlkdfsaklf")
-        # 计算气泡框的位置
-        x = 200
-        y = 100
-        self.tooltip_label.move(x, y)  # 调整气泡框的位置
-        self.tooltip_label.adjustSize()  # 自动调整大小
-        self.tooltip_label.setVisible(True)  # 显示气泡框
-
-        # 使用 QTimer 设置延时隐藏
-        QTimer.singleShot(2000, lambda:self.tooltip_label.setVisible(False))  # 2秒后隐藏
+        #self.ui.label_2.setVisible(True)
+        
+        self.ui.label_2.setText("ajskfjlkdfsaklf")
+        QTimer.singleShot(2000, lambda:self.ui.label_2.setText(""))
         from PyQt5.QtMultimedia import QSound
         try:
             QSound.play("click.wav")  # 需要准备WAV格式音频文件
@@ -224,10 +209,52 @@ class GoWindow(MethodWidget):
         self.state_label = self.ui.state_label
         self.timer_label = self.ui.time_label
         self.goal_label = self.ui.goal_label
+        self.label=self.ui.label
+        self.set_gif()
         self.option_button = self.ui.option_button
         # 点击主按钮切换到下一阶段
         self.main_button.clicked.connect(lambda: self.state_change(self.state + 1))
         self.option_button.clicked.connect(lambda: self.signal.emit("option_window"))
+
+    def set_gif(self):
+        from PyQt5.QtGui import QMovie
+        
+        try:
+            self.movie = QMovie('run.gif')
+            
+            # 连接帧变化信号到缩放函数
+            self.movie.frameChanged.connect(self._scale_gif_frame)
+            
+            # 设置标签大小策略和对齐方式
+            self.label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            self.label.setAlignment(Qt.AlignCenter)
+            
+            self.label.setMovie(self.movie)
+            self.movie.start()
+            
+            # 初始缩放
+            self._scale_gif_frame()
+            
+        except Exception as e:
+            print(f"加载GIF出错：{str(e)}")
+            
+    def _scale_gif_frame(self):
+        if not self.movie:
+            return
+            
+        # 获取当前帧
+        pixmap = self.movie.currentPixmap()
+        
+        # 按标签大小缩放
+        label_size = self.label.size()
+        scaled_pixmap = pixmap.scaled(
+            label_size, 
+            Qt.KeepAspectRatio, 
+            Qt.SmoothTransformation
+        )
+        
+        # 应用缩放后的图像
+        self.label.setPixmap(scaled_pixmap)
 
     def start_timer(self):
         self.timer.start(1000)

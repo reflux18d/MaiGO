@@ -18,9 +18,7 @@ class Ui_GoWidget(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/image/bear.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
         GoWidget.setWindowIcon(icon)
-        GoWidget.setStyleSheet("QWidget#GoWidget {\n"
-"        border-image: url(:/image/friend.png) 0 0 0 0 round round;\n"
-"    }")
+        GoWidget.setStyleSheet("")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(GoWidget)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.goal_label = QtWidgets.QLabel(GoWidget)
@@ -45,10 +43,15 @@ class Ui_GoWidget(object):
         self.time_label.setAlignment(QtCore.Qt.AlignCenter)
         self.time_label.setObjectName("time_label")
         self.verticalLayout_2.addWidget(self.time_label, 0, QtCore.Qt.AlignHCenter)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem1)
+        self.label = QtWidgets.QLabel(GoWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        self.label.setText("")
+        self.label.setObjectName("label")
+        self.verticalLayout_2.addWidget(self.label)
         self.state_label = QtWidgets.QLabel(GoWidget)
         self.state_label.setStyleSheet("QLabel#state_label{\n"
 "    \n"
