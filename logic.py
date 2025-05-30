@@ -43,7 +43,7 @@ from datainfo import data_samples
 
 bear_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/bear.png'
 online_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/offline.png'
-map_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/map.png'
+map_path = ":/image/map.png"
 
 # MainWindow中main_signal:pyqtSignal(str)的绑定函数字典
 # 现有val函数输入均为MainWindow的self, 均在MainWindow中定义
