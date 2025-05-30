@@ -1,6 +1,6 @@
 """存放记录数据的类"""
 from datetime import datetime
-import os
+import copy
 
 
 class Place:
@@ -35,6 +35,13 @@ class Tour:
         self.state = 0  # 0:准备 1:通勤 2:游玩 3:结束
         self.data = {} # 其他记录数据种类 key: str  val: varible
     
+    def set_data(self, user):
+        assert isinstance(user, User), "Invalid user type"
+        for key, val in user.data.items():
+            assert isinstance(val, Data)
+            new_data = val.new_copy()
+            self.data[key] = new_data
+    
     def start_tour(self):
         """开始出勤"""
         self.start_time = datetime.now()
@@ -48,25 +55,8 @@ class Tour:
     def end_tour(self):
         """结束出勤"""
         self.end_time = datetime.now()
-        self.state = 3
-        self._calculate_stats()
-    
-    def _calculate_stats(self):
-        """计算统计数据"""
-        # 函数名前加下划线，ok不在类外使用
-        assert all([self.start_time, self.arrival_time, self.end_time]), "Uncomplete Tour"
-        # 暂不返回
-        self.info["travel_time"] = (self.arrival_time - self.start_time).total_seconds() / 60  # 分钟 
-        self.info["play_duration"] = (self.end_time - self.arrival_time).total_seconds() / 60
-        self.info["from_to"] = f"{str(self.home)} → {str(self.goal)}" # 使用Place的str形式
+        self.state = 3   
 
-    def description(self):
-        """返回对于本次出勤的详情文本"""
-        result = ""
-        for item in self.info.items():
-            key, val = item
-            result = result + key + ": " + str(val) + "\n"
-        return result
         
         
 class User:
@@ -83,6 +73,7 @@ class User:
     def start_new_tour(self, home, goal):
         """开始新的出勤记录"""
         self.current_tour = Tour(home, goal)
+        self.current_tour.set_data(self)
     
     def save_tour(self):
         """保存当前出勤记录"""
@@ -131,6 +122,11 @@ class Data:
         """用于合并单次Tour的Data对象到User的总计Data对象中"""
         pass
 
+    def new_copy(self):
+        """用于生成一个相同类型但是数据初始化的Data"""
+        new_data = copy.deepcopy(self)
+        return new_data
+
 class NumData(Data):
     """记录数值的类，如时间里程等"""
     """暂时默认val为int"""
@@ -148,6 +144,11 @@ class NumData(Data):
         self.val += other.val
         return self
     
+    def new_copy(self):
+        new_data = Data.new_copy(self)
+        new_data.val = 0
+        return new_data
+    
 class StrData(Data):
     """记录文字的类，如不同标签的日记等"""
     def __init__(self, name: str, val: str = ""):
@@ -160,6 +161,11 @@ class StrData(Data):
             self.val += '\n'
         self.val += other.val
         return self
+    
+    def new_copy(self):
+        new_data = Data.new_copy(self)
+        new_data.val = ""
+        return new_data
     
 class DictData(Data):
     """记录选项的类，如选择交通方式并统计次数"""
@@ -194,6 +200,12 @@ class DictData(Data):
                 result += '\n'
                 result += f"{key}: {val}"
         return result
+    
+    def new_copy(self):
+        new_data = Data.new_copy(self)
+        for key in new_data.val.keys():
+            new_data.val[key] = 0
+        return new_data
 
 
 if __name__ == "__main__":

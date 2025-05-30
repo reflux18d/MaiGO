@@ -410,25 +410,30 @@ class AccountWindow(MethodWidget):
         绑定所有QTdesigner中定义的控件
         并定义逻辑行为
         """
-        data_widget = MethodWidget()
-
         #添加记录的layout
+        self.return_button = self.ui.return_button
+        self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
+
+        data_widget = MethodWidget()
         self.data_layout = data_widget.create_layout(QVBoxLayout)
         self.ui.account_scroll.setWidget(data_widget)
 
-        self.return_button = self.ui.return_button
-        self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
+        # 将用户设置中所有data转化为settingsSingle
+        for data in self.user.data.values():
+            data_single = DataSingle(data)
+            self.add_data(data_single)    
         
     def add_data(self, *widgets):
         for widget in widgets:
+            assert isinstance(widget, DataSingle), "Incorrect data class"
             self.data_layout.addWidget(widget)
             self.data_list.append(widget)
 
     def update_data(self):
         """将所有DataSingle更新数据"""
-        for widget in self.data_list:
-            # TODO
-            pass   
+        for data_single in self.data_list:
+            assert isinstance(data_single, DataSingle), "Incorrect data class"
+            data_single.update()  
 
 class MainWindow(MethodWidget):
     main_signal = pyqtSignal(str)
