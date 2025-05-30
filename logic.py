@@ -40,11 +40,13 @@ DataSingle, OptionInput, OptionSelect,
 
 # 调用datainfo中的sample
 from datainfo import data_samples
-
-bear_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/bear.png'
-online_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/offline.png'
-map_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/map.png'
-
+import os
+script_dir=os.path.dirname(os.path.abspath(__file__))
+bear_path=os.path.join(script_dir, 'image','bear.png')
+online_path = os.path.join(script_dir, 'image', 'offline.png')
+map_path = os.path.join(script_dir, 'image', 'map.png')
+friend_path = os.path.join(script_dir,  'image', 'friend.png')
+#map_path='D:/程序设计实习/MaiGO/image/map.png'
 # MainWindow中main_signal:pyqtSignal(str)的绑定函数字典
 # 现有val函数输入均为MainWindow的self, 均在MainWindow中定义
 CMD_DICT = {
@@ -65,7 +67,7 @@ class StartWindow(MethodWidget):
         # 创建ui类实例
         self.ui = Ui_start_window.Ui_StartWidget() 
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
-
+        
         self.user = user # 绑定用户
         self.signal = signal # 绑定切换界面信号
         self.trigger_widgets()
