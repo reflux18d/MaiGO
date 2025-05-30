@@ -399,7 +399,7 @@ class SettingsWindow(MethodWidget):
         settings_widget = MethodWidget()
         self.settings_layout = settings_widget.create_layout(QVBoxLayout)
         self.ui.settings_scroll.setWidget(settings_widget)
-        # 将用户设置中所有data转化为settingsSingle
+        # 将用户设置中所有editdable的data转化为SettingsSingle
         for data in self.user.data.values():
             assert isinstance(data, Data), "Invalid data type"
             if data.editable:
@@ -443,8 +443,10 @@ class AccountWindow(MethodWidget):
 
         # 将用户设置中所有data转化为settingsSingle
         for data in self.user.data.values():
-            data_single = DataSingle(data)
-            self.add_data(data_single)    
+            assert isinstance(data, Data), "Invalid data type"
+            if data.accumulable:
+                data_single = DataSingle(data)
+                self.add_data(data_single)    
         
     def add_data(self, *widgets):
         for widget in widgets:

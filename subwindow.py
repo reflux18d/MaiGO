@@ -196,21 +196,22 @@ class OptionInput(MethodWidget):
         assert isinstance(self.data, Data), "No Data"
         text = self.option_edit.toPlainText()
         if isinstance(self.data, NumData):
-            self.data.add_val(int(text))
+            self.data.set_val(int(text))
         elif isinstance(self.data, StrData):
-            self.data.add_val(text)
+            self.data.set_val(text)
 
     def reset(self):
         self.option_edit.clear()
 
 class OptionSelect(MethodWidget):
     """拥有RadioButtons的选择型option"""
-    def __init__(self, data = None, exclusive = True, *args, **kwargs):
+    def __init__(self, data = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ui = Ui_option_select.Ui_OptionSelect() # 创建ui类实例
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
+        assert isinstance(data, DictData)
         self.data = data
-        self.exclusive = exclusive # 是否单选
+        self.exclusive = self.data.exclusive # 是否单选
 
         self.trigger_widgets()
 
@@ -222,7 +223,7 @@ class OptionSelect(MethodWidget):
         self.option_box.setTitle(self.data.name)
         # 创建ButtonGroup实现单选逻辑
         self.radio_group = QButtonGroup(self)
-        self.radio_group.setExclusive(True)
+        self.radio_group.setExclusive(self.exclusive)
         self.index_to_key = {} # 方便后续调用self.data.val
         for index, key in enumerate(self.data.val.keys()):
             # 暂时默认传入key作为label
@@ -239,7 +240,7 @@ class OptionSelect(MethodWidget):
             assert isinstance(button, QRadioButton)
             if button.isChecked():
                 key = self.index_to_key[index]
-                self.data.update_val(key)
+                self.data.set_val(key, 1)
 
 
     def reset(self):
