@@ -1,5 +1,5 @@
 # More methods
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QLayout
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QGroupBox
 
 class MethodWidget(QWidget):
@@ -99,6 +99,17 @@ def more_widgets(layout, *widgets, stretch = 0):
         layout.addStretch(stretch)
     return widgets
     
+
+def clear_layout(layout):
+    """GPT写的清空layout的办法"""
+    assert isinstance(layout, QLayout), "Only for layout"
+    while layout.count():
+        item = layout.takeAt(0)
+        widget = item.widget()
+        if widget is not None:
+            widget.setParent(None)
+
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
