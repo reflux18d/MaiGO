@@ -41,9 +41,9 @@ DataSingle, OptionInput, OptionSelect,
 # 调用datainfo中的sample
 from datainfo import data_samples
 
-bear_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/bear.png'
-online_path = 'F:/cjdl/vsc/homework/ChSh/MaiGO/ui_test/offline.png'
+bear_path = ":/image/bear.png"
 map_path = ":/image/map.png"
+salt_path = ":/image/friend.png"
 
 # MainWindow中main_signal:pyqtSignal(str)的绑定函数字典
 # 现有val函数输入均为MainWindow的self, 均在MainWindow中定义
@@ -69,6 +69,7 @@ class StartWindow(MethodWidget):
         self.user = user # 绑定用户
         self.signal = signal # 绑定切换界面信号
         self.trigger_widgets()
+        self.set_figure(salt_path)
 
     def trigger_widgets(self):
         """
@@ -79,11 +80,23 @@ class StartWindow(MethodWidget):
         self.record_button = self.ui.record_button
         self.settings_button = self.ui.settings_button
         self.account_button = self.ui.account_button
+        self.figure_label = self.ui.figure_label
 
         self.go_button.clicked.connect(lambda: self.signal.emit("map_window"))
         self.record_button.clicked.connect(lambda: self.signal.emit("record_window"))
         self.settings_button.clicked.connect(lambda: self.signal.emit("settings_window"))
         self.account_button.clicked.connect(lambda: self.signal.emit("account_window"))
+
+    def set_figure(self, image_path):
+        pixmap = QPixmap(image_path)
+        if pixmap.isNull():
+            print(f"Failed to load image: {image_path}")
+            return
+        # 获取 QLabel 的尺寸
+        label_size = self.figure_label.size()
+        # 根据 QLabel 尺寸缩放 pixmap，保持原比例（AspectRatio）
+        scaled_pixmap = pixmap.scaled(label_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        self.figure_label.setPixmap(scaled_pixmap)
 
 class MapWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
