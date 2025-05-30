@@ -119,12 +119,12 @@ class DataSingle(MethodWidget):
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
         self.data = data
         self.trigger_widgets()
-        self.update_data()
+        self.update()
     
     def trigger_widgets(self):
         self.data_label = self.ui.data_label
 
-    def update_data(self):
+    def update(self):
         """更新label展示的数据 可扩展"""
         assert isinstance(self.data, Data), "No data"
         self.data_label.setText(str(self.data))
@@ -146,9 +146,9 @@ class SettingsSingle(MethodWidget):
         self.name_label = self.ui.name_label
         self.name_label.setText(self.data.name)
         self.checkbox = self.ui.enable_checkbox
-        self.checkbox.stateChanged.connect(self.update_enablity)
+        self.checkbox.stateChanged.connect(self.update)
 
-    def update_enablity(self):
+    def update(self):
         """检查自己的checkbox并相应改变data的enable属性"""
         if self.checkbox.isChecked():
             self.data.enable()
