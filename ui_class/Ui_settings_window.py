@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\settings_window.ui'
+# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\settings_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -26,6 +26,10 @@ class Ui_SettingsWidget(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label = QtWidgets.QLabel(SettingsWidget)
+        self.label.setStyleSheet("QLabel#label{\n"
+"    font: 14pt \"Book Antiqua\";\n"
+"    background-color:rgb(242, 234, 255)\n"
+"}")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
@@ -37,7 +41,7 @@ class Ui_SettingsWidget(object):
         self.settings_scroll.setAlignment(QtCore.Qt.AlignCenter)
         self.settings_scroll.setObjectName("settings_scroll")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 447))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 422))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.settings_scroll.setWidget(self.scrollAreaWidgetContents)
         self.inform_layout.addWidget(self.settings_scroll)
@@ -50,6 +54,20 @@ class Ui_SettingsWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.return_button.sizePolicy().hasHeightForWidth())
         self.return_button.setSizePolicy(sizePolicy)
+        self.return_button.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
+"    color: rgb(0, 0, 0);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    padding: 8px 16px;\n"
+"    font: 14pt \"STHupo\";\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
+"}")
         self.return_button.setObjectName("return_button")
         self.bottom_layout.addWidget(self.return_button)
         self.verticalLayout.addLayout(self.bottom_layout)

@@ -20,7 +20,10 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#StartWidget {
-        border-image: url(:/image/friend.png) 0 0 0 0 round round;
+    background-image: url(:/image/friend.png);
+    background-repeat: no-repeat;  /* 防止图片重复 */
+    background-position: center;  /* 图片在容器中居中 */
+    background - size: contain;  
     }
 </string>
   </property>
@@ -29,11 +32,8 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="account_button">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+       <property name="enabled">
+        <bool>true</bool>
        </property>
        <property name="styleSheet">
         <string notr="true">QPushButton {
@@ -42,7 +42,7 @@
     border: none;
     border-radius: 4px;
     padding: 8px 16px;
-	font: 14pt &quot;华文彩云&quot;;
+	font: 14pt &quot;STHupo&quot;;
 }
 QPushButton:hover {
     background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */
@@ -84,7 +84,7 @@ QPushButton:pressed {
     border: none;
     border-radius: 4px;
     padding: 8px 16px;
-	font: 14pt &quot;华文彩云&quot;;
+	font: 14pt &quot;STHupo&quot;;
 }
 QPushButton:hover {
     background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */
@@ -110,7 +110,7 @@ QPushButton:pressed {
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>40</height>
+         <height>20</height>
         </size>
        </property>
       </spacer>
