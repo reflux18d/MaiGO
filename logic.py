@@ -43,7 +43,8 @@ from datainfo import data_samples
 
 bear_path = ":/image/bear.png"
 map_path = ":/image/map.png"
-salt_path = ":/image/friend.png"
+salt_path = ":/image/salt.png"
+acid_path = ":/image/acid.png"
 
 # MainWindow中main_signal:pyqtSignal(str)的绑定函数字典
 # 现有val函数输入均为MainWindow的self, 均在MainWindow中定义
@@ -69,7 +70,7 @@ class StartWindow(MethodWidget):
         self.user = user # 绑定用户
         self.signal = signal # 绑定切换界面信号
         self.trigger_widgets()
-        self.set_figure(salt_path)
+        self.set_figure(acid_path)
 
     def trigger_widgets(self):
         """

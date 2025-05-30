@@ -6,5 +6,8 @@
     <file>image/offline.png</file>
     <file>image/bear_full.png</file>
     <file>image/friend.png</file>
+    <file>image/salt.png</file>
+    <file>image/acid.png</file>
+    <file>image/yurisaki.png</file>
 </qresource>
 </RCC>

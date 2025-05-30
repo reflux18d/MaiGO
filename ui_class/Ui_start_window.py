@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_StartWidget(object):
     def setupUi(self, StartWidget):
         StartWidget.setObjectName("StartWidget")
-        StartWidget.resize(261, 424)
+        StartWidget.resize(318, 555)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/image/bear.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
         StartWidget.setWindowIcon(icon)
@@ -44,12 +44,12 @@ class Ui_StartWidget(object):
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout_2.addItem(spacerItem1)
         self.figure_label = QtWidgets.QLabel(StartWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.figure_label.sizePolicy().hasHeightForWidth())
         self.figure_label.setSizePolicy(sizePolicy)
-        self.figure_label.setMinimumSize(QtCore.QSize(200, 250))
+        self.figure_label.setMinimumSize(QtCore.QSize(300, 400))
         self.figure_label.setMaximumSize(QtCore.QSize(300, 400))
         self.figure_label.setText("")
         self.figure_label.setScaledContents(True)
