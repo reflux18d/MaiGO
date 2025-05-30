@@ -50,7 +50,7 @@
           <x>0</x>
           <y>0</y>
           <width>325</width>
-          <height>447</height>
+          <height>420</height>
          </rect>
         </property>
        </widget>
@@ -58,22 +58,31 @@
      </item>
     </layout>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="bottom_layout">
-     <item>
-      <widget class="QPushButton" name="return_button">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>返回</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item alignment="Qt::AlignHCenter">
+    <widget class="QPushButton" name="return_button">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>取消</string>
+     </property>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignHCenter">
+    <widget class="QPushButton" name="Fixed_button">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>确定</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

@@ -181,6 +181,7 @@ class OptionInput(MethodWidget):
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
         self.data = data
         self.trigger_widgets()
+        self.reset()
 
     def trigger_widgets(self):
         """绑定GroupBoxName和TextEdit"""
@@ -190,7 +191,7 @@ class OptionInput(MethodWidget):
         self.option_box.setTitle(self.data.name)
         self.option_edit.setPlaceholderText(self.data.info)
 
-    def update_context(self):
+    def save(self):
         """检查自己的checkbox并相应改变data的enable属性"""
         assert isinstance(self.data, Data), "No Data"
         text = self.option_edit.toPlainText()
@@ -231,7 +232,7 @@ class OptionSelect(MethodWidget):
             self.radio_group.addButton(button, index)
             self.selection_layout.addWidget(select_widget)
 
-    def update_selection(self):
+    def save(self):
         """保存自己的选择"""
         assert isinstance(self.data, DictData), "Only support dict"
         for index, button in enumerate(self.radio_group.buttons()):
