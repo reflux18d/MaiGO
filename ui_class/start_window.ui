@@ -18,9 +18,15 @@
     <selectedon>:/image/bear.png</selectedon>
    </iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#StartWidget {
+        border-image: url(:/image/friend.png) 0 0 0 0 round round;
+    }
+</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="account_button">
        <property name="sizePolicy">
@@ -28,6 +34,22 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgb(185, 219, 255);  /* 蓝色背景 */
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+	font: 14pt &quot;华文彩云&quot;;
+}
+QPushButton:hover {
+    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */
+}
+QPushButton:pressed {
+    background-color: rgb(101, 206, 255);  /* 按下颜色 */
+}</string>
        </property>
        <property name="text">
         <string>账号</string>
@@ -39,12 +61,9 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
-       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>98</width>
          <height>20</height>
         </size>
        </property>
@@ -58,6 +77,22 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgb(185, 219, 255);  /* 蓝色背景 */
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+	font: 14pt &quot;华文彩云&quot;;
+}
+QPushButton:hover {
+    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */
+}
+QPushButton:pressed {
+    background-color: rgb(101, 206, 255);  /* 按下颜色 */
+}</string>
+       </property>
        <property name="text">
         <string>设置</string>
        </property>
@@ -66,88 +101,96 @@
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <widget class="QLabel" name="label_2">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>可爱立绘</string>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="go_button">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="text">
-          <string>出发</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item alignment="Qt::AlignHCenter">
+      <widget class="QPushButton" name="go_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgb(185, 219, 255);  /* 蓝色背景 */
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+	font: 14pt &quot;STHupo&quot;;
+}
+QPushButton:hover {
+    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */
+}
+QPushButton:pressed {
+    background-color: rgb(101, 206, 255);  /* 按下颜色 */
+}</string>
+       </property>
+       <property name="text">
+        <string>出发</string>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignHCenter">
+      <widget class="QPushButton" name="record_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: rgb(185, 219, 255);  /* 蓝色背景 */
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+	font: 14pt &quot;STHupo&quot;;
+}
+QPushButton:hover {
+    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */
+}
+QPushButton:pressed {
+    background-color: rgb(101, 206, 255);  /* 按下颜色 */
+}</string>
+       </property>
+       <property name="text">
+        <string>记录</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QPushButton" name="record_button">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>记录</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -161,19 +204,20 @@
      </property>
      <property name="font">
       <font>
-       <family>黑体</family>
+       <family>STHupo</family>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #f0f0f0;
-    border-radius: 8px;
-    padding: 6px 12px;</string>
+      <string notr="true">color:rgb(170, 0, 127);
+font: 12pt &quot;STHupo&quot;;
+</string>
      </property>
      <property name="text">
-      <string>可以和我打一辈子舞萌吗</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <string>可以和我打一辈子舞萌吗♪( ´▽｀)</string>
      </property>
     </widget>
    </item>

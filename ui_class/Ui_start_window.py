@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\start_window.ui'
+# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\start_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -18,6 +18,10 @@ class Ui_StartWidget(object):
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/image/bear.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
         StartWidget.setWindowIcon(icon)
+        StartWidget.setStyleSheet("QWidget#StartWidget {\n"
+"        border-image: url(:/image/friend.png) 0 0 0 0 round round;\n"
+"    }\n"
+"")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(StartWidget)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -28,9 +32,23 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.account_button.sizePolicy().hasHeightForWidth())
         self.account_button.setSizePolicy(sizePolicy)
+        self.account_button.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
+"    color: rgb(0, 0, 0);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    padding: 8px 16px;\n"
+"    font: 14pt \"华文彩云\";\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
+"}")
         self.account_button.setObjectName("account_button")
         self.horizontalLayout.addWidget(self.account_button)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(98, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.settings_button = QtWidgets.QPushButton(StartWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
@@ -38,48 +56,75 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.settings_button.sizePolicy().hasHeightForWidth())
         self.settings_button.setSizePolicy(sizePolicy)
+        self.settings_button.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
+"    color: rgb(0, 0, 0);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    padding: 8px 16px;\n"
+"    font: 14pt \"华文彩云\";\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
+"}")
         self.settings_button.setObjectName("settings_button")
         self.horizontalLayout.addWidget(self.settings_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem1)
-        self.label_2 = QtWidgets.QLabel(StartWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy)
-        self.label_2.setScaledContents(True)
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_2.setObjectName("label_2")
-        self.verticalLayout_2.addWidget(self.label_2)
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem2)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem1)
         self.go_button = QtWidgets.QPushButton(StartWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.go_button.sizePolicy().hasHeightForWidth())
         self.go_button.setSizePolicy(sizePolicy)
+        self.go_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.go_button.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.go_button.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
+"    color: rgb(0, 0, 0);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    padding: 8px 16px;\n"
+"    font: 14pt \"STHupo\";\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
+"}")
         self.go_button.setObjectName("go_button")
-        self.horizontalLayout_2.addWidget(self.go_button)
-        self.verticalLayout.addLayout(self.horizontalLayout_2)
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.verticalLayout.addWidget(self.go_button, 0, QtCore.Qt.AlignHCenter)
         self.record_button = QtWidgets.QPushButton(StartWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.record_button.sizePolicy().hasHeightForWidth())
         self.record_button.setSizePolicy(sizePolicy)
+        self.record_button.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
+"    color: rgb(0, 0, 0);\n"
+"    border: none;\n"
+"    border-radius: 4px;\n"
+"    padding: 8px 16px;\n"
+"    font: 14pt \"STHupo\";\n"
+"}\n"
+"QPushButton:hover {\n"
+"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
+"}")
         self.record_button.setObjectName("record_button")
-        self.horizontalLayout_3.addWidget(self.record_button)
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.verticalLayout.addWidget(self.record_button, 0, QtCore.Qt.AlignHCenter)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem2)
         self.verticalLayout_2.addLayout(self.verticalLayout)
         self.label = QtWidgets.QLabel(StartWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
@@ -88,12 +133,15 @@ class Ui_StartWidget(object):
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
-        font.setFamily("黑体")
+        font.setFamily("STHupo")
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
         self.label.setFont(font)
-        self.label.setStyleSheet("background-color: #f0f0f0;\n"
-"    border-radius: 8px;\n"
-"    padding: 6px 12px;")
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setStyleSheet("color:rgb(170, 0, 127);\n"
+"font: 12pt \"STHupo\";\n"
+"")
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
 
@@ -105,8 +153,7 @@ class Ui_StartWidget(object):
         StartWidget.setWindowTitle(_translate("StartWidget", "开始界面"))
         self.account_button.setText(_translate("StartWidget", "账号"))
         self.settings_button.setText(_translate("StartWidget", "设置"))
-        self.label_2.setText(_translate("StartWidget", "可爱立绘"))
         self.go_button.setText(_translate("StartWidget", "出发"))
         self.record_button.setText(_translate("StartWidget", "记录"))
-        self.label.setText(_translate("StartWidget", "可以和我打一辈子舞萌吗"))
+        self.label.setText(_translate("StartWidget", "可以和我打一辈子舞萌吗♪( ´▽｀)"))
 import resources_rc
