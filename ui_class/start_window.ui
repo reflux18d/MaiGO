@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>318</width>
-    <height>555</height>
+    <width>410</width>
+    <height>623</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,13 +21,45 @@
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QPushButton" name="account_button">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius: 15px;       /* 圆形按钮 */
+    background-color: rgb(255, 149, 42);       /* 圆形按钮 */
+    color: white;
+    border: none;;
+    color: white;
+    border: 3px solid rgb(255, 109, 42); /* 边框样式 */</string>
        </property>
        <property name="text">
         <string>账号</string>
@@ -38,9 +70,6 @@
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -53,10 +82,33 @@
      <item>
       <widget class="QPushButton" name="settings_button">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>35</width>
+         <height>35</height>
+        </size>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border-radius: 15px;       /* 圆形按钮 */
+    background-color: rgb(255, 149, 42);       /* 圆形按钮 */
+    color: white;
+    border: none;;
+    color: white;
+    border: 3px solid rgb(255, 109, 42); /* 边框样式 */</string>
        </property>
        <property name="text">
         <string>设置</string>
@@ -66,61 +118,88 @@
     </layout>
    </item>
    <item>
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item alignment="Qt::AlignHCenter">
-    <widget class="QLabel" name="figure_label">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>300</width>
-       <height>400</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>300</width>
-       <height>400</height>
-      </size>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
+    <widget class="QStackedWidget" name="verticalStackedWidget">
+     <widget class="QWidget" name="verticalStackedWidgetPage1" native="true">
+      <widget class="QLabel" name="figure_label">
+       <property name="geometry">
+        <rect>
+         <x>46</x>
+         <y>1</y>
+         <width>300</width>
+         <height>400</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>400</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>300</width>
+         <height>400</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>150</y>
+         <width>100</width>
+         <height>30</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgba(50, 50, 50, 0.8);  /* 背景颜色和透明度 */
+                color: white;                             /* 字体颜色 */
+                border: 2px solid #FFD700;               /* 边框样式和颜色 */
+                border-radius: 10px;                     /* 圆角边框 */
+                padding: 10px;                           /* 内边距 */</string>
+       </property>
+       <property name="text">
+        <string>Image clicker!</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
     </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -129,13 +208,26 @@
        <item>
         <widget class="QPushButton" name="go_button">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 14pt &quot;黑体&quot;;
+border-radius: 20px;      /* 圆角半径（像素） */
+    background-color: #4CAF50; /* 背景颜色 */
+    color: white;             /* 文字颜色 */
+    border: 5px solid #45a049; /* 边框样式 */</string>
          </property>
          <property name="text">
           <string>出发</string>
@@ -149,10 +241,29 @@
        <item>
         <widget class="QPushButton" name="record_button">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font: 14pt &quot;黑体&quot;;
+border-radius: 20px;      /* 圆角半径（像素） */
+    background-color:white;
+    color: black;             /* 文字颜色 */
+    border: 5px solid rgb(53, 144, 255); /* 边框样式 */</string>
          </property>
          <property name="text">
           <string>记录</string>
@@ -163,7 +274,7 @@
      </item>
     </layout>
    </item>
-   <item>
+   <item alignment="Qt::AlignHCenter">
     <widget class="QLabel" name="label">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -171,21 +282,29 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="font">
       <font>
        <family>黑体</family>
+       <pointsize>12</pointsize>
+       <weight>50</weight>
+       <italic>false</italic>
+       <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: #f0f0f0;
-    border-radius: 8px;
-    padding: 6px 12px;</string>
+      <string notr="true">font: 12pt &quot;黑体&quot;;</string>
      </property>
      <property name="text">
       <string>可以和我打一辈子舞萌吗</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

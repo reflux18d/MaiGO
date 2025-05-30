@@ -66,11 +66,23 @@ class StartWindow(MethodWidget):
         # 创建ui类实例
         self.ui = Ui_start_window.Ui_StartWidget() 
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
-
+        self.original_pixmap=None
         self.user = user # 绑定用户
         self.signal = signal # 绑定切换界面信号
         self.trigger_widgets()
         self.set_figure(acid_path)
+        # 创建气泡框 QLabel
+        self.tooltip_label = QLabel(self)
+        self.tooltip_label.setStyleSheet("""
+            QLabel {
+                background-color: rgba(0, 0, 0, 0.7);
+                color: white;
+                border-radius: 5px;
+                padding: 5px;
+            }
+        """)
+        self.tooltip_label.setAlignment(Qt.AlignCenter)
+        self.tooltip_label.setVisible(False)  # 初始化隐藏
 
     def trigger_widgets(self):
         """
@@ -82,12 +94,30 @@ class StartWindow(MethodWidget):
         self.settings_button = self.ui.settings_button
         self.account_button = self.ui.account_button
         self.figure_label = self.ui.figure_label
-
+        self.figure_label.setCursor(Qt.PointingHandCursor)  # 鼠标悬停时显示手型
+        self.figure_label.mousePressEvent = self.on_image_click  # 绑定点击事件
         self.go_button.clicked.connect(lambda: self.signal.emit("map_window"))
         self.record_button.clicked.connect(lambda: self.signal.emit("record_window"))
         self.settings_button.clicked.connect(lambda: self.signal.emit("settings_window"))
         self.account_button.clicked.connect(lambda: self.signal.emit("account_window"))
+    def on_image_click(self, event):
+        from PyQt5.QtWidgets import QToolTip,QMessageBox
+        from PyQt5.QtCore import QRect
+        self.tooltip_label.setText("ajskfjlkdfsaklf")
+        # 计算气泡框的位置
+        x = 200
+        y = 100
+        self.tooltip_label.move(x, y)  # 调整气泡框的位置
+        self.tooltip_label.adjustSize()  # 自动调整大小
+        self.tooltip_label.setVisible(True)  # 显示气泡框
 
+        # 使用 QTimer 设置延时隐藏
+        QTimer.singleShot(2000, lambda:self.tooltip_label.setVisible(False))  # 2秒后隐藏
+        from PyQt5.QtMultimedia import QSound
+        try:
+            QSound.play("click.wav")  # 需要准备WAV格式音频文件
+        except:
+            print("音频播放失败，请检查click.wav文件是否存在")
     def set_figure(self, image_path):
         pixmap = QPixmap(image_path)
         if pixmap.isNull():
@@ -96,6 +126,7 @@ class StartWindow(MethodWidget):
         # 获取 QLabel 的尺寸
         label_size = self.figure_label.size()
         # 根据 QLabel 尺寸缩放 pixmap，保持原比例（AspectRatio）
+        self.original_pixmap=pixmap
         scaled_pixmap = pixmap.scaled(label_size, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         self.figure_label.setPixmap(scaled_pixmap)
 
@@ -447,6 +478,8 @@ class AccountWindow(MethodWidget):
             assert isinstance(data_single, DataSingle), "Incorrect data class"
             data_single.update()  
 
+#class transWindow(MethodWidget):
+
 class MainWindow(MethodWidget):
     main_signal = pyqtSignal(str)
     # 传给每个窗口的切换信号
@@ -513,6 +546,7 @@ class MainWindow(MethodWidget):
         func(self)
 
 if __name__ == "__main__":
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     app = QApplication([])
 
     user = User("Bo")
