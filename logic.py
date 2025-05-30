@@ -323,9 +323,10 @@ class SettingsWindow(MethodWidget):
         self.ui = Ui_settings_window.Ui_SettingsWidget() # 创建ui类实例
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
 
+        self.user = user
         self.signal = signal
+        self.settings_list = []
         self.trigger_widgets()
-#        self.add_settings(SettingsSingle(), SettingsSingle())
     
     def trigger_widgets(self):
         """
@@ -338,10 +339,21 @@ class SettingsWindow(MethodWidget):
         settings_widget = MethodWidget()
         self.settings_layout = settings_widget.create_layout(QVBoxLayout)
         self.ui.settings_scroll.setWidget(settings_widget)
+        # 将用户设置中所有data转化为settingsSingle
+        for data in self.user.data.values():
+            settings_single = SettingsSingle(data)
+            self.add_settings(settings_single)
+            self.settings_list.append(settings_single)
 
     def add_settings(self, *widgets):
         for widget in widgets:
+            assert isinstance(widget, SettingsSingle), "Incorrect setting class"
             self.settings_layout.addWidget(widget)
+
+    def update_settings(self):
+        for setting in self.settings_list:
+            assert isinstance(setting, SettingsSingle), "Incorrect setting class"
+            setting.update()
         
 class AccountWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
@@ -447,7 +459,9 @@ class MainWindow(MethodWidget):
 if __name__ == "__main__":
     app = QApplication([])
 
-    user = User("Bo", data_samples)
+    user = User("Bo")
+
+    user.add_datatype(*data_samples)
 
     window = MainWindow(user)
 
