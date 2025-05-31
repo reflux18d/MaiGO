@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\settings_window.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\settings_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -35,7 +35,7 @@ class Ui_SettingsWidget(object):
         self.inform_layout.setObjectName("inform_layout")
         self.settings_scroll = QtWidgets.QScrollArea(SettingsWidget)
         self.settings_scroll.setWidgetResizable(True)
-        self.settings_scroll.setAlignment(QtCore.Qt.AlignCenter)
+        self.settings_scroll.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.settings_scroll.setObjectName("settings_scroll")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 423))

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\option_window.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\option_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -35,7 +35,7 @@ class Ui_OptionWidget(object):
         self.inform_layout.setObjectName("inform_layout")
         self.options_scroll = QtWidgets.QScrollArea(OptionWidget)
         self.options_scroll.setWidgetResizable(True)
-        self.options_scroll.setAlignment(QtCore.Qt.AlignCenter)
+        self.options_scroll.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.options_scroll.setObjectName("options_scroll")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 379))

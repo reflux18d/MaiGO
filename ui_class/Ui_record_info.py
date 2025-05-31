@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\record_info.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\record_info.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -14,29 +14,39 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_RecordInfo(object):
     def setupUi(self, RecordInfo):
         RecordInfo.setObjectName("RecordInfo")
-        RecordInfo.resize(391, 300)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.MinimumExpanding)
+        RecordInfo.resize(347, 520)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(RecordInfo.sizePolicy().hasHeightForWidth())
         RecordInfo.setSizePolicy(sizePolicy)
-        RecordInfo.setMaximumSize(QtCore.QSize(16777215, 300))
-        self.horizontalLayout = QtWidgets.QHBoxLayout(RecordInfo)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        self.verticalLayout = QtWidgets.QVBoxLayout()
+        RecordInfo.setWindowTitle("")
+        self.verticalLayout = QtWidgets.QVBoxLayout(RecordInfo)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setObjectName("horizontalLayout")
         self.info_label = QtWidgets.QLabel(RecordInfo)
         self.info_label.setStyleSheet("font: 14pt \"黑体\";")
-        self.info_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.info_label.setAlignment(QtCore.Qt.AlignCenter)
         self.info_label.setObjectName("info_label")
-        self.verticalLayout.addWidget(self.info_label)
-        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.verticalLayout.addItem(spacerItem)
-        self.horizontalLayout.addLayout(self.verticalLayout)
+        self.horizontalLayout.addWidget(self.info_label)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.inform_layout = QtWidgets.QVBoxLayout()
+        self.inform_layout.setObjectName("inform_layout")
+        self.info_scroll = QtWidgets.QScrollArea(RecordInfo)
+        self.info_scroll.setWidgetResizable(True)
+        self.info_scroll.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.info_scroll.setObjectName("info_scroll")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 422))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.info_scroll.setWidget(self.scrollAreaWidgetContents)
+        self.inform_layout.addWidget(self.info_scroll)
+        self.verticalLayout.addLayout(self.inform_layout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem1)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.return_button = QtWidgets.QPushButton(RecordInfo)
@@ -55,13 +65,12 @@ class Ui_RecordInfo(object):
         self.return_button.setObjectName("return_button")
         self.horizontalLayout_2.addWidget(self.return_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
-        self.horizontalLayout.addLayout(self.verticalLayout_2)
+        self.verticalLayout.addLayout(self.verticalLayout_2)
 
         self.retranslateUi(RecordInfo)
         QtCore.QMetaObject.connectSlotsByName(RecordInfo)
 
     def retranslateUi(self, RecordInfo):
         _translate = QtCore.QCoreApplication.translate
-        RecordInfo.setWindowTitle(_translate("RecordInfo", "Form"))
         self.info_label.setText(_translate("RecordInfo", "详情"))
         self.return_button.setText(_translate("RecordInfo", "返回"))

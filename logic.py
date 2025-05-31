@@ -34,7 +34,7 @@ Data, NumData, StrData, DictData
 )
 # 调用subwindow中的子窗口类
 from subwindow import (
-SettingsSingle, RecordSingle,
+SettingsSingle, RecordStack, RecordInterface,
 DataSingle, OptionInput, OptionSelect,
 )
 
@@ -51,13 +51,13 @@ acid_path = ":/image/acid.png"
 CMD_DICT = {
         "start_window": lambda self: MainWindow.switch_to(self, 0),
         "map_window": lambda self: MainWindow.switch_to(self, 1),
-        "go_window": lambda self: MainWindow.switch_to(self, 2),
+        "go_window": lambda self: MainWindow.switch_to_go(self),
         "record_window": lambda self: MainWindow.switch_to_record(self),
         "settings_window": lambda self: MainWindow.switch_to(self, 4),
-        "option_window": lambda self: MainWindow.switch_to(self, 5),
-        "account_window": lambda self: MainWindow.switch_to(self, 6),
+        "option_window": lambda self: MainWindow.switch_to_option(self),
+        "account_window": lambda self: MainWindow.switch_to_account(self),
+        "record_stack": lambda self: MainWindow.switch_to_record_stack(self),
         "save_record": lambda self: MainWindow.save_record(self),
-        "update_goal_label": lambda self: MainWindow.update_goal_label(self)
     }  
 
 class StartWindow(MethodWidget):
@@ -157,7 +157,6 @@ class MapWindow(MethodWidget):
 
     def selected(self, arcade):
         self.user.start_new_tour(self.user.home, arcade)
-        self.signal.emit("update_goal_label")
         self.signal.emit("go_window")
 
 class ArcadeMarker(QGraphicsEllipseItem):
@@ -365,16 +364,7 @@ class OptionWindow(MethodWidget):
         self.return_button = self.ui.return_button
         self.return_button.clicked.connect(self.cancel_and_quit)
         self.fixed_button = self.ui.Fixed_button
-        self.fixed_button.clicked.connect(self.save_and_quit)
-        # 将用户设置中所有data转化为OptionInput或OptionSelect
-        for data in self.user.data.values():
-            option = None
-            if isinstance(data, DictData):
-                option = OptionSelect(data)
-            elif isinstance(data, Data):
-                option = OptionInput(data)
-            assert data is not None, "Invalid option type"
-            self.add_option(option)
+        self.fixed_button.clicked.connect(self.save_and_quit)        
 
         
     def add_option(self, *widgets):
@@ -383,12 +373,32 @@ class OptionWindow(MethodWidget):
             self.option_layout.addWidget(widget)
             self.option_list.append(widget)
 
-    def update_visibility(self):
-        """将所有OptionsSingle更新可视性"""
+    def update(self):
+        """将所有OptionInput或OptionSelect更新数据"""
         for option in self.option_list:
             assert isinstance(option, (OptionInput, OptionSelect)) and isinstance(option.data, Data), "Invalid option or data"
-            option.setVisible(bool(option.data))
-             
+            option.update()
+        
+    def trigger_tour(self):
+        """在开始出勤时绑定self.current_tour作为本界面Options"""
+        assert isinstance(self.user, User), "No user for option"
+        assert isinstance(self.user.current_tour, Tour), "No tour for option"
+        tour = self.user.current_tour
+        for data in tour.data.values():
+            if bool(data):
+                option = None
+                if isinstance(data, DictData):
+                    option = OptionSelect(data)
+                elif isinstance(data, Data):
+                    option = OptionInput(data)
+                assert data is not None, "Invalid option type"
+                self.add_option(option)
+
+
+    def clear_scroll(self):
+        """清空所有Option控件"""
+        clear_layout(self.option_layout)
+
 
     def save_all(self):
         """按确定键保存所有编辑到相应的data"""
@@ -412,14 +422,14 @@ class OptionWindow(MethodWidget):
         
 
 
-class RecordWindow(MethodWidget):
+class RecordWindow(MethodWidget): 
     def __init__(self, signal, user: User = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ui = Ui_record_window.Ui_RecordWidget() # 创建ui类实例
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
         
+        self.user = user
         self.signal = signal
-        self.record_list = [] # 另外存放所有RecordSingle
         self.trigger_widgets()
 
     def trigger_widgets(self):
@@ -436,15 +446,16 @@ class RecordWindow(MethodWidget):
         self.return_button = self.ui.return_button
         self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
         
+    def save_record(self, tour):
+        assert isinstance(tour, Tour), "No tour to save"
+        interface = RecordInterface(self.signal, self.user, tour)
+        self.add_record(interface)
+    
     def add_record(self, *widgets):
         for widget in widgets:
+            assert isinstance(widget, RecordInterface), "Has to be interface"
             self.record_layout.addWidget(widget)
-            self.record_list.append(widget)
 
-    def reset_all(self):
-        """将所有RecordSingle切换到interface界面"""
-        for widget in self.record_list:
-            widget.reset()
 
 class SettingsWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
@@ -468,10 +479,12 @@ class SettingsWindow(MethodWidget):
         settings_widget = MethodWidget()
         self.settings_layout = settings_widget.create_layout(QVBoxLayout)
         self.ui.settings_scroll.setWidget(settings_widget)
-        # 将用户设置中所有data转化为settingsSingle
+        # 将用户设置中所有editdable的data转化为SettingsSingle
         for data in self.user.data.values():
-            settings_single = SettingsSingle(data)
-            self.add_settings(settings_single)           
+            assert isinstance(data, Data), "Invalid data type"
+            if data.editable:
+                settings_single = SettingsSingle(data)
+                self.add_settings(settings_single)           
 
     def add_settings(self, *widgets):
         for widget in widgets:
@@ -510,8 +523,10 @@ class AccountWindow(MethodWidget):
 
         # 将用户设置中所有data转化为settingsSingle
         for data in self.user.data.values():
-            data_single = DataSingle(data)
-            self.add_data(data_single)    
+            assert isinstance(data, Data), "Invalid data type"
+            if data.accumulable:
+                data_single = DataSingle(data)
+                self.add_data(data_single)    
         
     def add_data(self, *widgets):
         for widget in widgets:
@@ -565,7 +580,8 @@ class MainWindow(MethodWidget):
         self.windows.append(self.option_window)
         self.account_window = AccountWindow(self.main_signal, self.user)
         self.windows.append(self.account_window)
-        
+        self.record_stack = RecordStack(self.main_signal, self.user)
+        self.windows.append(self.record_stack)       
 
         for window in self.windows:
             self.stack.addWidget(window)
@@ -574,17 +590,32 @@ class MainWindow(MethodWidget):
     def switch_to(self, index):
         self.stack.setCurrentIndex(index)
 
+    def switch_to_go(self):
+        assert isinstance(self.user.current_tour, Tour), "No current Tour"
+        self.go_window.goal_label.setText(f"目的地:{str(self.user.current_tour.goal)}")
+        self.option_window.clear_scroll()
+        self.option_window.trigger_tour()
+        self.switch_to(2)
+
     def switch_to_record(self):
-        self.record_window.reset_all()
         self.switch_to(3)
 
-    def save_record(self):
-        """加载用户的current_tour为RecordWindow的Widget"""
-        self.record_window.add_record(RecordSingle(self.user.current_tour))
+    def switch_to_option(self):
+        self.option_window.update()
+        self.switch_to(5)
 
-    def update_goal_label(self):
-        if self.user.current_tour is not None:
-            self.go_window.goal_label.setText(f"目的地:{str(self.user.current_tour.goal)}")
+    def switch_to_account(self):
+        self.account_window.update_data()
+        self.switch_to(6)
+
+    def switch_to_record_stack(self):
+        self.record_stack.switch_to(self.user.record_index)
+        self.switch_to(7)
+
+    def save_record(self):
+        """加载用户的current_tour为RecordWindow和RecordStack的Widget"""
+        self.record_window.save_record(self.user.current_tour)
+        self.record_stack.save_record(self.user.current_tour)
 
     # 所有指令经过此处
     def signal_trigger(self, command: str):

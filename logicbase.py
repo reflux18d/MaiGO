@@ -27,6 +27,7 @@ class Arcade(Place):
 
 class Tour:
     def __init__(self, home, goal):
+        self.index = None # 第几次，用于Record绑定
         self.start_time = None
         self.arrival_time = None
         self.end_time = None
@@ -37,6 +38,9 @@ class Tour:
     
     def set_data(self, user):
         assert isinstance(user, User), "Invalid user type"
+        count_data = user.data.get("出勤次数")
+        assert isinstance(count_data, NumData), "Invalid data type"
+        self.index = int(count_data.val)
         for key, val in user.data.items():
             assert isinstance(val, Data)
             new_data = val.new_copy()
@@ -55,9 +59,19 @@ class Tour:
     def end_tour(self):
         """结束出勤"""
         self.end_time = datetime.now()
-        self.state = 3   
+        self.state = 3 
+        self.calc_time()  
 
-        
+    def calc_time(self):
+        count_data = self.data.get("出勤次数")
+        assert isinstance(count_data, NumData), "No Key in DataDict"
+        count_data.add_val(1)
+        march_data, play_data = self.data.get("通勤时间"), self.data.get("游玩时间")
+        assert isinstance(march_data, NumData) and isinstance(play_data, NumData), "No Key In DataDict"      
+        march_time = self.arrival_time - self.start_time
+        march_data.add_val(int(march_time.total_seconds()))
+        play_time = self.end_time - self.arrival_time
+        play_data.add_val(int(play_time.total_seconds()))
         
 class User:
     def __init__(self, name, data = None):
@@ -66,6 +80,7 @@ class User:
         self.current_tour = None  # 当前出勤
         self.home = Place()
         self.data = data if data is not None else {} # 总计数据, key: str
+        self.record_index = 0
 
     def __str__(self):
         return self.name
@@ -77,12 +92,19 @@ class User:
     
     def save_tour(self):
         """保存当前出勤记录"""
-        assert self.current_tour, "No Tour to save"
-        if self.current_tour.state >= 3:
-            self.history.append(self.current_tour)
-            self.current_tour = None
+        assert isinstance(self.current_tour, Tour), "No Tour to save"
+        assert self.current_tour.state >= 3, "Unfinished Tour"
+        for key, tour_data in self.current_tour.data.items():
+            user_data = self.data.get(key)
+            assert isinstance(user_data, Data), "Invalid user data"
+            assert isinstance(tour_data, Data), "Invalid tour data"
+            if user_data.accumulable:
+                user_data += tour_data
+        self.history.append(self.current_tour)
+        self.current_tour = None
 
     def add_datatype(self, *new_data):
+        """暂时没用上"""
         for data in new_data:
             assert isinstance(data, Data), "Invalid data type"
             key = data.name
@@ -90,10 +112,12 @@ class User:
     
 class Data:
     """记录数据选项的基类"""
-    def __init__(self, name: str, val = None, show_in_account = True):   
+    def __init__(self, name: str, val = None, editable = True, accumulable = True):   
         self.name = name
         self.val = val
         self.show = False # 重要，决定OptionWindow是否显示对应widget
+        self.editable = editable # 是否可以人为编辑，初始化之后就不会变化
+        self.accumulable = accumulable # 是否计入总计数据并在账号界面中显示
         self.info = "" # TODO: 加入描述信息
 
     def set_val(self, new_val):
@@ -113,7 +137,7 @@ class Data:
         return f"{self.name}: {self.val}"
     
     def __bool__(self):
-        return self.show
+        return self.editable and self.show
     
     def __add__(self):
         pass
@@ -130,8 +154,8 @@ class Data:
 class NumData(Data):
     """记录数值的类，如时间里程等"""
     """暂时默认val为int"""
-    def __init__(self, name: str, val = 0):
-        super().__init__(name, val)
+    def __init__(self, name: str, val = 0, editable = True, accumulable = True):
+        super().__init__(name, val, editable, accumulable)
 
     def __iadd__(self, other):
         """
@@ -151,8 +175,8 @@ class NumData(Data):
     
 class StrData(Data):
     """记录文字的类，如不同标签的日记等"""
-    def __init__(self, name: str, val: str = ""):
-        super().__init__(name, val)
+    def __init__(self, name: str, val: str = "", editable = True, accumulable = False):
+        super().__init__(name, val, editable, accumulable)
 
     def __iadd__(self, other, enter = False):
         """支持选择换行"""
@@ -162,6 +186,11 @@ class StrData(Data):
         self.val += other.val
         return self
     
+    def add_val(self, adder, enter = True):
+        if enter and len(self.val) > 0:
+            self.val += '\n'
+        self.val += adder
+    
     def new_copy(self):
         new_data = Data.new_copy(self)
         new_data.val = ""
@@ -170,8 +199,9 @@ class StrData(Data):
 class DictData(Data):
     """记录选项的类，如选择交通方式并统计次数"""
     """默认key值为int"""
-    def __init__(self, name: str, val: dict = None):
-        super().__init__(name, val)
+    def __init__(self, name: str, val: dict = None, editable = True, accumulable = True, exclusive = True):
+        super().__init__(name, val, editable, accumulable)
+        self.exclusive = exclusive
 
     def get_val(self, key):
         return self.val.get(key, 0)

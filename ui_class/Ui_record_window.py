@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\record_window.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\record_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -35,7 +35,7 @@ class Ui_RecordWidget(object):
         self.inform_layout.setObjectName("inform_layout")
         self.record_scroll = QtWidgets.QScrollArea(RecordWidget)
         self.record_scroll.setWidgetResizable(True)
-        self.record_scroll.setAlignment(QtCore.Qt.AlignCenter)
+        self.record_scroll.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.record_scroll.setObjectName("record_scroll")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 423))
