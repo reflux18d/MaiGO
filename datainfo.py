@@ -11,3 +11,13 @@ data_samples = [
     StrData("上机必玩"),
     StrData("推分记录")
 ]
+
+tips_samples = [
+    "Stop in maimai",
+    "奔跑的大国奏音.gif",
+    "赏~你~吃~的~白~菜~怎~么~少~几~斤~嘞~",
+    "提提提！大猩猩转圈.gif",
+    "有一个人前来出勤",
+    "...Who are you?",
+    "XXXX是什么歌"
+]
