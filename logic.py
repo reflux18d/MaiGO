@@ -126,7 +126,7 @@ class MapWindow(MethodWidget):
         self.signal = signal # 绑定切换界面信号
 
         # Arcade samples
-        self.arcades = [Arcade("上地"), Arcade("五道口"), Arcade("万柳"), Arcade("学清")] # 机厅列表
+        self.arcades = [Arcade("上地", 6), Arcade("五道口", 4), Arcade("万柳", 3), Arcade("学清", 6)] # 机厅列表
         positions = [(584, 71), (892, 600), (403, 864), (1048, 357)]
         for arcade, pos in zip(self.arcades, positions):
             arcade.set_pos(*pos)
@@ -204,6 +204,7 @@ class GoWindow(MethodWidget):
         绑定所有QTdesigner中定义的控件
         并定义逻辑行为
         """
+        self.tips_label = self.ui.tips_label
         self.main_button = self.ui.main_button
         self.state_label = self.ui.state_label
         self.timer_label = self.ui.time_label
@@ -298,7 +299,7 @@ class GoWindow(MethodWidget):
         self.start_timer()
         self.setWindowTitle("通勤中")
         self.main_button.setText("到达")
-        self.state_label.setText("GOGOGO!")
+        self.state_label.setText("出发喽!")
         self.set_gif("run.gif")
         from PyQt5.QtMultimedia import QSound
         try:
@@ -313,7 +314,7 @@ class GoWindow(MethodWidget):
         self.user.current_tour.arrived()
         self.setWindowTitle("游玩中")
         self.main_button.setText("退勤")
-        self.state_label.setText("要继续游玩吗")
+        self.state_label.setText("欢迎回来")
         from PyQt5.QtMultimedia import QSound
         try:
             QSound.play("欢迎回来.wav")  # 需要准备WAV格式音频文件
@@ -333,6 +334,12 @@ class GoWindow(MethodWidget):
         self.signal.emit("save_record")
         self.user.save_tour()
         self.signal.emit("start_window")
+
+    def update_tips(self):
+        from datainfo import tips_samples
+        import random
+        tips = random.choice(tips_samples)
+        self.tips_label.setText(tips)
 
 class OptionWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
@@ -587,9 +594,10 @@ class MainWindow(MethodWidget):
 
     def switch_to_go(self):
         assert isinstance(self.user.current_tour, Tour), "No current Tour"
-        self.go_window.goal_label.setText(f"目的地:{str(self.user.current_tour.goal)}")
+        self.go_window.goal_label.setText(f"前往:{str(self.user.current_tour.goal)}")
         self.option_window.clear_scroll()
         self.option_window.trigger_tour()
+        self.go_window.update_tips()
         from PyQt5.QtMultimedia import QSound
         try:
             QSound.play("要开始了哟.wav")  # 需要准备WAV格式音频文件

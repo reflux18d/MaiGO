@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\option_select.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\option_select.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -31,7 +31,7 @@ class Ui_OptionSelect(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.option_box.sizePolicy().hasHeightForWidth())
         self.option_box.setSizePolicy(sizePolicy)
-        self.option_box.setStyleSheet("font: 14pt \"黑体\";")
+        self.option_box.setStyleSheet("font: 12pt \"黑体\";")
         self.option_box.setObjectName("option_box")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.option_box)
         self.verticalLayout_2.setObjectName("verticalLayout_2")

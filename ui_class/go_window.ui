@@ -28,7 +28,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">font: 14pt &quot;黑体&quot;;</string>
+      <string notr="true">font: 15pt &quot;黑体&quot;;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -51,7 +51,7 @@
     <widget class="QLabel" name="time_label">
      <property name="styleSheet">
       <string notr="true">QLabel#time_label{
-	font: 20pt &quot;Noto Serif SC Black&quot;;
+	font: 14pt &quot;Noto Serif SC Black&quot;;
 }
 </string>
      </property>
@@ -82,7 +82,8 @@
    <item>
     <widget class="QLabel" name="state_label">
      <property name="styleSheet">
-      <string notr="true">font: 18pt &quot;黑体&quot;;</string>
+      <string notr="true">font: 10pt &quot;黑体&quot;;
+color: rgb(35, 116, 0);</string>
      </property>
      <property name="text">
       <string>state</string>
@@ -170,6 +171,20 @@ border-radius: 30px;      /* 圆角半径（像素） */
       </layout>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="tips_label">
+     <property name="styleSheet">
+      <string notr="true">font: 10pt &quot;黑体&quot;;
+color: rgb(0, 90, 158);</string>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

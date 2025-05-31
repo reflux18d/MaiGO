@@ -225,7 +225,11 @@ class OptionInput(MethodWidget):
 
     def update(self):
         """用于在进入option window时体现出已经记录的数据"""
-        self.option_edit.setText(self.data.val)
+        assert isinstance(self.data, Data)
+        if len(self.data.val) > 0:
+            self.option_edit.setText(self.data.val)
+        else:
+            self.option_edit.setPlaceholderText(self.data.info)
 
     def reset(self):
         self.option_edit.clear()

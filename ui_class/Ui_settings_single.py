@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\settings_single.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\settings_single.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -26,14 +26,15 @@ class Ui_SettingsSingle(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.name_label = QtWidgets.QLabel(SettingsSingle)
-        self.name_label.setStyleSheet("font: 14pt \"黑体\";")
+        self.name_label.setStyleSheet("font: 10pt \"黑体\";")
         self.name_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.name_label.setObjectName("name_label")
         self.horizontalLayout_2.addWidget(self.name_label)
         self.enable_checkbox = QtWidgets.QCheckBox(SettingsSingle)
         self.enable_checkbox.setMaximumSize(QtCore.QSize(16777215, 16777214))
         self.enable_checkbox.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.enable_checkbox.setStyleSheet("font: 14pt \"黑体\";")
+        self.enable_checkbox.setStyleSheet("font: 10pt \"黑体\";\n"
+"color: rgb(0, 90, 158);")
         self.enable_checkbox.setObjectName("enable_checkbox")
         self.horizontalLayout_2.addWidget(self.enable_checkbox)
         self.horizontalLayout.addLayout(self.horizontalLayout_2)

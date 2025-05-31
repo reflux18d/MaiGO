@@ -17,9 +17,10 @@ class Place:
 
 
 class Arcade(Place):
-    def __init__(self, name, info_text = ""):
+    def __init__(self, name, distance = 0, info_text = ""):
         super().__init__(name)
         self.info_text = info_text
+        self.distance = distance
     
     def description(self) -> str:
         return self.info_text
@@ -63,10 +64,12 @@ class Tour:
         self.calc_time()  
 
     def calc_time(self):
-        count_data = self.data.get("出勤次数")
-        assert isinstance(count_data, NumData), "No Key in DataDict"
+        count_data, distance_data = self.data.get("出勤次数"), self.data.get("出行里程(km)")
+        assert isinstance(count_data, NumData) and isinstance(distance_data, NumData), "No Key in DataDict"
+        assert isinstance(self.goal, Arcade), "Invalid Arcade"
         count_data.add_val(1)
-        march_data, play_data = self.data.get("通勤时间"), self.data.get("游玩时间")
+        distance_data.add_val(self.goal.distance)
+        march_data, play_data = self.data.get("通勤时间(s)"), self.data.get("游玩时间(s)")
         assert isinstance(march_data, NumData) and isinstance(play_data, NumData), "No Key In DataDict"      
         march_time = self.arrival_time - self.start_time
         march_data.add_val(int(march_time.total_seconds()))
@@ -118,7 +121,7 @@ class Data:
         self.show = False # 重要，决定OptionWindow是否显示对应widget
         self.editable = editable # 是否可以人为编辑，初始化之后就不会变化
         self.accumulable = accumulable # 是否计入总计数据并在账号界面中显示
-        self.info = "" # TODO: 加入描述信息
+        self.info = info
 
     def set_val(self, new_val):
         """用于单条数据的类"""

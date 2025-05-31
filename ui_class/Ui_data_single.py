@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\data_single.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\data_single.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -26,7 +26,7 @@ class Ui_DataSingle(object):
         self.single_layout = QtWidgets.QVBoxLayout()
         self.single_layout.setObjectName("single_layout")
         self.data_label = QtWidgets.QLabel(DataSingle)
-        self.data_label.setStyleSheet("font: 14pt \"黑体\";")
+        self.data_label.setStyleSheet("font: 10pt \"黑体\";")
         self.data_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.data_label.setObjectName("data_label")
         self.single_layout.addWidget(self.data_label)

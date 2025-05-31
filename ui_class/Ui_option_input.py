@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\option_input.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\option_input.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_OptionInput(object):
     def setupUi(self, OptionInput):
         OptionInput.setObjectName("OptionInput")
-        OptionInput.resize(553, 264)
+        OptionInput.resize(553, 271)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -31,7 +31,7 @@ class Ui_OptionInput(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.option_box.sizePolicy().hasHeightForWidth())
         self.option_box.setSizePolicy(sizePolicy)
-        self.option_box.setStyleSheet("font: 14pt \"黑体\";")
+        self.option_box.setStyleSheet("font: 12pt \"黑体\";")
         self.option_box.setObjectName("option_box")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.option_box)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -44,7 +44,7 @@ class Ui_OptionInput(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 494, 210))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 511, 213))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -54,7 +54,8 @@ class Ui_OptionInput(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.option_edit.sizePolicy().hasHeightForWidth())
         self.option_edit.setSizePolicy(sizePolicy)
-        self.option_edit.setStyleSheet("font: 14pt \"黑体\";")
+        self.option_edit.setStyleSheet("font: 10pt \"黑体\";\n"
+"color: rgb(0, 90, 158);")
         self.option_edit.setObjectName("option_edit")
         self.verticalLayout_2.addWidget(self.option_edit)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)

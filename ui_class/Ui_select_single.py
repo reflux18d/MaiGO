@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\select_single.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\select_single.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -24,7 +24,7 @@ class Ui_SelectSingle(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(SelectSingle)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.name_label = QtWidgets.QLabel(SelectSingle)
-        self.name_label.setStyleSheet("font: 14pt \"黑体\";")
+        self.name_label.setStyleSheet("font: 10pt \"黑体\";")
         self.name_label.setObjectName("name_label")
         self.horizontalLayout.addWidget(self.name_label)
         self.radioButton = QtWidgets.QRadioButton(SelectSingle)

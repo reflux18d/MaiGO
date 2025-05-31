@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\start_window.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\start_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_StartWidget(object):
     def setupUi(self, StartWidget):
         StartWidget.setObjectName("StartWidget")
-        StartWidget.resize(410, 734)
+        StartWidget.resize(336, 734)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/image/bear.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
         StartWidget.setWindowIcon(icon)
@@ -34,10 +34,10 @@ class Ui_StartWidget(object):
         self.account_button.setMinimumSize(QtCore.QSize(60, 60))
         self.account_button.setMaximumSize(QtCore.QSize(60, 60))
         self.account_button.setStyleSheet("border-radius: 30px;       /* 圆形按钮 */\n"
-"    background-color: rgb(255, 149, 42);       /* 圆形按钮 */\n"
+"    background-color: rgb(255, 0, 89);       /* 圆形按钮 */\n"
 "    color: white;\n"
-"    border: 3px solid rgb(255, 109, 42); /* 边框样式 */\n"
-"font: 7pt \"黑体\";")
+"    border: 3px solid rgb(186, 0, 112); /* 边框样式 */\n"
+"font: 8pt \"黑体\";")
         self.account_button.setObjectName("account_button")
         self.horizontalLayout.addWidget(self.account_button)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -52,10 +52,10 @@ class Ui_StartWidget(object):
         self.settings_button.setMaximumSize(QtCore.QSize(60, 60))
         self.settings_button.setAutoFillBackground(False)
         self.settings_button.setStyleSheet("border-radius: 30px;       /* 圆形按钮 */\n"
-"    background-color: rgb(255, 108, 89);       /* 圆形按钮 */\n"
+"    background-color: rgb(174, 75, 255);       /* 圆形按钮 */\n"
 "    color: white;\n"
-"    border: 3px solid rgb(255, 37, 17); /* 边框样式 */\n"
-"font: 7pt \"黑体\";")
+"    border: 3px solid rgb(119, 0, 179); /* 边框样式 */\n"
+"font: 8pt \"黑体\";")
         self.settings_button.setObjectName("settings_button")
         self.horizontalLayout.addWidget(self.settings_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
@@ -74,8 +74,8 @@ class Ui_StartWidget(object):
         self.label_2.setSizePolicy(sizePolicy)
         self.label_2.setMinimumSize(QtCore.QSize(300, 50))
         self.label_2.setMaximumSize(QtCore.QSize(300, 50))
-        self.label_2.setStyleSheet("color: black;\n"
-"font: 14pt \"黑体\";\n"
+        self.label_2.setStyleSheet("font: 10pt \"黑体\";\n"
+"color: rgb(0, 0, 0);\n"
 "")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
@@ -133,26 +133,27 @@ class Ui_StartWidget(object):
         self.horizontalLayout_3.addWidget(self.record_button)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.verticalLayout_2.addLayout(self.verticalLayout)
-        self.label = QtWidgets.QLabel(StartWidget)
+        self.tips_label = QtWidgets.QLabel(StartWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
-        self.label.setSizePolicy(sizePolicy)
-        self.label.setMinimumSize(QtCore.QSize(250, 30))
-        self.label.setMaximumSize(QtCore.QSize(500, 30))
+        sizePolicy.setHeightForWidth(self.tips_label.sizePolicy().hasHeightForWidth())
+        self.tips_label.setSizePolicy(sizePolicy)
+        self.tips_label.setMinimumSize(QtCore.QSize(250, 30))
+        self.tips_label.setMaximumSize(QtCore.QSize(500, 30))
         font = QtGui.QFont()
         font.setFamily("黑体")
-        font.setPointSize(12)
+        font.setPointSize(10)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
-        self.label.setFont(font)
-        self.label.setStyleSheet("font: 12pt \"黑体\";")
-        self.label.setScaledContents(True)
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("label")
-        self.verticalLayout_2.addWidget(self.label, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.tips_label.setFont(font)
+        self.tips_label.setStyleSheet("font: 10pt \"黑体\";\n"
+"color: rgb(0, 90, 158);")
+        self.tips_label.setScaledContents(True)
+        self.tips_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.tips_label.setObjectName("tips_label")
+        self.verticalLayout_2.addWidget(self.tips_label, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
 
         self.retranslateUi(StartWidget)
         QtCore.QMetaObject.connectSlotsByName(StartWidget)
@@ -165,5 +166,5 @@ class Ui_StartWidget(object):
         self.label_2.setText(_translate("StartWidget", "Image clicker!"))
         self.go_button.setText(_translate("StartWidget", "出发"))
         self.record_button.setText(_translate("StartWidget", "记录"))
-        self.label.setText(_translate("StartWidget", "可以和我打一辈子舞萌吗"))
+        self.tips_label.setText(_translate("StartWidget", "可以和我打一辈子舞萌吗qwq"))
 import resources_rc

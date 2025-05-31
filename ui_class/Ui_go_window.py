@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\go_window.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\go_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -23,7 +23,7 @@ class Ui_GoWidget(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.goal_label = QtWidgets.QLabel(GoWidget)
         self.goal_label.setAutoFillBackground(False)
-        self.goal_label.setStyleSheet("font: 14pt \"黑体\";")
+        self.goal_label.setStyleSheet("font: 15pt \"黑体\";")
         self.goal_label.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.goal_label.setFrameShadow(QtWidgets.QFrame.Raised)
         self.goal_label.setMidLineWidth(0)
@@ -32,7 +32,7 @@ class Ui_GoWidget(object):
         self.verticalLayout_2.addWidget(self.goal_label)
         self.time_label = QtWidgets.QLabel(GoWidget)
         self.time_label.setStyleSheet("QLabel#time_label{\n"
-"    font: 20pt \"Noto Serif SC Black\";\n"
+"    font: 14pt \"Noto Serif SC Black\";\n"
 "}\n"
 "")
         self.time_label.setFrameShadow(QtWidgets.QFrame.Plain)
@@ -49,7 +49,8 @@ class Ui_GoWidget(object):
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
         self.state_label = QtWidgets.QLabel(GoWidget)
-        self.state_label.setStyleSheet("font: 18pt \"黑体\";")
+        self.state_label.setStyleSheet("font: 10pt \"黑体\";\n"
+"color: rgb(35, 116, 0);")
         self.state_label.setAlignment(QtCore.Qt.AlignCenter)
         self.state_label.setObjectName("state_label")
         self.verticalLayout_2.addWidget(self.state_label)
@@ -93,6 +94,12 @@ class Ui_GoWidget(object):
         self.horizontalLayout_3.addWidget(self.option_button)
         self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.verticalLayout_2.addLayout(self.verticalLayout)
+        self.tips_label = QtWidgets.QLabel(GoWidget)
+        self.tips_label.setStyleSheet("font: 10pt \"黑体\";\n"
+"color: rgb(0, 90, 158);")
+        self.tips_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.tips_label.setObjectName("tips_label")
+        self.verticalLayout_2.addWidget(self.tips_label)
 
         self.retranslateUi(GoWidget)
         QtCore.QMetaObject.connectSlotsByName(GoWidget)
@@ -105,4 +112,5 @@ class Ui_GoWidget(object):
         self.state_label.setText(_translate("GoWidget", "state"))
         self.main_button.setText(_translate("GoWidget", "出发"))
         self.option_button.setText(_translate("GoWidget", "选项"))
+        self.tips_label.setText(_translate("GoWidget", "TextLabel"))
 import resources_rc

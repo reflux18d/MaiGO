@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\record_interface.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\record_interface.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_RecordInterface(object):
     def setupUi(self, RecordInterface):
         RecordInterface.setObjectName("RecordInterface")
-        RecordInterface.resize(391, 108)
+        RecordInterface.resize(391, 128)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -26,11 +26,11 @@ class Ui_RecordInterface(object):
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.time_label = QtWidgets.QLabel(RecordInterface)
-        self.time_label.setStyleSheet("font: 14pt \"黑体\";")
+        self.time_label.setStyleSheet("font: 12pt \"黑体\";")
         self.time_label.setObjectName("time_label")
         self.verticalLayout.addWidget(self.time_label)
         self.goal_label = QtWidgets.QLabel(RecordInterface)
-        self.goal_label.setStyleSheet("font: 14pt \"黑体\";")
+        self.goal_label.setStyleSheet("font: 12pt \"黑体\";")
         self.goal_label.setObjectName("goal_label")
         self.verticalLayout.addWidget(self.goal_label)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
