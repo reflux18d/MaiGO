@@ -27,6 +27,7 @@ class Arcade(Place):
 
 class Tour:
     def __init__(self, home, goal):
+        self.index = None # 第几次，用于Record绑定
         self.start_time = None
         self.arrival_time = None
         self.end_time = None
@@ -37,6 +38,9 @@ class Tour:
     
     def set_data(self, user):
         assert isinstance(user, User), "Invalid user type"
+        count_data = user.data.get("出勤次数")
+        assert isinstance(count_data, NumData), "Invalid data type"
+        self.index = int(count_data.val)
         for key, val in user.data.items():
             assert isinstance(val, Data)
             new_data = val.new_copy()
@@ -59,6 +63,9 @@ class Tour:
         self.calc_time()  
 
     def calc_time(self):
+        count_data = self.data.get("出勤次数")
+        assert isinstance(count_data, NumData), "No Key in DataDict"
+        count_data.add_val(1)
         march_data, play_data = self.data.get("通勤时间"), self.data.get("游玩时间")
         assert isinstance(march_data, NumData) and isinstance(play_data, NumData), "No Key In DataDict"      
         march_time = self.arrival_time - self.start_time
@@ -73,6 +80,7 @@ class User:
         self.current_tour = None  # 当前出勤
         self.home = Place()
         self.data = data if data is not None else {} # 总计数据, key: str
+        self.record_index = 0
 
     def __str__(self):
         return self.name

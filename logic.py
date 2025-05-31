@@ -34,7 +34,7 @@ Data, NumData, StrData, DictData
 )
 # 调用subwindow中的子窗口类
 from subwindow import (
-SettingsSingle, RecordSingle,
+SettingsSingle, RecordStack, RecordInterface,
 DataSingle, OptionInput, OptionSelect,
 )
 
@@ -56,6 +56,7 @@ CMD_DICT = {
         "settings_window": lambda self: MainWindow.switch_to(self, 4),
         "option_window": lambda self: MainWindow.switch_to(self, 5),
         "account_window": lambda self: MainWindow.switch_to_account(self),
+        "record_stack": lambda self: MainWindow.switch_to_record_stack(self),
         "save_record": lambda self: MainWindow.save_record(self),
     }  
 
@@ -343,14 +344,14 @@ class OptionWindow(MethodWidget):
         
 
 
-class RecordWindow(MethodWidget):
+class RecordWindow(MethodWidget): 
     def __init__(self, signal, user: User = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ui = Ui_record_window.Ui_RecordWidget() # 创建ui类实例
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
         
+        self.user = user
         self.signal = signal
-        self.record_list = [] # 另外存放所有RecordSingle
         self.trigger_widgets()
 
     def trigger_widgets(self):
@@ -367,15 +368,16 @@ class RecordWindow(MethodWidget):
         self.return_button = self.ui.return_button
         self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
         
+    def save_record(self, tour):
+        assert isinstance(tour, Tour), "No tour to save"
+        interface = RecordInterface(self.signal, self.user, tour)
+        self.add_record(interface)
+    
     def add_record(self, *widgets):
         for widget in widgets:
+            assert isinstance(widget, RecordInterface), "Has to be interface"
             self.record_layout.addWidget(widget)
-            self.record_list.append(widget)
 
-    def reset_all(self):
-        """将所有RecordSingle切换到interface界面"""
-        for widget in self.record_list:
-            widget.reset()
 
 class SettingsWindow(MethodWidget):
     def __init__(self, signal, user: User = None, *args, **kwargs):
@@ -498,7 +500,8 @@ class MainWindow(MethodWidget):
         self.windows.append(self.option_window)
         self.account_window = AccountWindow(self.main_signal, self.user)
         self.windows.append(self.account_window)
-        
+        self.record_stack = RecordStack(self.main_signal, self.user)
+        self.windows.append(self.record_stack)       
 
         for window in self.windows:
             self.stack.addWidget(window)
@@ -515,17 +518,20 @@ class MainWindow(MethodWidget):
         self.switch_to(2)
 
     def switch_to_record(self):
-        self.record_window.reset_all()
         self.switch_to(3)
 
     def switch_to_account(self):
         self.account_window.update_data()
         self.switch_to(6)
 
+    def switch_to_record_stack(self):
+        self.record_stack.switch_to(self.user.record_index)
+        self.switch_to(7)
+
     def save_record(self):
-        """加载用户的current_tour为RecordWindow的Widget"""
-        self.record_window.add_record(RecordSingle(self.user.current_tour))
-      
+        """加载用户的current_tour为RecordWindow和RecordStack的Widget"""
+        self.record_window.save_record(self.user.current_tour)
+        self.record_stack.save_record(self.user.current_tour)
 
     # 所有指令经过此处
     def signal_trigger(self, command: str):
