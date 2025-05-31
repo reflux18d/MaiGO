@@ -28,10 +28,7 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">QLabel#goal_label{
-	font: 14pt &quot;Book Antiqua&quot;;
-	background-color:rgb(242, 234, 255)
-}</string>
+      <string notr="true">font: 14pt &quot;黑体&quot;;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -54,7 +51,6 @@
     <widget class="QLabel" name="time_label">
      <property name="styleSheet">
       <string notr="true">QLabel#time_label{
-	background-color:rgba(235, 252, 255, 100);
 	font: 20pt &quot;Noto Serif SC Black&quot;;
 }
 </string>
@@ -86,10 +82,7 @@
    <item>
     <widget class="QLabel" name="state_label">
      <property name="styleSheet">
-      <string notr="true">QLabel#state_label{
-	
-	font: 14pt &quot;Book Antiqua&quot;;
-}</string>
+      <string notr="true">font: 18pt &quot;黑体&quot;;</string>
      </property>
      <property name="text">
       <string>state</string>
@@ -106,29 +99,32 @@
        <item>
         <widget class="QPushButton" name="main_button">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
          </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton {
-    background-color: rgb(185, 219, 255);  /* 蓝色背景 */
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-	font: 14pt &quot;STHupo&quot;;
-}
-QPushButton:hover {
-    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */
-}
-QPushButton:pressed {
-    background-color: rgb(101, 206, 255);  /* 按下颜色 */
-}</string>
+          <string notr="true">font: 14pt &quot;黑体&quot;;
+border-radius: 20px;      /* 圆角半径（像素） */
+    background-color: #4CAF50; /* 背景颜色 */
+    color: white;             /* 文字颜色 */
+    border: 5px solid #45a049; /* 边框样式 */</string>
          </property>
          <property name="text">
           <string>出发</string>
@@ -142,26 +138,29 @@ QPushButton:pressed {
        <item>
         <widget class="QPushButton" name="option_button">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>40</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton {
-    background-color: rgb(185, 219, 255);  /* 蓝色背景 */
-    color: rgb(0, 0, 0);
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-	font: 14pt &quot;STHupo&quot;;
-}
-QPushButton:hover {
-    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */
-}
-QPushButton:pressed {
-    background-color: rgb(101, 206, 255);  /* 按下颜色 */
-}</string>
+          <string notr="true">font: 14pt &quot;黑体&quot;;
+border-radius: 20px;      /* 圆角半径（像素） */
+    background-color:rgb(80, 194, 255);
+    color: white;             /* 文字颜色 */
+    border: 5px solid rgb(53, 144, 255); /* 边框样式 */</string>
          </property>
          <property name="text">
           <string>选项</string>

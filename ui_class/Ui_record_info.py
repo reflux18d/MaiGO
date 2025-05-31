@@ -26,6 +26,7 @@ class Ui_RecordInfo(object):
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.info_label = QtWidgets.QLabel(RecordInfo)
+        self.info_label.setStyleSheet("font: 14pt \"黑体\";")
         self.info_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.info_label.setObjectName("info_label")
         self.verticalLayout.addWidget(self.info_label)
@@ -39,25 +40,18 @@ class Ui_RecordInfo(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.return_button = QtWidgets.QPushButton(RecordInfo)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.return_button.sizePolicy().hasHeightForWidth())
         self.return_button.setSizePolicy(sizePolicy)
-        self.return_button.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
-"    color: rgb(0, 0, 0);\n"
-"    border: none;\n"
-"    border-radius: 4px;\n"
-"    padding: 8px 16px;\n"
-"    font: 14pt \"STHupo\";\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
-"}\n"
-"QPushButton:pressed {\n"
-"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
-"}")
+        self.return_button.setMinimumSize(QtCore.QSize(80, 40))
+        self.return_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.return_button.setStyleSheet("font: 14pt \"黑体\";\n"
+"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"    background-color:rgb(80, 194, 255);\n"
+"    color: white;             /* 文字颜色 */\n"
+"    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")
         self.return_button.setObjectName("return_button")
         self.horizontalLayout_2.addWidget(self.return_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)

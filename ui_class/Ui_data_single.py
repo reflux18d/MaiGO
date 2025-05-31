@@ -26,6 +26,7 @@ class Ui_DataSingle(object):
         self.single_layout = QtWidgets.QVBoxLayout()
         self.single_layout.setObjectName("single_layout")
         self.data_label = QtWidgets.QLabel(DataSingle)
+        self.data_label.setStyleSheet("font: 14pt \"黑体\";")
         self.data_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.data_label.setObjectName("data_label")
         self.single_layout.addWidget(self.data_label)

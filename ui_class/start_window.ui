@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>410</width>
-    <height>623</height>
+    <height>655</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -249,8 +249,8 @@ border-radius: 20px;      /* 圆角半径（像素） */
          <property name="styleSheet">
           <string notr="true">font: 14pt &quot;黑体&quot;;
 border-radius: 20px;      /* 圆角半径（像素） */
-    background-color:white;
-    color: black;             /* 文字颜色 */
+    background-color:rgb(80, 194, 255);
+    color: white;             /* 文字颜色 */
     border: 5px solid rgb(53, 144, 255); /* 边框样式 */</string>
          </property>
          <property name="text">

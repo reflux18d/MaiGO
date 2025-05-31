@@ -23,10 +23,7 @@ class Ui_GoWidget(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.goal_label = QtWidgets.QLabel(GoWidget)
         self.goal_label.setAutoFillBackground(False)
-        self.goal_label.setStyleSheet("QLabel#goal_label{\n"
-"    font: 14pt \"Book Antiqua\";\n"
-"    background-color:rgb(242, 234, 255)\n"
-"}")
+        self.goal_label.setStyleSheet("font: 14pt \"黑体\";")
         self.goal_label.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.goal_label.setFrameShadow(QtWidgets.QFrame.Raised)
         self.goal_label.setMidLineWidth(0)
@@ -35,7 +32,6 @@ class Ui_GoWidget(object):
         self.verticalLayout_2.addWidget(self.goal_label)
         self.time_label = QtWidgets.QLabel(GoWidget)
         self.time_label.setStyleSheet("QLabel#time_label{\n"
-"    background-color:rgba(235, 252, 255, 100);\n"
 "    font: 20pt \"Noto Serif SC Black\";\n"
 "}\n"
 "")
@@ -53,10 +49,7 @@ class Ui_GoWidget(object):
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
         self.state_label = QtWidgets.QLabel(GoWidget)
-        self.state_label.setStyleSheet("QLabel#state_label{\n"
-"    \n"
-"    font: 14pt \"Book Antiqua\";\n"
-"}")
+        self.state_label.setStyleSheet("font: 18pt \"黑体\";")
         self.state_label.setAlignment(QtCore.Qt.AlignCenter)
         self.state_label.setObjectName("state_label")
         self.verticalLayout_2.addWidget(self.state_label)
@@ -65,51 +58,37 @@ class Ui_GoWidget(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.main_button = QtWidgets.QPushButton(GoWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.main_button.sizePolicy().hasHeightForWidth())
         self.main_button.setSizePolicy(sizePolicy)
+        self.main_button.setMinimumSize(QtCore.QSize(80, 40))
+        self.main_button.setMaximumSize(QtCore.QSize(80, 40))
         self.main_button.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.main_button.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
-"    color: rgb(0, 0, 0);\n"
-"    border: none;\n"
-"    border-radius: 4px;\n"
-"    padding: 8px 16px;\n"
-"    font: 14pt \"STHupo\";\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
-"}\n"
-"QPushButton:pressed {\n"
-"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
-"}")
+        self.main_button.setStyleSheet("font: 14pt \"黑体\";\n"
+"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"    background-color: #4CAF50; /* 背景颜色 */\n"
+"    color: white;             /* 文字颜色 */\n"
+"    border: 5px solid #45a049; /* 边框样式 */")
         self.main_button.setObjectName("main_button")
         self.horizontalLayout_2.addWidget(self.main_button)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.option_button = QtWidgets.QPushButton(GoWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.option_button.sizePolicy().hasHeightForWidth())
         self.option_button.setSizePolicy(sizePolicy)
-        self.option_button.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
-"    color: rgb(0, 0, 0);\n"
-"    border: none;\n"
-"    border-radius: 4px;\n"
-"    padding: 8px 16px;\n"
-"    font: 14pt \"STHupo\";\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
-"}\n"
-"QPushButton:pressed {\n"
-"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
-"}")
+        self.option_button.setMinimumSize(QtCore.QSize(80, 40))
+        self.option_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.option_button.setStyleSheet("font: 14pt \"黑体\";\n"
+"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"    background-color:rgb(80, 194, 255);\n"
+"    color: white;             /* 文字颜色 */\n"
+"    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")
         self.option_button.setObjectName("option_button")
         self.horizontalLayout_3.addWidget(self.option_button)
         self.verticalLayout.addLayout(self.horizontalLayout_3)

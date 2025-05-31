@@ -210,17 +210,20 @@ class GoWindow(MethodWidget):
         self.timer_label = self.ui.time_label
         self.goal_label = self.ui.goal_label
         self.label=self.ui.label
-        self.set_gif()
+        gif_path1="run.gif"
+        gif_path2="play.gif"
+        self.set_gif(gif_path1)
         self.option_button = self.ui.option_button
         # 点击主按钮切换到下一阶段
         self.main_button.clicked.connect(lambda: self.state_change(self.state + 1))
+        
         self.option_button.clicked.connect(lambda: self.signal.emit("option_window"))
-
-    def set_gif(self):
+        
+    def set_gif(self,gif_path):
         from PyQt5.QtGui import QMovie
         
         try:
-            self.movie = QMovie('run.gif')
+            self.movie = QMovie(gif_path)
             
             # 连接帧变化信号到缩放函数
             self.movie.frameChanged.connect(self._scale_gif_frame)
@@ -301,6 +304,8 @@ class GoWindow(MethodWidget):
 
     def playing(self):
         """current_tour到达"""
+
+        self.set_gif("play.gif")
         self.user.current_tour.arrived()
         self.setWindowTitle("游玩中")
         self.main_button.setText("退勤")

@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_RecordInterface(object):
     def setupUi(self, RecordInterface):
         RecordInterface.setObjectName("RecordInterface")
-        RecordInterface.resize(391, 100)
+        RecordInterface.resize(391, 104)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -26,9 +26,11 @@ class Ui_RecordInterface(object):
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.time_label = QtWidgets.QLabel(RecordInterface)
+        self.time_label.setStyleSheet("font: 14pt \"黑体\";")
         self.time_label.setObjectName("time_label")
         self.verticalLayout.addWidget(self.time_label)
         self.goal_label = QtWidgets.QLabel(RecordInterface)
+        self.goal_label.setStyleSheet("font: 14pt \"黑体\";")
         self.goal_label.setObjectName("goal_label")
         self.verticalLayout.addWidget(self.goal_label)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -41,25 +43,18 @@ class Ui_RecordInterface(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.info_button = QtWidgets.QPushButton(RecordInterface)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.info_button.sizePolicy().hasHeightForWidth())
         self.info_button.setSizePolicy(sizePolicy)
-        self.info_button.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
-"    color: rgb(0, 0, 0);\n"
-"    border: none;\n"
-"    border-radius: 4px;\n"
-"    padding: 8px 16px;\n"
-"    font: 14pt \"STHupo\";\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
-"}\n"
-"QPushButton:pressed {\n"
-"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
-"}")
+        self.info_button.setMinimumSize(QtCore.QSize(80, 40))
+        self.info_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.info_button.setStyleSheet("font: 14pt \"黑体\";\n"
+"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"    background-color:rgb(80, 194, 255);\n"
+"    color: white;             /* 文字颜色 */\n"
+"    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")
         self.info_button.setObjectName("info_button")
         self.horizontalLayout_2.addWidget(self.info_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)

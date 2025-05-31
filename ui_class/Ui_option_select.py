@@ -31,6 +31,7 @@ class Ui_OptionSelect(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.option_box.sizePolicy().hasHeightForWidth())
         self.option_box.setSizePolicy(sizePolicy)
+        self.option_box.setStyleSheet("font: 14pt \"黑体\";")
         self.option_box.setObjectName("option_box")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.option_box)
         self.verticalLayout_2.setObjectName("verticalLayout_2")

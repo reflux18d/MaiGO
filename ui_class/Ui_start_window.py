@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_StartWidget(object):
     def setupUi(self, StartWidget):
         StartWidget.setObjectName("StartWidget")
-        StartWidget.resize(410, 623)
+        StartWidget.resize(410, 655)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/image/bear.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
         StartWidget.setWindowIcon(icon)
@@ -128,8 +128,8 @@ class Ui_StartWidget(object):
         self.record_button.setMaximumSize(QtCore.QSize(80, 40))
         self.record_button.setStyleSheet("font: 14pt \"黑体\";\n"
 "border-radius: 20px;      /* 圆角半径（像素） */\n"
-"    background-color:white;\n"
-"    color: black;             /* 文字颜色 */\n"
+"    background-color:rgb(80, 194, 255);\n"
+"    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")
         self.record_button.setObjectName("record_button")
         self.horizontalLayout_3.addWidget(self.record_button)

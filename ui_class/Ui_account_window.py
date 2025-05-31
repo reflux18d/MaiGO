@@ -26,10 +26,7 @@ class Ui_AccountWidget(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label = QtWidgets.QLabel(AccountWidget)
-        self.label.setStyleSheet("QLabel#label{\n"
-"    font: 14pt \"Book Antiqua\";\n"
-"    background-color:rgb(242, 234, 255)\n"
-"}")
+        self.label.setStyleSheet("font: 14pt \"黑体\";")
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.horizontalLayout.addWidget(self.label)
@@ -41,7 +38,7 @@ class Ui_AccountWidget(object):
         self.account_scroll.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.account_scroll.setObjectName("account_scroll")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 422))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 423))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.account_scroll.setWidget(self.scrollAreaWidgetContents)
         self.inform_layout.addWidget(self.account_scroll)
@@ -49,25 +46,18 @@ class Ui_AccountWidget(object):
         self.bottom_layout = QtWidgets.QHBoxLayout()
         self.bottom_layout.setObjectName("bottom_layout")
         self.return_button = QtWidgets.QPushButton(AccountWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.return_button.sizePolicy().hasHeightForWidth())
         self.return_button.setSizePolicy(sizePolicy)
-        self.return_button.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(185, 219, 255);  /* 蓝色背景 */\n"
-"    color: rgb(0, 0, 0);\n"
-"    border: none;\n"
-"    border-radius: 4px;\n"
-"    padding: 8px 16px;\n"
-"    font: 14pt \"STHupo\";\n"
-"}\n"
-"QPushButton:hover {\n"
-"    background-color: rgb(103, 202, 255);  /* 悬停变深蓝 */\n"
-"}\n"
-"QPushButton:pressed {\n"
-"    background-color: rgb(101, 206, 255);  /* 按下颜色 */\n"
-"}")
+        self.return_button.setMinimumSize(QtCore.QSize(80, 40))
+        self.return_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.return_button.setStyleSheet("font: 14pt \"黑体\";\n"
+"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"    background-color:rgb(80, 194, 255);\n"
+"    color: white;             /* 文字颜色 */\n"
+"    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")
         self.return_button.setObjectName("return_button")
         self.bottom_layout.addWidget(self.return_button)
         self.verticalLayout.addLayout(self.bottom_layout)
