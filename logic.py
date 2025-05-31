@@ -100,7 +100,7 @@ class StartWindow(MethodWidget):
         QTimer.singleShot(2000, lambda:self.ui.label_2.setText(""))
         from PyQt5.QtMultimedia import QSound
         try:
-            QSound.play("click.wav")  # 需要准备WAV格式音频文件
+            QSound.play("咕噜咕噜.wav")  # 需要准备WAV格式音频文件
         except:
             print("音频播放失败，请检查click.wav文件是否存在")
     def set_figure(self, image_path):
@@ -193,7 +193,7 @@ class GoWindow(MethodWidget):
 
         self.trigger_widgets()        
         self.state_update() # 初始化为状态0
-
+        
         # 计时功能
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_timer)
@@ -212,13 +212,11 @@ class GoWindow(MethodWidget):
         self.label=self.ui.label
         gif_path1="run.gif"
         gif_path2="play.gif"
-        self.set_gif(gif_path1)
         self.option_button = self.ui.option_button
         # 点击主按钮切换到下一阶段
         self.main_button.clicked.connect(lambda: self.state_change(self.state + 1))
-        
         self.option_button.clicked.connect(lambda: self.signal.emit("option_window"))
-        
+    
     def set_gif(self,gif_path):
         from PyQt5.QtGui import QMovie
         
@@ -293,6 +291,13 @@ class GoWindow(MethodWidget):
         self.setWindowTitle("准备中")
         self.main_button.setText("出发")
         self.state_label.setText("准备好了就开始了哦")
+        self.set_gif("run.gif")
+        
+        from PyQt5.QtMultimedia import QSound
+        try:
+            QSound.play("要开始了哟.wav")  # 需要准备WAV格式音频文件
+        except:
+            print("音频播放失败，请检查click.wav文件是否存在")
 
     def marching(self):
         """启动user的current_tour"""
@@ -301,6 +306,11 @@ class GoWindow(MethodWidget):
         self.setWindowTitle("通勤中")
         self.main_button.setText("到达")
         self.state_label.setText("GOGOGO!")
+        from PyQt5.QtMultimedia import QSound
+        try:
+            QSound.play("出发咯.wav")  # 需要准备WAV格式音频文件
+        except:
+            print("音频播放失败，请检查click.wav文件是否存在")
 
     def playing(self):
         """current_tour到达"""
@@ -310,6 +320,11 @@ class GoWindow(MethodWidget):
         self.setWindowTitle("游玩中")
         self.main_button.setText("退勤")
         self.state_label.setText("要继续游玩吗")
+        from PyQt5.QtMultimedia import QSound
+        try:
+            QSound.play("欢迎回来.wav")  # 需要准备WAV格式音频文件
+        except:
+            print("音频播放失败，请检查click.wav文件是否存在")
 
     def ending(self):
         """current_tour结束"""
