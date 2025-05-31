@@ -72,7 +72,7 @@ class StartWindow(MethodWidget):
         self.user = user # 绑定用户
         self.signal = signal # 绑定切换界面信号
         self.trigger_widgets()
-        self.set_figure(acid_path)
+        self.set_figure(salt_path)
         
 
     def trigger_widgets(self):
@@ -96,7 +96,7 @@ class StartWindow(MethodWidget):
         from PyQt5.QtCore import QRect
         #self.ui.label_2.setVisible(True)
         
-        self.ui.label_2.setText("ajskfjlkdfsaklf")
+        self.ui.label_2.setText("喵喵~咕噜咕噜")
         QTimer.singleShot(2000, lambda:self.ui.label_2.setText(""))
         from PyQt5.QtMultimedia import QSound
         try:

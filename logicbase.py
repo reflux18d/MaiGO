@@ -112,7 +112,7 @@ class User:
     
 class Data:
     """记录数据选项的基类"""
-    def __init__(self, name: str, val = None, editable = True, accumulable = True):   
+    def __init__(self, name: str, val = None, editable = True, accumulable = True, info = ""):   
         self.name = name
         self.val = val
         self.show = False # 重要，决定OptionWindow是否显示对应widget
@@ -154,8 +154,8 @@ class Data:
 class NumData(Data):
     """记录数值的类，如时间里程等"""
     """暂时默认val为int"""
-    def __init__(self, name: str, val = 0, editable = True, accumulable = True):
-        super().__init__(name, val, editable, accumulable)
+    def __init__(self, name: str, val = 0, editable = True, accumulable = True, info = ""):
+        super().__init__(name, val, editable, accumulable, info)
 
     def __iadd__(self, other):
         """
@@ -175,8 +175,8 @@ class NumData(Data):
     
 class StrData(Data):
     """记录文字的类，如不同标签的日记等"""
-    def __init__(self, name: str, val: str = "", editable = True, accumulable = False):
-        super().__init__(name, val, editable, accumulable)
+    def __init__(self, name: str, val: str = "", editable = True, accumulable = False, info = ""):
+        super().__init__(name, val, editable, accumulable, info)
 
     def __iadd__(self, other, enter = False):
         """支持选择换行"""
@@ -199,8 +199,8 @@ class StrData(Data):
 class DictData(Data):
     """记录选项的类，如选择交通方式并统计次数"""
     """默认key值为int"""
-    def __init__(self, name: str, val: dict = None, editable = True, accumulable = True, exclusive = True):
-        super().__init__(name, val, editable, accumulable)
+    def __init__(self, name: str, val: dict = None, editable = True, accumulable = True, exclusive = True, info = ""):
+        super().__init__(name, val, editable, accumulable, info)
         self.exclusive = exclusive
 
     def get_val(self, key):
