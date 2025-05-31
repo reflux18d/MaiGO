@@ -290,14 +290,8 @@ class GoWindow(MethodWidget):
         self.setWindowTitle("准备中")
         self.main_button.setText("出发")
         self.state_label.setText("准备好了就开始了哦")
-        self.set_gif("run.gif")
         
-        from PyQt5.QtMultimedia import QSound
-        try:
-            QSound.play("要开始了哟.wav")  # 需要准备WAV格式音频文件
-        except:
-            print("音频播放失败，请检查click.wav文件是否存在")
-
+        
     def marching(self):
         """启动user的current_tour"""
         self.user.current_tour.start_tour()
@@ -305,6 +299,7 @@ class GoWindow(MethodWidget):
         self.setWindowTitle("通勤中")
         self.main_button.setText("到达")
         self.state_label.setText("GOGOGO!")
+        self.set_gif("run.gif")
         from PyQt5.QtMultimedia import QSound
         try:
             QSound.play("出发咯.wav")  # 需要准备WAV格式音频文件
@@ -595,6 +590,11 @@ class MainWindow(MethodWidget):
         self.go_window.goal_label.setText(f"目的地:{str(self.user.current_tour.goal)}")
         self.option_window.clear_scroll()
         self.option_window.trigger_tour()
+        from PyQt5.QtMultimedia import QSound
+        try:
+            QSound.play("要开始了哟.wav")  # 需要准备WAV格式音频文件
+        except:
+            print("音频播放失败，请检查click.wav文件是否存在")
         self.switch_to(2)
 
     def switch_to_record(self):
@@ -624,7 +624,7 @@ class MainWindow(MethodWidget):
         func(self)
 
 if __name__ == "__main__":
-    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+    #QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
     app = QApplication([])
 
     user = User("Bo")
