@@ -48,7 +48,7 @@
         <bool>true</bool>
        </property>
        <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <set>Qt::AlignHCenter|Qt::AlignTop</set>
        </property>
        <widget class="QWidget" name="scrollAreaWidgetContents">
         <property name="geometry">

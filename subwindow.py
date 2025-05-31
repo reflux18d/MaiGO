@@ -160,6 +160,7 @@ class SettingsSingle(MethodWidget):
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
         self.data = data
         self.trigger_widgets()
+        self.update()
 
     def trigger_widgets(self):
         """绑定描述的文本和checkbox"""
@@ -167,6 +168,7 @@ class SettingsSingle(MethodWidget):
         self.name_label = self.ui.name_label
         self.name_label.setText(self.data.name)
         self.checkbox = self.ui.enable_checkbox
+        self.checkbox.setChecked(True)
         self.checkbox.stateChanged.connect(self.update)
 
     def update(self):
@@ -219,7 +221,11 @@ class OptionInput(MethodWidget):
         if isinstance(self.data, NumData):
             self.data.set_val(int(text))
         elif isinstance(self.data, StrData):
-            self.data.add_val(text)
+            self.data.set_val(text)
+
+    def update(self):
+        """用于在进入option window时体现出已经记录的数据"""
+        self.option_edit.setText(self.data.val)
 
     def reset(self):
         self.option_edit.clear()
@@ -246,11 +252,13 @@ class OptionSelect(MethodWidget):
         self.radio_group = QButtonGroup(self)
         self.radio_group.setExclusive(self.exclusive)
         self.index_to_key = {} # 方便后续调用self.data.val
+        self.key_to_index = {}
         for index, key in enumerate(self.data.val.keys()):
             # 暂时默认传入key作为label
             select_widget = SelectSingle(key)
             button = select_widget.button
             self.index_to_key[index] = key
+            self.key_to_index[key] = index
             self.radio_group.addButton(button, index)
             self.selection_layout.addWidget(select_widget)
 
@@ -262,7 +270,17 @@ class OptionSelect(MethodWidget):
             if button.isChecked():
                 key = self.index_to_key[index]
                 self.data.set_val(key, 1)
+            else:
+                key = self.index_to_key[index]
+                self.data.set_val(key, 0)
 
+    def update(self):
+        """用于在进入option window时体现出已经选择的数据"""
+        assert isinstance(self.data, DictData), "Only support dict"
+        for key, val in self.data.val.items():
+            index = self.key_to_index[key]
+            button = self.radio_group.button(index)
+            button.setChecked(bool(val))
 
     def reset(self):
         for button in self.radio_group.buttons():

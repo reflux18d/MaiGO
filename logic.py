@@ -54,7 +54,7 @@ CMD_DICT = {
         "go_window": lambda self: MainWindow.switch_to_go(self),
         "record_window": lambda self: MainWindow.switch_to_record(self),
         "settings_window": lambda self: MainWindow.switch_to(self, 4),
-        "option_window": lambda self: MainWindow.switch_to(self, 5),
+        "option_window": lambda self: MainWindow.switch_to_option(self),
         "account_window": lambda self: MainWindow.switch_to_account(self),
         "record_stack": lambda self: MainWindow.switch_to_record_stack(self),
         "save_record": lambda self: MainWindow.save_record(self),
@@ -295,11 +295,11 @@ class OptionWindow(MethodWidget):
             self.option_layout.addWidget(widget)
             self.option_list.append(widget)
 
-    def update_visibility(self):
-        """将所有OptionsSingle更新可视性"""
+    def update(self):
+        """将所有OptionInput或OptionSelect更新数据"""
         for option in self.option_list:
             assert isinstance(option, (OptionInput, OptionSelect)) and isinstance(option.data, Data), "Invalid option or data"
-            option.setVisible(bool(option.data))
+            option.update()
         
     def trigger_tour(self):
         """在开始出勤时绑定self.current_tour作为本界面Options"""
@@ -519,6 +519,10 @@ class MainWindow(MethodWidget):
 
     def switch_to_record(self):
         self.switch_to(3)
+
+    def switch_to_option(self):
+        self.option_window.update()
+        self.switch_to(5)
 
     def switch_to_account(self):
         self.account_window.update_data()
