@@ -63,11 +63,11 @@ class Ui_GoWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.main_button.sizePolicy().hasHeightForWidth())
         self.main_button.setSizePolicy(sizePolicy)
-        self.main_button.setMinimumSize(QtCore.QSize(80, 40))
-        self.main_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.main_button.setMinimumSize(QtCore.QSize(150, 60))
+        self.main_button.setMaximumSize(QtCore.QSize(150, 60))
         self.main_button.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.main_button.setStyleSheet("font: 14pt \"黑体\";\n"
-"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
 "    background-color: #4CAF50; /* 背景颜色 */\n"
 "    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid #45a049; /* 边框样式 */")
@@ -82,10 +82,10 @@ class Ui_GoWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.option_button.sizePolicy().hasHeightForWidth())
         self.option_button.setSizePolicy(sizePolicy)
-        self.option_button.setMinimumSize(QtCore.QSize(80, 40))
-        self.option_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.option_button.setMinimumSize(QtCore.QSize(150, 60))
+        self.option_button.setMaximumSize(QtCore.QSize(150, 60))
         self.option_button.setStyleSheet("font: 14pt \"黑体\";\n"
-"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
 "    background-color:rgb(80, 194, 255);\n"
 "    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")

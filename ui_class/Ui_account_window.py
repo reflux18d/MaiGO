@@ -38,7 +38,7 @@ class Ui_AccountWidget(object):
         self.account_scroll.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.account_scroll.setObjectName("account_scroll")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 423))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 403))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.account_scroll.setWidget(self.scrollAreaWidgetContents)
         self.inform_layout.addWidget(self.account_scroll)
@@ -51,10 +51,10 @@ class Ui_AccountWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.return_button.sizePolicy().hasHeightForWidth())
         self.return_button.setSizePolicy(sizePolicy)
-        self.return_button.setMinimumSize(QtCore.QSize(80, 40))
-        self.return_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.return_button.setMinimumSize(QtCore.QSize(150, 60))
+        self.return_button.setMaximumSize(QtCore.QSize(150, 60))
         self.return_button.setStyleSheet("font: 14pt \"黑体\";\n"
-"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
 "    background-color:rgb(80, 194, 255);\n"
 "    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")

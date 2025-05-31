@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_StartWidget(object):
     def setupUi(self, StartWidget):
         StartWidget.setObjectName("StartWidget")
-        StartWidget.resize(410, 655)
+        StartWidget.resize(410, 734)
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/image/bear.png"), QtGui.QIcon.Selected, QtGui.QIcon.On)
         StartWidget.setWindowIcon(icon)
@@ -31,14 +31,13 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.account_button.sizePolicy().hasHeightForWidth())
         self.account_button.setSizePolicy(sizePolicy)
-        self.account_button.setMinimumSize(QtCore.QSize(35, 35))
-        self.account_button.setMaximumSize(QtCore.QSize(35, 35))
-        self.account_button.setStyleSheet("border-radius: 15px;       /* 圆形按钮 */\n"
+        self.account_button.setMinimumSize(QtCore.QSize(60, 60))
+        self.account_button.setMaximumSize(QtCore.QSize(60, 60))
+        self.account_button.setStyleSheet("border-radius: 30px;       /* 圆形按钮 */\n"
 "    background-color: rgb(255, 149, 42);       /* 圆形按钮 */\n"
 "    color: white;\n"
-"    border: none;;\n"
-"    color: white;\n"
-"    border: 3px solid rgb(255, 109, 42); /* 边框样式 */")
+"    border: 3px solid rgb(255, 109, 42); /* 边框样式 */\n"
+"font: 7pt \"黑体\";")
         self.account_button.setObjectName("account_button")
         self.horizontalLayout.addWidget(self.account_button)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -49,15 +48,14 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.settings_button.sizePolicy().hasHeightForWidth())
         self.settings_button.setSizePolicy(sizePolicy)
-        self.settings_button.setMinimumSize(QtCore.QSize(35, 35))
-        self.settings_button.setMaximumSize(QtCore.QSize(35, 35))
+        self.settings_button.setMinimumSize(QtCore.QSize(60, 60))
+        self.settings_button.setMaximumSize(QtCore.QSize(60, 60))
         self.settings_button.setAutoFillBackground(False)
-        self.settings_button.setStyleSheet("border-radius: 15px;       /* 圆形按钮 */\n"
-"    background-color: rgb(255, 149, 42);       /* 圆形按钮 */\n"
+        self.settings_button.setStyleSheet("border-radius: 30px;       /* 圆形按钮 */\n"
+"    background-color: rgb(255, 108, 89);       /* 圆形按钮 */\n"
 "    color: white;\n"
-"    border: none;;\n"
-"    color: white;\n"
-"    border: 3px solid rgb(255, 109, 42); /* 边框样式 */")
+"    border: 3px solid rgb(255, 37, 17); /* 边框样式 */\n"
+"font: 7pt \"黑体\";")
         self.settings_button.setObjectName("settings_button")
         self.horizontalLayout.addWidget(self.settings_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout)
@@ -106,10 +104,10 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.go_button.sizePolicy().hasHeightForWidth())
         self.go_button.setSizePolicy(sizePolicy)
-        self.go_button.setMinimumSize(QtCore.QSize(80, 40))
+        self.go_button.setMinimumSize(QtCore.QSize(150, 60))
         self.go_button.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.go_button.setStyleSheet("font: 14pt \"黑体\";\n"
-"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
 "    background-color: #4CAF50; /* 背景颜色 */\n"
 "    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid #45a049; /* 边框样式 */")
@@ -124,10 +122,10 @@ class Ui_StartWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.record_button.sizePolicy().hasHeightForWidth())
         self.record_button.setSizePolicy(sizePolicy)
-        self.record_button.setMinimumSize(QtCore.QSize(80, 40))
-        self.record_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.record_button.setMinimumSize(QtCore.QSize(150, 60))
+        self.record_button.setMaximumSize(QtCore.QSize(150, 60))
         self.record_button.setStyleSheet("font: 14pt \"黑体\";\n"
-"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
 "    background-color:rgb(80, 194, 255);\n"
 "    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")
@@ -136,12 +134,13 @@ class Ui_StartWidget(object):
         self.verticalLayout.addLayout(self.horizontalLayout_3)
         self.verticalLayout_2.addLayout(self.verticalLayout)
         self.label = QtWidgets.QLabel(StartWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
         self.label.setSizePolicy(sizePolicy)
-        self.label.setMaximumSize(QtCore.QSize(200, 30))
+        self.label.setMinimumSize(QtCore.QSize(250, 30))
+        self.label.setMaximumSize(QtCore.QSize(500, 30))
         font = QtGui.QFont()
         font.setFamily("黑体")
         font.setPointSize(12)
@@ -151,8 +150,9 @@ class Ui_StartWidget(object):
         self.label.setFont(font)
         self.label.setStyleSheet("font: 12pt \"黑体\";")
         self.label.setScaledContents(True)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
-        self.verticalLayout_2.addWidget(self.label, 0, QtCore.Qt.AlignHCenter)
+        self.verticalLayout_2.addWidget(self.label, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
 
         self.retranslateUi(StartWidget)
         QtCore.QMetaObject.connectSlotsByName(StartWidget)

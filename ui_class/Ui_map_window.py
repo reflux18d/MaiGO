@@ -36,10 +36,10 @@ class Ui_MapWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.return_button.sizePolicy().hasHeightForWidth())
         self.return_button.setSizePolicy(sizePolicy)
-        self.return_button.setMinimumSize(QtCore.QSize(80, 40))
-        self.return_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.return_button.setMinimumSize(QtCore.QSize(150, 60))
+        self.return_button.setMaximumSize(QtCore.QSize(150, 60))
         self.return_button.setStyleSheet("font: 14pt \"黑体\";\n"
-"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
 "    background-color:rgb(80, 194, 255);\n"
 "    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\record_window.ui'
+# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\record_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -38,7 +38,7 @@ class Ui_RecordWidget(object):
         self.record_scroll.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.record_scroll.setObjectName("record_scroll")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 423))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 403))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.record_scroll.setWidget(self.scrollAreaWidgetContents)
         self.inform_layout.addWidget(self.record_scroll)
@@ -51,10 +51,10 @@ class Ui_RecordWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.return_button.sizePolicy().hasHeightForWidth())
         self.return_button.setSizePolicy(sizePolicy)
-        self.return_button.setMinimumSize(QtCore.QSize(80, 40))
-        self.return_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.return_button.setMinimumSize(QtCore.QSize(150, 60))
+        self.return_button.setMaximumSize(QtCore.QSize(150, 60))
         self.return_button.setStyleSheet("font: 14pt \"黑体\";\n"
-"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
 "    background-color:rgb(80, 194, 255);\n"
 "    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\option_window.ui'
+# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\option_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -35,10 +35,10 @@ class Ui_OptionWidget(object):
         self.inform_layout.setObjectName("inform_layout")
         self.options_scroll = QtWidgets.QScrollArea(OptionWidget)
         self.options_scroll.setWidgetResizable(True)
-        self.options_scroll.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.options_scroll.setAlignment(QtCore.Qt.AlignCenter)
         self.options_scroll.setObjectName("options_scroll")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 379))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 325, 339))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.options_scroll.setWidget(self.scrollAreaWidgetContents)
         self.inform_layout.addWidget(self.options_scroll)
@@ -49,10 +49,10 @@ class Ui_OptionWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.return_button.sizePolicy().hasHeightForWidth())
         self.return_button.setSizePolicy(sizePolicy)
-        self.return_button.setMinimumSize(QtCore.QSize(80, 40))
-        self.return_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.return_button.setMinimumSize(QtCore.QSize(150, 60))
+        self.return_button.setMaximumSize(QtCore.QSize(150, 60))
         self.return_button.setStyleSheet("font: 14pt \"黑体\";\n"
-"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
 "    background-color:rgb(80, 194, 255);\n"
 "    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")
@@ -64,10 +64,10 @@ class Ui_OptionWidget(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Fixed_button.sizePolicy().hasHeightForWidth())
         self.Fixed_button.setSizePolicy(sizePolicy)
-        self.Fixed_button.setMinimumSize(QtCore.QSize(80, 40))
-        self.Fixed_button.setMaximumSize(QtCore.QSize(80, 40))
+        self.Fixed_button.setMinimumSize(QtCore.QSize(150, 60))
+        self.Fixed_button.setMaximumSize(QtCore.QSize(150, 60))
         self.Fixed_button.setStyleSheet("font: 14pt \"黑体\";\n"
-"border-radius: 20px;      /* 圆角半径（像素） */\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
 "    background-color: #4CAF50; /* 背景颜色 */\n"
 "    color: white;             /* 文字颜色 */\n"
 "    border: 5px solid #45a049; /* 边框样式 */")

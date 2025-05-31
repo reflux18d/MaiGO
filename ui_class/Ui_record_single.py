@@ -41,11 +41,18 @@ class Ui_RecordSingle(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.info_button = QtWidgets.QPushButton(RecordSingle)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.info_button.sizePolicy().hasHeightForWidth())
         self.info_button.setSizePolicy(sizePolicy)
+        self.info_button.setMinimumSize(QtCore.QSize(150, 60))
+        self.info_button.setMaximumSize(QtCore.QSize(150, 60))
+        self.info_button.setStyleSheet("font: 14pt \"黑体\";\n"
+"border-radius: 30px;      /* 圆角半径（像素） */\n"
+"    background-color:rgb(80, 194, 255);\n"
+"    color: white;             /* 文字颜色 */\n"
+"    border: 5px solid rgb(53, 144, 255); /* 边框样式 */")
         self.info_button.setObjectName("info_button")
         self.horizontalLayout_2.addWidget(self.info_button)
         self.verticalLayout_2.addLayout(self.horizontalLayout_2)
