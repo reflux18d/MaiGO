@@ -15,6 +15,7 @@ QIcon, QPixmap
 from PyQt5.QtCore import (
 pyqtSignal, QTimer, Qt
 )
+from PyQt5.QtMultimedia import QSound
 # 调用暂时不知道有没有用的资源文件
 import resources_rc
 
@@ -66,7 +67,6 @@ class StartWindow(MethodWidget):
         # 创建ui类实例
         self.ui = Ui_start_window.Ui_StartWidget() 
         self.ui.setupUi(self) # 从ui对象获取所有已有布局
-        #self.ui.label_2.setVisible(False)
         self.ui.label_2.setText("")
         self.original_pixmap=None
         self.user = user # 绑定用户
@@ -91,18 +91,16 @@ class StartWindow(MethodWidget):
         self.record_button.clicked.connect(lambda: self.signal.emit("record_window"))
         self.settings_button.clicked.connect(lambda: self.signal.emit("settings_window"))
         self.account_button.clicked.connect(lambda: self.signal.emit("account_window"))
+
     def on_image_click(self, event):
-        from PyQt5.QtWidgets import QToolTip,QMessageBox
-        from PyQt5.QtCore import QRect
-        #self.ui.label_2.setVisible(True)
-        
         self.ui.label_2.setText("喵喵~咕噜咕噜")
+        # 显示2秒后消失
         QTimer.singleShot(2000, lambda:self.ui.label_2.setText(""))
-        from PyQt5.QtMultimedia import QSound
         try:
-            QSound.play("咕噜咕噜.wav")  # 需要准备WAV格式音频文件
+            QSound.play(":/audio/咕噜咕噜.wav")  # 需要准备WAV格式音频文件
         except:
-            print("音频播放失败，请检查click.wav文件是否存在")
+            print("音频播放失败，请检查.wav文件是否存在")
+
     def set_figure(self, image_path):
         pixmap = QPixmap(image_path)
         if pixmap.isNull():
@@ -210,14 +208,12 @@ class GoWindow(MethodWidget):
         self.timer_label = self.ui.time_label
         self.goal_label = self.ui.goal_label
         self.label=self.ui.label
-        gif_path1="run.gif"
-        gif_path2="play.gif"
         self.option_button = self.ui.option_button
         # 点击主按钮切换到下一阶段
         self.main_button.clicked.connect(lambda: self.state_change(self.state + 1))
         self.option_button.clicked.connect(lambda: self.signal.emit("option_window"))
     
-    def set_gif(self,gif_path):
+    def set_gif(self, gif_path):
         from PyQt5.QtGui import QMovie
         
         try:
@@ -300,26 +296,23 @@ class GoWindow(MethodWidget):
         self.setWindowTitle("通勤中")
         self.main_button.setText("到达")
         self.state_label.setText("出发喽!")
-        self.set_gif("run.gif")
-        from PyQt5.QtMultimedia import QSound
+        self.set_gif(":/animation/run.gif")
         try:
-            QSound.play("出发咯.wav")  # 需要准备WAV格式音频文件
+            QSound.play(":/audio/出发咯.wav")  # 需要准备WAV格式音频文件
         except:
-            print("音频播放失败，请检查click.wav文件是否存在")
+            print("音频播放失败，请检查.wav文件是否存在")
 
     def playing(self):
         """current_tour到达"""
-
-        self.set_gif("play.gif")
+        self.set_gif(":/animation/play.gif")
         self.user.current_tour.arrived()
         self.setWindowTitle("游玩中")
         self.main_button.setText("退勤")
         self.state_label.setText("欢迎回来")
-        from PyQt5.QtMultimedia import QSound
         try:
-            QSound.play("欢迎回来.wav")  # 需要准备WAV格式音频文件
+            QSound.play(":/audio/欢迎回来.wav")  # 需要准备WAV格式音频文件
         except:
-            print("音频播放失败，请检查click.wav文件是否存在")
+            print("音频播放失败，请检查.wav文件是否存在")
 
     def ending(self):
         """current_tour结束"""
@@ -598,11 +591,10 @@ class MainWindow(MethodWidget):
         self.option_window.clear_scroll()
         self.option_window.trigger_tour()
         self.go_window.update_tips()
-        from PyQt5.QtMultimedia import QSound
         try:
-            QSound.play("要开始了哟.wav")  # 需要准备WAV格式音频文件
+            QSound.play(":/audio/要开始了哟.wav")  # 需要准备WAV格式音频文件
         except:
-            print("音频播放失败，请检查click.wav文件是否存在")
+            print("音频播放失败，请检查.wav文件是否存在")
         self.switch_to(2)
 
     def switch_to_record(self):
