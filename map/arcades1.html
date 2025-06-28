@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>舞萌机厅地图</title>
+  <script src="https://webapi.amap.com/maps?v=2.0&key=e2af5ac6f39edf4b77e65f0774e0181d"></script>
+  <style>
+    html, body, #container {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+    .info {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .info a {
+      color: #0077cc;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div id="container"></div>
+
+<script>
+  const map = new AMap.Map("container", {
+    center: [104.114129, 37.550339],
+    zoom: 6,
+    viewMode: '2D',
+    pitch: 45
+  });
+
+  // 加载 halls.json 中的机厅信息
+  fetch("all_arcades_code.json")
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(hall => {
+        const marker = new AMap.Marker({
+          position: [hall.lng, hall.lat],
+          map: map,
+          title: hall.name
+        });
+
+        const infoContent = `
+          <div class="info">
+            <b>${hall.name}</b><br/>
+            ${hall.address}<br/>
+            ${hall.url ? `<a href="${hall.url}" target="_blank">查看详情</a>` : ""}
+          </div>
+        `;
+
+        const infoWindow = new AMap.InfoWindow({
+          content: infoContent,
+          offset: new AMap.Pixel(0, -30)
+        });
+
+        marker.on("click", () => {
+          infoWindow.open(map, marker.getPosition());
+        });
+      });
+    });
+</script>
+</body>
+</html>

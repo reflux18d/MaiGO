@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>舞萌机厅地图聚合版</title>
+  <script src="https://webapi.amap.com/maps?v=2.0&key=e2af5ac6f39edf4b77e65f0774e0181d"></script>
+  <script src="https://webapi.amap.com/ui/1.1/main.js"></script>
+  <style>
+    html, body, #container {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+    .info {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .info a {
+      color: #0077cc;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div id="container"></div>
+
+<script>
+  const map = new AMap.Map("container", {
+    center: [104.114129, 37.550339],
+    zoom: 5,
+    viewMode: '3D',
+    pitch: 50,
+    mapStyle: 'amap://styles/whitesmoke'
+  });
+
+  // 加载聚合插件
+  AMapUI.loadUI(['misc/MarkerClusterer'], function(Clusterer) {
+    fetch("arcades_code.json")
+      .then(res => res.json())
+      .then(data => {
+        const markers = data.map(hall => {
+          const marker = new AMap.Marker({
+            position: [hall.lng, hall.lat],
+            title: hall.name
+          });
+
+          marker.on("click", () => {
+            const infoWindow = new AMap.InfoWindow({
+              content: `
+                <div class="info">
+                  <b>${hall.name}</b><br/>
+                  ${hall.address}<br/>
+                  ${hall.url ? `<a href="${hall.url}" target="_blank">查看详情</a>` : ""}
+                </div>
+              `,
+              offset: new AMap.Pixel(0, -30)
+            });
+            infoWindow.open(map, marker.getPosition());
+          });
+
+          return marker;
+        });
+
+        new Clusterer(map, markers, {
+          gridSize: 80,
+          maxZoom: 17
+        });
+
+        // 自动缩放
+        const bounds = new AMap.Bounds();
+        data.forEach(h => bounds.extend([h.lng, h.lat]));
+        map.setBounds(bounds);
+      });
+  });
+</script>
+</body>
+</html>
