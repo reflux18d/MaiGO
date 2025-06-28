@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>舞萌机厅地图聚合版</title>
+  <title>舞萌机厅地图</title>
   <script src="https://webapi.amap.com/maps?v=2.0&key=e2af5ac6f39edf4b77e65f0774e0181d"></script>
-  <script src="https://webapi.amap.com/ui/1.1/main.js"></script>
+  <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
   <style>
     html, body, #container {
       width: 100%;
@@ -18,6 +18,7 @@
     .info a {
       color: #0077cc;
       text-decoration: underline;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -25,53 +26,47 @@
 <div id="container"></div>
 
 <script>
+  let pyBridge = null;
+
+  new QWebChannel(qt.webChannelTransport, function(channel) {
+    pyBridge = channel.objects.pyBridge;
+  });
+
   const map = new AMap.Map("container", {
     center: [104.114129, 37.550339],
-    zoom: 5,
-    viewMode: '3D',
-    pitch: 50,
-    mapStyle: 'amap://styles/whitesmoke'
+    zoom: 6,
+    viewMode: '2D',
+    pitch: 45
   });
 
-  // 加载聚合插件
-  AMapUI.loadUI(['misc/MarkerClusterer'], function(Clusterer) {
-    fetch("arcades_code.json")
-      .then(res => res.json())
-      .then(data => {
-        const markers = data.map(hall => {
-          const marker = new AMap.Marker({
-            position: [hall.lng, hall.lat],
-            title: hall.name
-          });
-
-          marker.on("click", () => {
-            const infoWindow = new AMap.InfoWindow({
-              content: `
-                <div class="info">
-                  <b>${hall.name}</b><br/>
-                  ${hall.address}<br/>
-                  ${hall.url ? `<a href="${hall.url}" target="_blank">查看详情</a>` : ""}
-                </div>
-              `,
-              offset: new AMap.Pixel(0, -30)
-            });
-            infoWindow.open(map, marker.getPosition());
-          });
-
-          return marker;
+  fetch("all_arcades_code.json")
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(hall => {
+        const marker = new AMap.Marker({
+          position: [hall.lng, hall.lat],
+          map: map,
+          title: hall.name
         });
 
-        new Clusterer(map, markers, {
-          gridSize: 80,
-          maxZoom: 17
+        const infoContent = `
+          <div class="info">
+            <b>${hall.name}</b><br/>
+            ${hall.address}<br/>
+            <a onclick="if(pyBridge){ pyBridge.showInfo('${hall.name}', '${hall.address}'); }">查看详情</a>
+          </div>
+        `;
+
+        const infoWindow = new AMap.InfoWindow({
+          content: infoContent,
+          offset: new AMap.Pixel(0, -30)
         });
 
-        // 自动缩放
-        const bounds = new AMap.Bounds();
-        data.forEach(h => bounds.extend([h.lng, h.lat]));
-        map.setBounds(bounds);
+        marker.on("click", () => {
+          infoWindow.open(map, marker.getPosition());
+        });
       });
-  });
+    });
 </script>
 </body>
 </html>
