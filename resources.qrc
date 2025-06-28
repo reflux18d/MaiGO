@@ -9,5 +9,11 @@
     <file>image/salt.png</file>
     <file>image/acid.png</file>
     <file>image/yurisaki.png</file>
+    <file>animation/play.gif</file>
+    <file>animation/run.gif</file>
+    <file>audio/出发咯.wav</file>
+    <file>audio/咕噜咕噜.wav</file>
+    <file>audio/欢迎回来.wav</file>
+    <file>audio/要开始了哟.wav</file>
 </qresource>
 </RCC>
