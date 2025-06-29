@@ -13,11 +13,16 @@ QPixmap, QColor, QFont, QBrush, QPen,
 QIcon, QPixmap
 )
 from PyQt5.QtCore import (
-pyqtSignal, QTimer, Qt
+pyqtSignal, QTimer, Qt,
+pyqtSlot, QUrl
 )
-from PyQt5.QtMultimedia import QSound
 # 调用暂时不知道有没有用的资源文件
 import resources_rc
+
+# 调用其他资源
+from PyQt5.QtMultimedia import QSound
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtWebChannel import QWebChannel
 
 # 调用ui_class文件夹中使用QTdesigner写好的窗口类文件
 from ui_class import (
@@ -123,39 +128,44 @@ class MapWindow(MethodWidget):
         self.user = user # 绑定用户
         self.signal = signal # 绑定切换界面信号
 
-        # Arcade samples
-        self.arcades = [Arcade("上地", 6), Arcade("五道口", 4), Arcade("万柳", 3), Arcade("学清", 6)] # 机厅列表
-        positions = [(584, 71), (892, 600), (403, 864), (1048, 357)]
-        for arcade, pos in zip(self.arcades, positions):
-            arcade.set_pos(*pos)
-
+        self.arcades = []
         self.trigger_widgets() # 动态添加机厅按钮
 
     def trigger_widgets(self):
-        """
-        绑定所有QTdesigner中定义的控件
-        并定义逻辑行为
-        """
-        # QTdesigner只有GraphicView
-        # 所以还要自己添加Graphic的其他控件
-        self.scene = QGraphicsScene()
-        self.view = self.ui.view
-        self.view.setScene(self.scene)
-        pixmap = QPixmap(map_path)
-        self.background = QGraphicsPixmapItem(pixmap)
-        self.scene.addItem(self.background)
-
         self.return_button = self.ui.return_button
         self.return_button.clicked.connect(lambda: self.signal.emit("start_window"))
-        for arcade in self.arcades:
-            # 在ArcadeMarker中定义点击行为
-            marker = ArcadeMarker(self, arcade)
-            self.scene.addItem(marker)
+        self.load_arcades()
+
+        self.webview = QWebEngineView()
+        self.ui.view_layout.addWidget(self.webview)
+
+        # ✅ 第一步：注册 WebChannel
+        self.channel = QWebChannel()
+        self.channel.registerObject("pyBridge", self)
+        self.webview.page().setWebChannel(self.channel)
+        print("✅ WebChannel 已注册成功")
+
+        # ✅ 第二步：再加载页面
+        self.webview.setUrl(QUrl("http://localhost:8000/arcades2.html"))
 
 
-    def selected(self, arcade):
-        self.user.start_new_tour(self.user.home, arcade)
+    def load_arcades(self):
+        """加载机厅信息"""
+        import os, json
+        base_dir = os.path.dirname(__file__)
+        json_path = os.path.join(base_dir, 'map', 'all_arcades_code.json')
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+        for arcade in data:
+            name, info, lat, lng = arcade["name"], arcade["address"], arcade["lat"], arcade["lng"]
+            self.arcades.append(Arcade(name, lat, lng, info))
+
+    @pyqtSlot(int)
+    def selected(self, index):
+        print(f"selected:{index}")
+        self.user.start_new_tour(self.user.home, self.arcades[index])
         self.signal.emit("go_window")
+
 
 class ArcadeMarker(QGraphicsEllipseItem):
     """自定义商场标记图形项"""

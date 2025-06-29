@@ -28,17 +28,20 @@
 <script>
   let pyBridge = null;
 
+  // 建立 WebChannel 连接
   new QWebChannel(qt.webChannelTransport, function(channel) {
     pyBridge = channel.objects.pyBridge;
+    console.log("✅ WebChannel connected:", pyBridge);
   });
 
   const map = new AMap.Map("container", {
-    center: [104.114129, 37.550339],
-    zoom: 6,
+    center: [116.310454, 39.992734],
+    zoom: 11,
     viewMode: '2D',
     pitch: 45
   });
 
+  // 加载机厅 JSON 数据
   fetch("all_arcades_code.json")
     .then(res => res.json())
     .then(data => {
@@ -49,11 +52,12 @@
           title: hall.name
         });
 
+        // 使用一个 JS 函数来处理点击
         const infoContent = `
           <div class="info">
             <b>${hall.name}</b><br/>
             ${hall.address}<br/>
-            <a onclick="if(pyBridge){ pyBridge.showInfo('${hall.name}', '${hall.address}'); }">查看详情</a>
+            <a onclick="handleClick(${hall.index})">就是这里!</a>
           </div>
         `;
 
@@ -66,7 +70,20 @@
           infoWindow.open(map, marker.getPosition());
         });
       });
+    })
+    .catch(err => {
+      console.error("❌ 加载 JSON 失败:", err);
     });
+
+  // 统一处理点击事件
+  function handleClick(index) {
+    console.log("📍 点击 index =", index);
+    if (pyBridge && typeof pyBridge.selected === "function") {
+      pyBridge.selected(index);
+    } else {
+      console.warn("⚠️ pyBridge 未连接或 selected 不是函数");
+    }
+  }
 </script>
 </body>
 </html>
