@@ -5,7 +5,7 @@ import json
 import os
 
 class Place:
-    def __init__(self, name = "Peking University", latitude = 116.310454, longitude = 39.992734):
+    def __init__(self, name = "Peking University", latitude = 39.992734, longitude = 116.310454):
         self.name = name
         self.lat, self.lng = latitude, longitude
         self.visits = 0
@@ -18,7 +18,7 @@ class Place:
 
 
 class Arcade(Place):
-    def __init__(self, name, latitude = 116.310454, longitude = 39.992734, address = ""):
+    def __init__(self, name, latitude = 39.992734, longitude = 116.310454, address = ""):
         super().__init__(name, latitude, longitude)
         self.address = address
         self.distance = 0
@@ -28,8 +28,8 @@ class Arcade(Place):
 
 
 class Tour:
-    def __init__(self, home, goal):
-        self.index = None # 第几次，用于Record绑定
+    def __init__(self, home, goal, index = None):
+        self.index = index # 第几次，用于Record绑定
         self.start_time = None
         self.arrival_time = None
         self.end_time = None
@@ -40,9 +40,6 @@ class Tour:
     
     def set_data(self, user):
         assert isinstance(user, User), "Invalid user type"
-        count_data = user.data.get("出勤次数")
-        assert isinstance(count_data, NumData), "Invalid data type"
-        self.index = int(count_data.val)
         for key, val in user.data.items():
             assert isinstance(val, Data)
             new_data = val.new_copy()
@@ -70,7 +67,7 @@ class Tour:
         assert isinstance(self.goal, Arcade), "Invalid Arcade"
         assert isinstance(self.home, Place), "Invalid Home"
         count_data.add_val(1)
-        distance = haversine(self.home.lng, self.home.lat, self.goal.lng, self.goal.lat)
+        distance = calculate_distance(self.home.lat, self.home.lng, self.goal.lat, self.goal.lng)
         distance_data.add_val(distance)
         march_data, play_data = self.data.get("通勤时间(s)"), self.data.get("游玩时间(s)")
         assert isinstance(march_data, NumData) and isinstance(play_data, NumData), "No Key In DataDict"      
@@ -174,13 +171,15 @@ class User:
     
     def start_new_tour(self, home, goal):
         """开始新的出勤记录"""
-        self.current_tour = Tour(home, goal)
+        print(len(self.history))
+        self.current_tour = Tour(home, goal, len(self.history))
         self.current_tour.set_data(self)
     
     def save_tour(self):
         """保存当前出勤记录"""
         assert isinstance(self.current_tour, Tour), "No Tour to save"
         assert self.current_tour.state >= 3, "Unfinished Tour"
+        #print(f"Tour index:{self.current_tour.index}")
         for key, tour_data in self.current_tour.data.items():
             user_data = self.data.get(key)
             assert isinstance(user_data, Data), "Invalid user data"
@@ -197,7 +196,7 @@ class User:
         
 
     def add_datatype(self, *new_data):
-        """暂时没用上"""
+        """用于main内初始化datainfo的数据"""
         for data in new_data:
             assert isinstance(data, Data), "Invalid data type"
             key = data.name
@@ -340,19 +339,41 @@ class DictData(Data):
             new_data.val[key] = 0
         return new_data
 
-def haversine(lng1, lat1, lng2, lat2):
-    """根据经纬度差计算距离"""
+def calculate_distance(lat1, lon1, lat2, lon2):
+    """
+    计算两个经纬度坐标之间的直线距离（使用Haversine公式）
+    
+    参数:
+    lat1 -- 地点1的纬度（0~90）
+    lon1 -- 地点1的经度（0~180）
+    lat2 -- 地点2的纬度（0~90）
+    lon2 -- 地点2的经度（0~180）
+    
+    返回:
+    两点间的直线距离（单位：公里）
+    """
+    # 将角度转换为弧度
     import math
-    R = 6371  # 地球半径，单位为千米
-    # 将角度转为弧度
-    lat1, lat2 = map(math.radians, [lat1, lat2])
-    lng1, lng2 = map(math.radians, [lng1, lng2])
-    dlat = lat2 - lat1
-    dlng = lng2 - lng1
-
-    a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlng / 2)**2
-    c = 2 * math.asin(math.sqrt(a))
+    print(lat1, lon1, lat2, lon2)
+    lat1_rad = math.radians(lat1)
+    lon1_rad = math.radians(lon1)
+    lat2_rad = math.radians(lat2)
+    lon2_rad = math.radians(lon2)
+    
+    # 地球半径（单位：公里）
+    R = 6371.0  # 地球平均半径
+    
+    # 计算经纬度差值
+    dlat = lat2_rad - lat1_rad
+    dlon = lon2_rad - lon1_rad
+    
+    # Haversine公式
+    a = math.sin(dlat / 2)**2 + math.cos(lat1_rad) * math.cos(lat2_rad) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    
+    # 计算距离
     distance = R * c
+    
     return distance
 
 if __name__ == "__main__":

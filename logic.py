@@ -619,6 +619,7 @@ class MainWindow(MethodWidget):
         self.switch_to(6)
 
     def switch_to_record_stack(self):
+        print(self.user.record_index)
         self.record_stack.switch_to(self.user.record_index)
         self.switch_to(7)
 
