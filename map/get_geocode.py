@@ -7,7 +7,7 @@ API_KEY = "e2af5ac6f39edf4b77e65f0774e0181d"
 def geocode(address):
     url = f"https://restapi.amap.com/v3/geocode/geo?address={address}&key={API_KEY}"
     try:
-        resp = requests.get(url)
+        resp = requests.get(url, proxies={"http": None, "https": None})
         data = resp.json()
         if data["status"] == "1" and data["geocodes"]:
             location = data["geocodes"][0]["location"]  # 'lng,lat'
@@ -22,7 +22,7 @@ output = []
 with open("error.txt", "r", encoding="utf-8") as f:
     lines = [line.strip() for line in f if line.strip()]
 
-for i in range(0, len(lines), 2):
+for i in range(0, 6, 2):
     name = lines[i]
     address = lines[i+1]
     lng, lat = geocode(address)
@@ -39,5 +39,5 @@ for i in range(0, len(lines), 2):
     time.sleep(0.3)  # 避免触发限流
 
 # 保存为 JSON
-with open("arcades_code5.json", "w", encoding="utf-8") as f:
+with open("home_code.json", "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)

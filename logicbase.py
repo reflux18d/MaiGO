@@ -5,26 +5,26 @@ import json
 import os
 
 class Place:
-    def __init__(self, name = "Peking University"):
+    def __init__(self, name = "Peking University", latitude = 116.310454, longitude = 39.992734):
         self.name = name
-        self.latitude, self.longitude = 0, 0
+        self.lat, self.lng = latitude, longitude
         self.visits = 0
 
     def __str__(self):
         return self.name
 
-    def set_pos(self, lati, longi):
-        self.latitude, self.longitude = lati, longi
+    def set_pos(self, latitude, longitude):
+        self.lat, self.lng = latitude, longitude
 
 
 class Arcade(Place):
-    def __init__(self, name, distance = 0, info_text = ""):
-        super().__init__(name)
-        self.info_text = info_text
-        self.distance = distance
+    def __init__(self, name, latitude = 116.310454, longitude = 39.992734, address = ""):
+        super().__init__(name, latitude, longitude)
+        self.address = address
+        self.distance = 0
     
     def description(self) -> str:
-        return self.info_text
+        return self.address
 
 
 class Tour:
@@ -68,8 +68,10 @@ class Tour:
         count_data, distance_data = self.data.get("出勤次数"), self.data.get("出行里程(km)")
         assert isinstance(count_data, NumData) and isinstance(distance_data, NumData), "No Key in DataDict"
         assert isinstance(self.goal, Arcade), "Invalid Arcade"
+        assert isinstance(self.home, Place), "Invalid Home"
         count_data.add_val(1)
-        distance_data.add_val(self.goal.distance)
+        distance = haversine(self.home.lng, self.home.lat, self.goal.lng, self.goal.lat)
+        distance_data.add_val(distance)
         march_data, play_data = self.data.get("通勤时间(s)"), self.data.get("游玩时间(s)")
         assert isinstance(march_data, NumData) and isinstance(play_data, NumData), "No Key In DataDict"      
         march_time = self.arrival_time - self.start_time
@@ -338,6 +340,20 @@ class DictData(Data):
             new_data.val[key] = 0
         return new_data
 
+def haversine(lng1, lat1, lng2, lat2):
+    """根据经纬度差计算距离"""
+    import math
+    R = 6371  # 地球半径，单位为千米
+    # 将角度转为弧度
+    lat1, lat2 = map(math.radians, [lat1, lat2])
+    lng1, lng2 = map(math.radians, [lng1, lng2])
+    dlat = lat2 - lat1
+    dlng = lng2 - lng1
+
+    a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlng / 2)**2
+    c = 2 * math.asin(math.sqrt(a))
+    distance = R * c
+    return distance
 
 if __name__ == "__main__":
     import doctest

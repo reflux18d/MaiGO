@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\程序设计实习\MaiGO\ui_class\map_window.ui'
+# Form implementation generated from reading ui file 'f:\cjdl\vsc\homework\ChSh\MaiGO\ui_class\map_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.11
 #
@@ -25,9 +25,9 @@ class Ui_MapWidget(object):
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setObjectName("label")
         self.verticalLayout_2.addWidget(self.label)
-        self.view = QtWidgets.QGraphicsView(MapWidget)
-        self.view.setObjectName("view")
-        self.verticalLayout_2.addWidget(self.view)
+        self.view_layout = QtWidgets.QVBoxLayout()
+        self.view_layout.setObjectName("view_layout")
+        self.verticalLayout_2.addLayout(self.view_layout)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.return_button = QtWidgets.QPushButton(MapWidget)

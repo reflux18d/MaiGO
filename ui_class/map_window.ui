@@ -33,7 +33,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QGraphicsView" name="view"/>
+    <layout class="QVBoxLayout" name="view_layout"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
