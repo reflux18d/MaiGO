@@ -616,6 +616,8 @@ class MainWindow(MethodWidget):
         """加载用户的current_tour为RecordWindow和RecordStack的Widget"""
         self.record_window.save_record(self.user.current_tour)
         self.record_stack.save_record(self.user.current_tour)
+        #self.user.save_tour()  # 这会自动保存到文件
+        
 
     # 所有指令经过此处
     def signal_trigger(self, command: str):
@@ -629,7 +631,8 @@ if __name__ == "__main__":
 
     user = User("Bo")
 
-    user.add_datatype(*data_samples)
+    if not user.data:
+        user.add_datatype(*data_samples)
 
     window = MainWindow(user)
 

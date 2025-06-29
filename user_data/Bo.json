@@ -1,0 +1,1006 @@
+{
+  "name": "Bo",
+  "data": {
+    "出勤次数": {
+      "name": "出勤次数",
+      "val": 3,
+      "show": false,
+      "editable": false,
+      "accumulable": true,
+      "info": "",
+      "_type": "NumData"
+    },
+    "通勤时间(s)": {
+      "name": "通勤时间(s)",
+      "val": 12,
+      "show": false,
+      "editable": false,
+      "accumulable": true,
+      "info": "",
+      "_type": "NumData"
+    },
+    "游玩时间(s)": {
+      "name": "游玩时间(s)",
+      "val": 8,
+      "show": false,
+      "editable": false,
+      "accumulable": true,
+      "info": "",
+      "_type": "NumData"
+    },
+    "出行里程(km)": {
+      "name": "出行里程(km)",
+      "val": 14,
+      "show": false,
+      "editable": false,
+      "accumulable": true,
+      "info": "",
+      "_type": "NumData"
+    },
+    "交通方式": {
+      "name": "交通方式",
+      "val": {
+        "骑行": 1,
+        "步行": 0,
+        "公共交通": 0
+      },
+      "show": true,
+      "editable": true,
+      "accumulable": true,
+      "info": "",
+      "exclusive": true,
+      "_type": "DictData"
+    },
+    "出装记录": {
+      "name": "出装记录",
+      "val": {
+        "大水": 0,
+        "板子": 1,
+        "手套": 0,
+        "谷子": 0
+      },
+      "show": true,
+      "editable": true,
+      "accumulable": true,
+      "info": "",
+      "exclusive": false,
+      "_type": "DictData"
+    },
+    "排队时在干嘛": {
+      "name": "排队时在干嘛",
+      "val": {
+        "看铺面预览": 0,
+        "adx上练习": 1,
+        "玩移动端音游": 0,
+        "水群发动态": 0
+      },
+      "show": true,
+      "editable": true,
+      "accumulable": true,
+      "info": "",
+      "exclusive": false,
+      "_type": "DictData"
+    },
+    "上机必玩": {
+      "name": "上机必玩",
+      "val": "",
+      "show": true,
+      "editable": true,
+      "accumulable": false,
+      "info": "接下来要玩什么呢",
+      "_type": "StrData"
+    },
+    "推分记录": {
+      "name": "推分记录",
+      "val": "",
+      "show": true,
+      "editable": true,
+      "accumulable": false,
+      "info": "我要飞升!",
+      "_type": "StrData"
+    },
+    "获得成就": {
+      "name": "获得成就",
+      "val": "",
+      "show": false,
+      "editable": false,
+      "accumulable": false,
+      "info": "",
+      "_type": "StrData"
+    }
+  },
+  "records": [
+    {
+      "start_time": "2025-06-29T10:17:58.123584",
+      "end_time": "2025-06-29T10:17:58.866644",
+      "goal": "万柳",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 3,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T10:31:06.513782",
+      "end_time": "2025-06-29T10:31:25.497181",
+      "goal": "上地",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 18,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 6,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 1,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 1,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 1,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "跌幅超过v不会就那么",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "非常高v会比较",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T10:36:58.488288",
+      "end_time": "2025-06-29T10:36:59.359736",
+      "goal": "上地",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 6,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T10:39:14.668466",
+      "end_time": "2025-06-29T10:39:15.592162",
+      "goal": "上地",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 6,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T10:45:09.543887",
+      "end_time": "2025-06-29T10:45:11.473875",
+      "goal": "万柳",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 3,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T10:58:04.945495",
+      "end_time": "2025-06-29T10:58:05.577266",
+      "goal": "万柳",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 3,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T11:32:46.790012",
+      "end_time": "2025-06-29T11:32:48.647219",
+      "goal": "五道口",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 4,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T11:45:46.183472",
+      "end_time": "2025-06-29T11:45:58.097900",
+      "goal": "上地",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 5,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 6,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 6,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 1,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T11:49:05.502469",
+      "end_time": "2025-06-29T11:49:08.498395",
+      "goal": "五道口",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 2,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 4,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T11:56:45.164419",
+      "end_time": "2025-06-29T11:57:01.713792",
+      "goal": "上地",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 7,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 8,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 6,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 1,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 1,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "啊但是对方",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "阿萨的规范化",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T11:57:35.174343",
+      "end_time": "2025-06-29T11:57:39.566738",
+      "goal": "五道口",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 3,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 4,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 1,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    }
+  ],
+  "last_save": "2025-06-29T11:57:39.566738"
+}

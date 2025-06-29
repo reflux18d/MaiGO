@@ -1,7 +1,8 @@
 """存放记录数据的类"""
 from datetime import datetime
 import copy
-
+import json
+import os
 
 class Place:
     def __init__(self, name = "Peking University"):
@@ -75,16 +76,97 @@ class Tour:
         march_data.add_val(int(march_time.total_seconds()))
         play_time = self.end_time - self.arrival_time
         play_data.add_val(int(play_time.total_seconds()))
-        
+
+    def to_dict(self):
+        return {
+            'start_time': self.start_time.isoformat() if self.start_time else None,
+            'end_time': self.end_time.isoformat() if self.end_time else None,
+            'goal': str(self.goal),
+            'data': {k: v.to_dict() for k, v in self.data.items()}
+        }
+    
 class User:
     def __init__(self, name, data = None):
         self.name = name
         self.history = []  # 存储所有Tour记录
+        self.records=[] # dict格式
         self.current_tour = None  # 当前出勤
         self.home = Place()
         self.data = data if data is not None else {} # 总计数据, key: str
         self.record_index = 0
+        
+        # 初始化存储路径
+        self.data_dir = "user_data"
+        if not os.path.exists(self.data_dir):
+            os.makedirs(self.data_dir)
+        self.user_file = os.path.join(self.data_dir, f"{name}.json")
+        
+        # 尝试加载已有数据
+        
+        print("load data")
+        self.load_data()
 
+        print(self.data)
+        print(self.data['出勤次数'].val)
+    
+    def load_data(self):
+        """从文件加载用户数据"""
+        if os.path.exists(self.user_file):
+            try:
+                with open(self.user_file, 'r', encoding='utf-8') as f:
+                    saved = json.load(f)
+                
+                # 重建data字典
+                self.data = {}
+                for k, v in saved.get('data', {}).items():
+                    data_type=v["_type"]
+                    
+                    if data_type == 'NumData':
+                        data_name,data_val,data_show,data_editable,data_accumulable,data_info,data_type=v.values()
+                        print(v)
+                        self.data[k] = NumData(data_name,data_val,data_editable,data_accumulable,data_info)
+                       
+                    elif data_type == 'StrData':
+                        data_name,data_val,data_show,data_editable,data_accumulable,data_info,data_type=v.values()
+                        self.data[k] = StrData(data_name,data_val,data_editable,data_accumulable,data_info)
+                    elif data_type=='DictData':
+                        data_name,data_val,data_show,data_editable,data_accumulable,data_info,data_exclusive,data_type=v.values()
+                        self.data[k]=DictData(data_name,data_val,data_editable,data_accumulable,data_exclusive,data_info)
+
+                self.records = saved.get('records', [])
+                print("hi")
+                
+            except Exception as e:
+                print(f"加载用户数据失败: {e}")
+    
+    def save_data(self):
+        """保存用户数据到文件"""
+        try:
+            print("尝试保存数据...")
+            data = {
+                'name': self.name,
+                'data': {
+                        k: {
+                            **v.__dict__,
+                            '_type':v.__class__.__name__
+                        }
+                        for k, v in self.data.items()},  # 简化数据转换
+                'records': self.records,
+                'last_save': datetime.now().isoformat()
+            }
+            
+            print(f"将保存到: {self.user_file}")
+            with open(self.user_file, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            
+            print("保存成功！")
+            print(f"文件是否存在: {os.path.exists(self.user_file)}")  # 二次验证
+        except Exception as e:
+            print(f"保存失败！错误详情: {str(e)}")
+            import traceback
+            traceback.print_exc()  # 打印完整错误堆栈
+    
+        
     def __str__(self):
         return self.name
     
@@ -104,7 +186,13 @@ class User:
             if user_data.accumulable:
                 user_data += tour_data
         self.history.append(self.current_tour)
+       
+        # 保存字典副本到records，但保留原始对象
+        self.records.append(self.current_tour.to_dict())
+        self.save_data()  # 保存到文件
+        
         self.current_tour = None
+        
 
     def add_datatype(self, *new_data):
         """暂时没用上"""
@@ -154,6 +242,15 @@ class Data:
         new_data = copy.deepcopy(self)
         return new_data
 
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'value': self.val,
+            'editable': self.editable,
+            'accumulable': self.accumulable
+        }
+   
+    
 class NumData(Data):
     """记录数值的类，如时间里程等"""
     """暂时默认val为int"""
@@ -175,6 +272,7 @@ class NumData(Data):
         new_data = Data.new_copy(self)
         new_data.val = 0
         return new_data
+    
     
 class StrData(Data):
     """记录文字的类，如不同标签的日记等"""
