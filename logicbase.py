@@ -4,16 +4,16 @@ import copy
 
 
 class Place:
-    def __init__(self, name = "Peking University"):
+    def __init__(self, name = "Peking University", latitude = 0, longitude = 0):
         self.name = name
-        self.latitude, self.longitude = 0, 0
+        self.lat, self.lng = latitude, longitude
         self.visits = 0
 
     def __str__(self):
         return self.name
 
-    def set_pos(self, lati, longi):
-        self.latitude, self.longitude = lati, longi
+    def set_pos(self, latitude, longitude):
+        self.lat, self.lng = latitude, longitude
 
 
 class Arcade(Place):
