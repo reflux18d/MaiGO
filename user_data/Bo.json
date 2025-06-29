@@ -3,7 +3,7 @@
   "data": {
     "出勤次数": {
       "name": "出勤次数",
-      "val": 23,
+      "val": 29,
       "show": false,
       "editable": false,
       "accumulable": true,
@@ -12,7 +12,7 @@
     },
     "通勤时间(s)": {
       "name": "通勤时间(s)",
-      "val": 63,
+      "val": 112,
       "show": false,
       "editable": false,
       "accumulable": true,
@@ -21,7 +21,7 @@
     },
     "游玩时间(s)": {
       "name": "游玩时间(s)",
-      "val": 46,
+      "val": 78,
       "show": false,
       "editable": false,
       "accumulable": true,
@@ -30,7 +30,7 @@
     },
     "出行里程(km)": {
       "name": "出行里程(km)",
-      "val": 26340.74588321331,
+      "val": 26429.04967644403,
       "show": false,
       "editable": false,
       "accumulable": true,
@@ -40,11 +40,11 @@
     "交通方式": {
       "name": "交通方式",
       "val": {
-        "骑行": 1,
+        "骑行": 4,
         "步行": 0,
         "公共交通": 3
       },
-      "show": true,
+      "show": false,
       "editable": true,
       "accumulable": true,
       "info": "",
@@ -54,12 +54,12 @@
     "出装记录": {
       "name": "出装记录",
       "val": {
-        "大水": 5,
+        "大水": 7,
         "板子": 2,
         "手套": 3,
-        "谷子": 4
+        "谷子": 5
       },
-      "show": true,
+      "show": false,
       "editable": true,
       "accumulable": true,
       "info": "",
@@ -69,7 +69,7 @@
     "排队时在干嘛": {
       "name": "排队时在干嘛",
       "val": {
-        "看铺面预览": 2,
+        "看铺面预览": 6,
         "adx上练习": 2,
         "玩移动端音游": 0,
         "水群发动态": 0
@@ -84,7 +84,7 @@
     "上机必玩": {
       "name": "上机必玩",
       "val": "",
-      "show": true,
+      "show": false,
       "editable": true,
       "accumulable": false,
       "info": "接下来要玩什么呢",
@@ -93,7 +93,7 @@
     "推分记录": {
       "name": "推分记录",
       "val": "",
-      "show": true,
+      "show": false,
       "editable": true,
       "accumulable": false,
       "info": "我要飞升!",
@@ -2620,7 +2620,493 @@
           "accumulable": false
         }
       }
+    },
+    {
+      "start_time": "2025-06-29T19:01:40.362940",
+      "end_time": "2025-06-29T19:02:08.679729",
+      "goal": "城市英雄北京海淀大悦城店",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 11,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 16,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 12.952985031504248,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 1,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 1
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 1,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "啊啊啊啊啊",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "这是大富大贵发给",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T19:02:54.074451",
+      "end_time": "2025-06-29T19:03:04.678212",
+      "goal": "快乐星球北京大兴凯德茂店",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 10,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 29.675921218074272,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T19:03:16.400817",
+      "end_time": "2025-06-29T19:03:20.418234",
+      "goal": "町豆部落北京丰台店",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 3,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 0,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 18.72214505205594,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 0,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T19:06:28.199541",
+      "end_time": "2025-06-29T19:06:50.636001",
+      "goal": "金思乐海淀U悦店",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 11,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 10,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 8.819551708233574,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 1,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 1,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 1,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "啊啊啊",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "并不比",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T19:10:05.008978",
+      "end_time": "2025-06-29T19:10:20.118753",
+      "goal": "金思乐海淀U悦店",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 10,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 5,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 8.819551708233574,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 1,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 1,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 1,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "阿三哥",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
+    },
+    {
+      "start_time": "2025-06-29T19:10:44.726238",
+      "end_time": "2025-06-29T19:10:50.696575",
+      "goal": "星际传奇北京五棵松店",
+      "data": {
+        "出勤次数": {
+          "name": "出勤次数",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "通勤时间(s)": {
+          "name": "通勤时间(s)",
+          "value": 4,
+          "editable": false,
+          "accumulable": true
+        },
+        "游玩时间(s)": {
+          "name": "游玩时间(s)",
+          "value": 1,
+          "editable": false,
+          "accumulable": true
+        },
+        "出行里程(km)": {
+          "name": "出行里程(km)",
+          "value": 9.313638512615873,
+          "editable": false,
+          "accumulable": true
+        },
+        "交通方式": {
+          "name": "交通方式",
+          "value": {
+            "骑行": 0,
+            "步行": 0,
+            "公共交通": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "出装记录": {
+          "name": "出装记录",
+          "value": {
+            "大水": 0,
+            "板子": 0,
+            "手套": 0,
+            "谷子": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "排队时在干嘛": {
+          "name": "排队时在干嘛",
+          "value": {
+            "看铺面预览": 1,
+            "adx上练习": 0,
+            "玩移动端音游": 0,
+            "水群发动态": 0
+          },
+          "editable": true,
+          "accumulable": true
+        },
+        "上机必玩": {
+          "name": "上机必玩",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "推分记录": {
+          "name": "推分记录",
+          "value": "",
+          "editable": true,
+          "accumulable": false
+        },
+        "获得成就": {
+          "name": "获得成就",
+          "value": "",
+          "editable": false,
+          "accumulable": false
+        }
+      }
     }
   ],
-  "last_save": "2025-06-29T18:56:29.207759"
+  "last_save": "2025-06-29T19:10:50.702575"
 }

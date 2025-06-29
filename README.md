@@ -1,6 +1,13 @@
 It's MaiGO!!!!!
 感谢两位collaborator的陪伴🥰
-版本alpha 2.0   2025.5.31完成
+版本alpha 3.0   2025.6.29完成
+使用说明: 
+1.编译resource.qrc为resource_rc.py
+2.在主文件夹终端内运行cd map
+再输入python -m http.server 8000
+3.运行logic.py
+演示视频: 
+https://disk.pku.edu.cn/link/ARD766E1510CC3496DA33DAE8B3916E8BA
 功能:
 a.启动程序，显示主界面，带有按钮“出发”“记录”“设置”“账号”，点击主界面上的立绘人物salt可以互动，会展示文字和语音。
 b.点击出发，显示地图，地图上标有机厅的位置，点击对应位置的按钮可以选择本次出勤的目的地，进入本次旅行的界面，会有相应语音提示。

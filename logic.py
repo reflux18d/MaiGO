@@ -139,13 +139,13 @@ class MapWindow(MethodWidget):
         self.webview = QWebEngineView()
         self.ui.view_layout.addWidget(self.webview)
 
-        # ✅ 第一步：注册 WebChannel
+        # 注册 WebChannel
         self.channel = QWebChannel()
         self.channel.registerObject("pyBridge", self)
         self.webview.page().setWebChannel(self.channel)
-        print("✅ WebChannel 已注册成功")
+        print("WebChannel 已注册成功")
 
-        # ✅ 第二步：再加载页面
+        # 加载页面
         self.webview.setUrl(QUrl("http://localhost:8000/arcades2.html"))
 
 
